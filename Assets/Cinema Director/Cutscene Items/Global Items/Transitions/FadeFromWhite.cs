@@ -1,5 +1,5 @@
-// Cinema Suite
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CinemaDirector
 {
@@ -17,15 +17,14 @@ namespace CinemaDirector
         /// </summary>
         void Awake()
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
+			RawImage guiTexture = gameObject.GetComponent<RawImage> ();
             if (guiTexture == null)
             {
-                guiTexture = gameObject.AddComponent<GUITexture>();
+                guiTexture = gameObject.AddComponent<RawImage>();
                 gameObject.transform.position = Vector3.zero;
                 gameObject.transform.localScale = new Vector3(100, 100, 100);
                 guiTexture.texture = new Texture2D(1, 1);
                 guiTexture.enabled = false;
-                guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
                 guiTexture.color = Color.clear;
             }
         }

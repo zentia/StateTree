@@ -28,7 +28,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             // If specified, use the seed provided.
             if (useSeed) {
-                Random.seed = seed;
+                Random.InitState(seed);
             }
 
             // Add the index of each child to a list to make the Fischer-Yates shuffle possible.

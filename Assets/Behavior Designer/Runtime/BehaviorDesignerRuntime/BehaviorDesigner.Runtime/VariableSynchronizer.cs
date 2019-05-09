@@ -355,17 +355,16 @@ namespace BehaviorDesigner.Runtime
 		{
 			while (true)
 			{
-				this.Tick();
-				yield return this.updateWait;
+				Tick();
+				yield return updateWait;
 			}
-			yield break;
 		}
 
 		public void Tick()
 		{
-			for (int i = 0; i < this.synchronizedVariables.Count; i++)
+			for (int i = 0; i < synchronizedVariables.Count; i++)
 			{
-				VariableSynchronizer.SynchronizedVariable synchronizedVariable = this.synchronizedVariables[i];
+				SynchronizedVariable synchronizedVariable = this.synchronizedVariables[i];
 				switch (synchronizedVariable.synchronizationType)
 				{
 				case VariableSynchronizer.SynchronizationType.BehaviorDesigner:

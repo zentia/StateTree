@@ -14,7 +14,7 @@ namespace BehaviorDesigner.Runtime.Tasks
     public class RandomSequence : Composite
     {
         [Tooltip("Seed the random number generator to make things easier to UnityEngine.Debug")]
-        public int seed = 0;
+        public int seed;
         [Tooltip("Do we want to use the seed?")]
         public bool useSeed = false;
 
@@ -29,7 +29,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             // If specified, use the seed provided.
             if (useSeed) {
-                Random.seed = seed;
+                Random.InitState(seed);
             }
 
             // Add the index of each child to a list to make the Fischer-Yates shuffle possible.

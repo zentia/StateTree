@@ -1,5 +1,6 @@
 // Cinema Suite
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CinemaDirector
 {
@@ -38,11 +39,10 @@ namespace CinemaDirector
         /// </summary>
         public override void Trigger()
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
+			RawImage guiTexture = gameObject.GetComponent<RawImage> ();
 			if(guiTexture != null)
 			{
 	            guiTexture.enabled = true;
-	            guiTexture.pixelInset = new Rect(0f, 0f, Screen.width, Screen.height);
 	            guiTexture.color = From;
 			}
         }
