@@ -715,12 +715,12 @@ public static class BinaryDeserialization
 	private static SharedVariable BytesToSharedVariable(FieldSerializationData fieldSerializationData, Dictionary<string, int> fieldIndexMap, byte[] bytes, int dataPosition, IVariableSource variableSource, bool fromField, string namePrefix)
 	{
 		SharedVariable sharedVariable = null;
-		string text = (string)LoadField(fieldSerializationData, fieldIndexMap, typeof(string), namePrefix + "Type", null, null, null);
+		string text = (string)LoadField(fieldSerializationData, fieldIndexMap, typeof(string), namePrefix + "Type", null);
 		if (string.IsNullOrEmpty(text))
 		{
 			return null;
 		}
-		string name = (string)LoadField(fieldSerializationData, fieldIndexMap, typeof(string), namePrefix + "Name", null, null, null);
+		string name = (string)LoadField(fieldSerializationData, fieldIndexMap, typeof(string), namePrefix + "Name", null);
 		bool flag = Convert.ToBoolean(LoadField(fieldSerializationData, fieldIndexMap, typeof(bool), namePrefix + "IsShared", null, null, null));
 		bool flag2 = Convert.ToBoolean(LoadField(fieldSerializationData, fieldIndexMap, typeof(bool), namePrefix + "IsGlobal", null, null, null));
 		if (flag && fromField)
@@ -731,13 +731,13 @@ public static class BinaryDeserialization
 			}
 			else
 			{
-				if (BinaryDeserialization.globalVariables == null)
+				if (globalVariables == null)
 				{
-					BinaryDeserialization.globalVariables = GlobalVariables.Instance;
+					globalVariables = GlobalVariables.Instance;
 				}
-				if (BinaryDeserialization.globalVariables != null)
+				if (globalVariables != null)
 				{
-					sharedVariable = BinaryDeserialization.globalVariables.GetVariable(name);
+					sharedVariable = globalVariables.GetVariable(name);
 				}
 			}
 		}
@@ -753,18 +753,18 @@ public static class BinaryDeserialization
 			sharedVariable.Name = name;
 			sharedVariable.IsShared = flag;
 			sharedVariable.IsGlobal = flag2;
-			sharedVariable.NetworkSync = Convert.ToBoolean(BinaryDeserialization.LoadField(fieldSerializationData, fieldIndexMap, typeof(bool), namePrefix + "NetworkSync", null, null, null));
+			sharedVariable.NetworkSync = Convert.ToBoolean(LoadField(fieldSerializationData, fieldIndexMap, typeof(bool), namePrefix + "NetworkSync", null));
 			if (!flag2)
 			{
-				sharedVariable.PropertyMapping = (string)BinaryDeserialization.LoadField(fieldSerializationData, fieldIndexMap, typeof(string), namePrefix + "PropertyMapping", null, null, null);
-				sharedVariable.PropertyMappingOwner = (GameObject)BinaryDeserialization.LoadField(fieldSerializationData, fieldIndexMap, typeof(GameObject), namePrefix + "PropertyMappingOwner", null, null, null);
+				sharedVariable.PropertyMapping = (string)LoadField(fieldSerializationData, fieldIndexMap, typeof(string), namePrefix + "PropertyMapping", null);
+				sharedVariable.PropertyMappingOwner = (GameObject)LoadField(fieldSerializationData, fieldIndexMap, typeof(GameObject), namePrefix + "PropertyMappingOwner", null);
 				sharedVariable.InitializePropertyMapping(variableSource as BehaviorSource);
 			}
 			if (!flag3)
 			{
 				sharedVariable.IsShared = true;
 			}
-			BinaryDeserialization.LoadFields(fieldSerializationData, fieldIndexMap, sharedVariable, namePrefix, variableSource);
+			LoadFields(fieldSerializationData, fieldIndexMap, sharedVariable, namePrefix, variableSource);
 		}
 		return sharedVariable;
 	}

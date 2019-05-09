@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks
 {
     [TaskDescription("Sends an event to the behavior tree, returns success after sending the event.")]
@@ -51,12 +49,15 @@ namespace BehaviorDesigner.Runtime.Tasks
                 behaviorTree.SendEvent(eventName.Value);
             } else {
                 if (argument2 == null || argument2.IsNone) {
-                    behaviorTree.SendEvent<object>(eventName.Value, argument1.GetValue());
+                    behaviorTree.SendEvent(eventName.Value, argument1.GetValue());
                 } else {
-                    if (argument3 == null || argument3.IsNone) {
-                        behaviorTree.SendEvent<object, object>(eventName.Value, argument1.GetValue(), argument2.GetValue());
-                    } else {
-                        behaviorTree.SendEvent<object, object, object>(eventName.Value, argument1.GetValue(), argument2.GetValue(), argument3.GetValue());
+                    if (argument3 == null || argument3.IsNone)
+                    {
+                        behaviorTree.SendEvent(eventName.Value, argument1.GetValue(), argument2.GetValue());
+                    }
+                    else
+                    {
+                        behaviorTree.SendEvent(eventName.Value, argument1.GetValue(), argument2.GetValue(), argument3.GetValue());
                     }
                 }
             }

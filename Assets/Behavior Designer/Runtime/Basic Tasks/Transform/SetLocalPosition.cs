@@ -25,8 +25,9 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityTransform
 
         public override TaskStatus OnUpdate()
         {
-            if (targetTransform == null) {
-                UnityEngine.Debug.LogWarning("Transform is null");
+            if (targetTransform == null)
+            {
+                Debug.LogWarning("Transform is null");
                 return TaskStatus.Failure;
             }
 

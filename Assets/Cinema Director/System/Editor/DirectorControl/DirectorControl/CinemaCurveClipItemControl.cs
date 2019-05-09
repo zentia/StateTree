@@ -1,7 +1,6 @@
 ﻿using DirectorEditor;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -76,23 +75,9 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	private const float TANGENT_HANDLE_LENGTH = 30f;
 	private const int INDENT_AMOUNT = 12;
 	private const float ONE_THIRD = 0.333333343f;
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	public event CurveClipItemEventHandler TranslateCurveClipItem;
-	[method: CompilerGenerated]
-	[CompilerGenerated]
-	public event CurveClipItemEventHandler AlterFiretime;
-	[method: CompilerGenerated]
-	[CompilerGenerated]
-	public event CurveClipItemEventHandler AlterDuration;
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	public event CurveClipSrubberEventHandler SnapScrubber;
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	public event CurveClipWrapperEventHandler CurvesChanged;
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	internal event CurveClipWrapperEventHandler RequestEdit;
 	public bool IsEditing
 	{
@@ -379,7 +364,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 				{
 					Keyframe keyframe = cinemaAnimationCurveWrapper.GetKeyframe(k);
 					CinemaKeyframeWrapper keyframeWrapper = cinemaAnimationCurveWrapper.GetKeyframeWrapper(k);
-					bool arg_C4_0 = this.selection.Type == cinemaMemberCurveWrapper.Type && this.selection.Property == cinemaMemberCurveWrapper.PropertyName && this.selection.KeyId == k && this.selection.CurveId == cinemaAnimationCurveWrapper.Id;
+					bool arg_C4_0 = selection.Type == cinemaMemberCurveWrapper.Type && selection.Property == cinemaMemberCurveWrapper.PropertyName && this.selection.KeyId == k && this.selection.CurveId == cinemaAnimationCurveWrapper.Id;
 					if (keyframe.time != clipCurveWrapper.Firetime)
 					{
 						bool arg_C3_0 = keyframe.time == clipCurveWrapper.Firetime + clipCurveWrapper.Duration;
@@ -1883,7 +1868,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 					CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
 					if (cinemaClipCurveWrapper != null)
 					{
-						this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+						CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
 					}
 				}
 				haveCurvesChanged = true;
@@ -1897,7 +1882,6 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
     }
 
     private List<CinemaKeyframeWrapper> m_SelectedKeysCache;
-    private Bounds? m_SelectionBoundsCache;
     public bool KeyIsSelected(int hash)
     {
         return selectedKeyHashes.Contains(hash);
@@ -1918,14 +1902,10 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
         int hash = keyframe.GetHash();
         if (selectedKeyHashes.Contains(hash))
             selectedKeyHashes.Remove(hash);
-        m_SelectedKeysCache = null;
-        m_SelectionBoundsCache = null;
     }
     public void ClearKeySelections()
     {
         selectedKeyHashes.Clear();
-        m_SelectedKeysCache = null;
-        m_SelectionBoundsCache = null;
     }
     public void OnDestroy()
     {

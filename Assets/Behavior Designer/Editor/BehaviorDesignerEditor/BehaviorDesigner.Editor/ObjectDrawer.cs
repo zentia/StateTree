@@ -54,11 +54,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.task;
+				return task;
 			}
 			set
 			{
-				this.task = value;
+				task = value;
 			}
 		}
 

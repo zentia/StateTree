@@ -113,12 +113,12 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.mTask;
+				return mTask;
 			}
 			set
 			{
-				this.mTask = value;
-				this.Init();
+				mTask = value;
+				Init();
 			}
 		}
 
@@ -126,7 +126,7 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.isParent;
+				return isParent;
 			}
 		}
 
@@ -134,7 +134,7 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.isEntryDisplay;
+				return isEntryDisplay;
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace BehaviorDesigner.Editor
 		{
 			set
 			{
-				this.showReferenceIcon = value;
+				showReferenceIcon = value;
 			}
 		}
 
@@ -150,11 +150,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.showHoverBar;
+				return showHoverBar;
 			}
 			set
 			{
-				this.showHoverBar = value;
+				showHoverBar = value;
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace BehaviorDesigner.Editor
 		{
 			set
 			{
-				this.hasError = value;
+				hasError = value;
 			}
 		}
 
@@ -170,11 +170,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.parentNodeDesigner;
+				return parentNodeDesigner;
 			}
 			set
 			{
-				this.parentNodeDesigner = value;
+				parentNodeDesigner = value;
 			}
 		}
 
@@ -182,36 +182,36 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.outgoingNodeConnections;
+				return outgoingNodeConnections;
 			}
 		}
 
 		public void Select()
 		{
-			if (!this.isEntryDisplay)
+			if (!isEntryDisplay)
 			{
-				this.mSelected = true;
+				mSelected = true;
 			}
 		}
 
 		public void Deselect()
 		{
-			this.mSelected = false;
+			mSelected = false;
 		}
 
 		public void MarkDirty()
 		{
-			this.mConnectionIsDirty = true;
-			this.mRectIsDirty = true;
-			this.mIncomingRectIsDirty = true;
-			this.mOutgoingRectIsDirty = true;
+			mConnectionIsDirty = true;
+			mRectIsDirty = true;
+			mIncomingRectIsDirty = true;
+			mOutgoingRectIsDirty = true;
 		}
 
 		public Rect IncomingConnectionRect(Vector2 offset)
 		{
-			if (!this.mIncomingRectIsDirty)
+			if (!mIncomingRectIsDirty)
 			{
-				return this.mIncomingRectangle;
+				return mIncomingRectangle;
 			}
 			Rect rect = this.Rectangle(offset, false, false);
 			this.mIncomingRectangle = new Rect(rect.x + (rect.width - 42f) / 2f, rect.y - 14f, 42f, 14f);
@@ -233,7 +233,7 @@ namespace BehaviorDesigner.Editor
 
 		public void OnEnable()
 		{
-			base.hideFlags=(HideFlags)(61);
+			hideFlags = HideFlags.HideAndDontSave;
 		}
 
 		public void LoadTask(Task task, Behavior owner, ref int id)
@@ -242,28 +242,28 @@ namespace BehaviorDesigner.Editor
 			{
 				return;
 			}
-			this.mTask = task;
-			this.mTask.Owner = owner;
-			this.mTask.ID = id++;
-			this.mTask.NodeData.NodeDesigner = this;
-			this.mTask.NodeData.InitWatchedFields(this.mTask);
-			if (!this.mTask.NodeData.FriendlyName.Equals(string.Empty))
+			mTask = task;
+			mTask.Owner = owner;
+			mTask.ID = id++;
+			mTask.NodeData.NodeDesigner = this;
+			mTask.NodeData.InitWatchedFields(this.mTask);
+			if (!mTask.NodeData.FriendlyName.Equals(string.Empty))
 			{
-				this.mTask.FriendlyName = this.mTask.NodeData.FriendlyName;
-				this.mTask.NodeData.FriendlyName = string.Empty;
+				mTask.FriendlyName = mTask.NodeData.FriendlyName;
+				mTask.NodeData.FriendlyName = string.Empty;
 			}
-			this.LoadTaskIcon();
-			this.Init();
+			LoadTaskIcon();
+			Init();
 			RequiredComponentAttribute[] array;
-			if (this.mTask.Owner != null && (array = (this.mTask.GetType().GetCustomAttributes(typeof(RequiredComponentAttribute), true) as RequiredComponentAttribute[])).Length > 0)
+			if (mTask.Owner != null && (array = (mTask.GetType().GetCustomAttributes(typeof(RequiredComponentAttribute), true) as RequiredComponentAttribute[])).Length > 0)
 			{
 				Type componentType = array[0].ComponentType;
-				if (typeof(Component).IsAssignableFrom(componentType) && this.mTask.Owner.gameObject.GetComponent(componentType) == null)
+				if (typeof(Component).IsAssignableFrom(componentType) && mTask.Owner.gameObject.GetComponent(componentType) == null)
 				{
-					this.mTask.Owner.gameObject.AddComponent(componentType);
+					mTask.Owner.gameObject.AddComponent(componentType);
 				}
 			}
-			List<Type> baseClasses = FieldInspector.GetBaseClasses(this.mTask.GetType());
+			List<Type> baseClasses = FieldInspector.GetBaseClasses(mTask.GetType());
 			BindingFlags bindingAttr = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 			for (int i = baseClasses.Count - 1; i > -1; i--)
 			{
@@ -281,11 +281,11 @@ namespace BehaviorDesigner.Editor
 						{
 							sharedVariable.IsShared = true;
 						}
-						fields[j].SetValue(this.mTask, sharedVariable);
+						fields[j].SetValue(mTask, sharedVariable);
 					}
 				}
 			}
-			if (this.isParent)
+			if (isParent)
 			{
 				ParentTask parentTask = this.mTask as ParentTask;
 				if (parentTask.Children != null)
@@ -305,22 +305,22 @@ namespace BehaviorDesigner.Editor
 
 		public void LoadNode(Task task, BehaviorSource behaviorSource, Vector2 offset, ref int id)
 		{
-			this.mTask = task;
-			this.mTask.Owner = (behaviorSource.Owner as Behavior);
-			this.mTask.ID = id++;
-			this.mTask.NodeData = new NodeData();
-			this.mTask.NodeData.Offset = offset;
-			this.mTask.NodeData.NodeDesigner = this;
-			this.LoadTaskIcon();
-			this.Init();
-			this.mTask.FriendlyName = this.taskName;
+			mTask = task;
+			mTask.Owner = (behaviorSource.Owner as Behavior);
+			mTask.ID = id++;
+			mTask.NodeData = new NodeData();
+			mTask.NodeData.Offset = offset;
+			mTask.NodeData.NodeDesigner = this;
+			LoadTaskIcon();
+			Init();
+			mTask.FriendlyName = taskName;
 			RequiredComponentAttribute[] array;
-			if (this.mTask.Owner != null && (array = (this.mTask.GetType().GetCustomAttributes(typeof(RequiredComponentAttribute), true) as RequiredComponentAttribute[])).Length > 0)
+			if (mTask.Owner != null && (array = (mTask.GetType().GetCustomAttributes(typeof(RequiredComponentAttribute), true) as RequiredComponentAttribute[])).Length > 0)
 			{
 				Type componentType = array[0].ComponentType;
-				if (typeof(Component).IsAssignableFrom(componentType) && this.mTask.Owner.gameObject.GetComponent(componentType) == null)
+				if (typeof(Component).IsAssignableFrom(componentType) && mTask.Owner.gameObject.GetComponent(componentType) == null)
 				{
-					this.mTask.Owner.gameObject.AddComponent(componentType);
+					mTask.Owner.gameObject.AddComponent(componentType);
 				}
 			}
 			List<Type> baseClasses = FieldInspector.GetBaseClasses(this.mTask.GetType());
@@ -499,15 +499,15 @@ namespace BehaviorDesigner.Editor
 				this.successExecutionStatusTextureRect = new Rect(nodeRect.xMax - 37f, nodeRect.yMax - 33f, 35f, 31f);
 				this.failureExecutionStatusTextureRect = new Rect(nodeRect.xMax - 37f, nodeRect.yMax - 38f, 35f, 36f);
 				this.iconBorderTextureRect = new Rect(nodeRect.x + (nodeRect.width - 46f) / 2f, nodeRect.y + 3f + 2f, 46f, 46f);
-				this.CalculateNodeCommentRect(nodeRect);
-				this.mCacheIsDirty = false;
+				CalculateNodeCommentRect(nodeRect);
+				mCacheIsDirty = false;
 			}
 		}
 
 		private void CalculateNodeCommentRect(Rect nodeRect)
 		{
 			bool flag = false;
-			if (this.mTask.NodeData.WatchedFields != null && this.mTask.NodeData.WatchedFields.Count > 0)
+			if (mTask.NodeData.WatchedFields != null && this.mTask.NodeData.WatchedFields.Count > 0)
 			{
 				string text = string.Empty;
 				string text2 = string.Empty;
@@ -569,13 +569,13 @@ namespace BehaviorDesigner.Editor
 			{
 				return false;
 			}
-			if (this.ToString().Length != this.prevFriendlyNameLength)
+			if (ToString().Length != prevFriendlyNameLength)
 			{
-				this.prevFriendlyNameLength = this.ToString().Length;
-				this.mRectIsDirty = true;
+				prevFriendlyNameLength = ToString().Length;
+				mRectIsDirty = true;
 			}
-			Rect rect = this.Rectangle(offset, false, false);
-			this.UpdateCache(rect);
+			Rect rect = Rectangle(offset, false, false);
+			UpdateCache(rect);
 			bool flag = (this.mTask.NodeData.PushTime != -1f && this.mTask.NodeData.PushTime >= this.mTask.NodeData.PopTime) || (this.isEntryDisplay && this.outgoingNodeConnections.Count > 0 && this.outgoingNodeConnections[0].DestinationNodeDesigner.Task.NodeData.PushTime != -1f);
 			bool flag2 = this.mIdentifyUpdateCount != -1;
 			bool result = this.prevRunningState != flag;
@@ -944,12 +944,12 @@ namespace BehaviorDesigner.Editor
 			Vector2 result;
 			if (connectionType == NodeConnectionType.Incoming)
 			{
-				Rect rect = this.IncomingConnectionRect(offset);
+				Rect rect = IncomingConnectionRect(offset);
 				result = new Vector2(rect.center.x, rect.y + 7f);
 			}
 			else
 			{
-				Rect rect2 = this.OutgoingConnectionRect(offset);
+				Rect rect2 = OutgoingConnectionRect(offset);
 				result = new Vector2(rect2.center.x, rect2.yMax - 8f);
 			}
 			return result;
@@ -957,7 +957,7 @@ namespace BehaviorDesigner.Editor
 
 		public bool HoverBarAreaContains(Vector2 point, Vector2 offset)
 		{
-			Rect rect = this.Rectangle(offset, false, false);
+			Rect rect = Rectangle(offset, false, false);
 			rect.y=(rect.y - 24f);
 			return rect.Contains(point);
 		}
@@ -985,7 +985,7 @@ namespace BehaviorDesigner.Editor
 					}
 					else
 					{
-						this.mTask.NodeData.Collapsed = !this.mTask.NodeData.Collapsed;
+						mTask.NodeData.Collapsed = !this.mTask.NodeData.Collapsed;
 					}
 					collapsedButtonClicked = true;
 					flag = true;
@@ -1018,7 +1018,7 @@ namespace BehaviorDesigner.Editor
 
 		public void AddChildNode(NodeDesigner childNodeDesigner, NodeConnection nodeConnection, bool adjustOffset, bool replaceNode)
 		{
-			this.AddChildNode(childNodeDesigner, nodeConnection, adjustOffset, replaceNode, -1);
+			AddChildNode(childNodeDesigner, nodeConnection, adjustOffset, replaceNode, -1);
 		}
 
 		public void AddChildNode(NodeDesigner childNodeDesigner, NodeConnection nodeConnection, bool adjustOffset, bool replaceNode, int replaceNodeIndex)
@@ -1100,7 +1100,7 @@ namespace BehaviorDesigner.Editor
 
 		public int ChildIndexForTask(Task childTask)
 		{
-			if (this.isParent)
+			if (isParent)
 			{
 				ParentTask parentTask = this.mTask as ParentTask;
 				if (parentTask.Children != null)
@@ -1125,7 +1125,7 @@ namespace BehaviorDesigner.Editor
 			}
 			if (this.isParent)
 			{
-				ParentTask parentTask = this.mTask as ParentTask;
+				ParentTask parentTask = mTask as ParentTask;
 				if (parentTask.Children != null)
 				{
 					if (index >= parentTask.Children.Count || parentTask.Children[index] == null)
@@ -1141,7 +1141,7 @@ namespace BehaviorDesigner.Editor
 		public void MoveChildNode(int index, bool decreaseIndex)
 		{
 			int index2 = index + ((!decreaseIndex) ? 1 : -1);
-			ParentTask parentTask = this.mTask as ParentTask;
+			ParentTask parentTask = mTask as ParentTask;
 			Task value = parentTask.Children[index];
 			parentTask.Children[index] = parentTask.Children[index2];
 			parentTask.Children[index2] = value;
@@ -1163,7 +1163,7 @@ namespace BehaviorDesigner.Editor
 
 		public void ToggleBreakpoint()
 		{
-			this.mTask.NodeData.IsBreakpoint = !this.Task.NodeData.IsBreakpoint;
+			this.mTask.NodeData.IsBreakpoint = !Task.NodeData.IsBreakpoint;
 		}
 
 		public void ToggleEnableState()
@@ -1194,11 +1194,11 @@ namespace BehaviorDesigner.Editor
 
 		public void DestroyConnections()
 		{
-			if (this.outgoingNodeConnections != null)
+			if (outgoingNodeConnections != null)
 			{
-				for (int i = this.outgoingNodeConnections.Count - 1; i > -1; i--)
+				for (int i = outgoingNodeConnections.Count - 1; i > -1; i--)
 				{
-					UnityEngine.Object.DestroyImmediate(this.outgoingNodeConnections[i], true);
+					DestroyImmediate(outgoingNodeConnections[i], true);
 				}
 			}
 		}
@@ -1215,7 +1215,7 @@ namespace BehaviorDesigner.Editor
 
 		public override string ToString()
 		{
-			return (this.mTask != null) ? ((!this.mTask.FriendlyName.Equals(string.Empty)) ? this.mTask.FriendlyName : this.taskName) : string.Empty;
+			return (mTask != null) ? ((!mTask.FriendlyName.Equals(string.Empty)) ? mTask.FriendlyName : taskName) : string.Empty;
 		}
 	}
 }

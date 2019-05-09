@@ -775,8 +775,8 @@ namespace BehaviorDesigner.Editor
             }
             if (Draw() && mGUITickCount > 1)
             {
-                base.Repaint();
-                this.mGUITickCount = 0;
+                Repaint();
+                mGUITickCount = 0;
             }
             this.HandleEvents();
             this.mGUITickCount++;
@@ -936,8 +936,8 @@ namespace BehaviorDesigner.Editor
             bool result = false;
             Color color = GUI.color;
             Color backgroundColor = GUI.backgroundColor;
-            GUI.color = (Color.white);
-            GUI.backgroundColor = (Color.white);
+            GUI.color = Color.white;
+            GUI.backgroundColor = Color.white;
             DrawFileToolbar();
             DrawDebugToolbar();
             DrawPropertiesBox();
@@ -1303,14 +1303,14 @@ namespace BehaviorDesigner.Editor
 
         private bool DrawGraphArea()
         {
-            if (Event.current.type != (EventType)6 && !this.mTakingScreenshot)
+            if (Event.current.type != (EventType)6 && !mTakingScreenshot)
             {
-                Vector2 vector = GUI.BeginScrollView(new Rect(this.mGraphRect.x, this.mGraphRect.y, this.mGraphRect.width + 15f, this.mGraphRect.height + 15f), this.mGraphScrollPosition, new Rect(0f, 0f, this.mGraphScrollSize.x, this.mGraphScrollSize.y), true, true);
-                if (vector != this.mGraphScrollPosition && Event.current.type != (EventType)9 && Event.current.type != (EventType)11)
+                Vector2 vector = GUI.BeginScrollView(new Rect(mGraphRect.x, mGraphRect.y, mGraphRect.width + 15f, this.mGraphRect.height + 15f), this.mGraphScrollPosition, new Rect(0f, 0f, this.mGraphScrollSize.x, this.mGraphScrollSize.y), true, true);
+                if (vector != mGraphScrollPosition && Event.current.type != (EventType)9 && Event.current.type != (EventType)11)
                 {
-                    this.mGraphOffset -= (vector - this.mGraphScrollPosition) / this.mGraphZoom;
-                    this.mGraphScrollPosition = vector;
-                    this.mGraphDesigner.GraphDirty();
+                    mGraphOffset -= (vector - this.mGraphScrollPosition) / mGraphZoom;
+                    mGraphScrollPosition = vector;
+                    mGraphDesigner.GraphDirty();
                 }
                 GUI.EndScrollView();
             }
@@ -1323,7 +1323,7 @@ namespace BehaviorDesigner.Editor
                 mousePosition = new Vector2(-1f, -1f);
             }
             bool result = false;
-            if (this.mGraphDesigner != null && this.mGraphDesigner.DrawNodes(mousePosition, this.mGraphOffset))
+            if (mGraphDesigner != null && mGraphDesigner.DrawNodes(mousePosition, mGraphOffset))
             {
                 result = true;
             }
@@ -2160,7 +2160,7 @@ namespace BehaviorDesigner.Editor
                     NodeDesigner nodeDesigner2 = this.mGraphDesigner.NodeAt(point2, this.mGraphOffset);
                     if (nodeDesigner2 != null && !this.mGraphDesigner.IsSelected(nodeDesigner2))
                     {
-                        this.mGraphDesigner.DeselectAllExcept(nodeDesigner2);
+                        mGraphDesigner.DeselectAllExcept(nodeDesigner2);
                     }
                     return true;
                 }

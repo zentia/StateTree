@@ -99,13 +99,13 @@ namespace BehaviorDesigner.Editor
 
 		private static void SaveNodeData(NodeData nodeData)
 		{
-			BinarySerialization.SaveField(typeof(Vector2), "NodeDataOffset", nodeData.Offset, null);
-			BinarySerialization.SaveField(typeof(string), "NodeDataComment", nodeData.Comment, null);
-			BinarySerialization.SaveField(typeof(bool), "NodeDataIsBreakpoint", nodeData.IsBreakpoint, null);
-			BinarySerialization.SaveField(typeof(bool), "NodeDataDisabled", nodeData.Disabled, null);
-			BinarySerialization.SaveField(typeof(bool), "NodeDataCollapsed", nodeData.Collapsed, null);
-			BinarySerialization.SaveField(typeof(int), "NodeDataColorIndex", nodeData.ColorIndex, null);
-			BinarySerialization.SaveField(typeof(List<string>), "NodeDataWatchedFields", nodeData.WatchedFieldNames, null);
+			SaveField(typeof(Vector2), "NodeDataOffset", nodeData.Offset, null);
+			SaveField(typeof(string), "NodeDataComment", nodeData.Comment, null);
+			SaveField(typeof(bool), "NodeDataIsBreakpoint", nodeData.IsBreakpoint, null);
+			SaveField(typeof(bool), "NodeDataDisabled", nodeData.Disabled, null);
+			SaveField(typeof(bool), "NodeDataCollapsed", nodeData.Collapsed, null);
+			SaveField(typeof(int), "NodeDataColorIndex", nodeData.ColorIndex, null);
+			SaveField(typeof(List<string>), "NodeDataWatchedFields", nodeData.WatchedFieldNames, null);
 		}
 
 		private static void SaveSharedVariable(SharedVariable sharedVariable, string namePrefix)
@@ -114,29 +114,29 @@ namespace BehaviorDesigner.Editor
 			{
 				return;
 			}
-			BinarySerialization.SaveField(typeof(string), namePrefix + "Type", sharedVariable.GetType().ToString(), null);
-			BinarySerialization.SaveField(typeof(string), namePrefix + "Name", sharedVariable.Name, null);
+			SaveField(typeof(string), namePrefix + "Type", sharedVariable.GetType().ToString(), null);
+			SaveField(typeof(string), namePrefix + "Name", sharedVariable.Name, null);
 			if (sharedVariable.IsShared)
 			{
-				BinarySerialization.SaveField(typeof(bool), namePrefix + "IsShared", sharedVariable.IsShared, null);
+				SaveField(typeof(bool), namePrefix + "IsShared", sharedVariable.IsShared, null);
 			}
 			if (sharedVariable.IsGlobal)
 			{
-				BinarySerialization.SaveField(typeof(bool), namePrefix + "IsGlobal", sharedVariable.IsGlobal, null);
+				SaveField(typeof(bool), namePrefix + "IsGlobal", sharedVariable.IsGlobal, null);
 			}
 			if (sharedVariable.NetworkSync)
 			{
-				BinarySerialization.SaveField(typeof(bool), namePrefix + "NetworkSync", sharedVariable.NetworkSync, null);
+				SaveField(typeof(bool), namePrefix + "NetworkSync", sharedVariable.NetworkSync, null);
 			}
 			if (!string.IsNullOrEmpty(sharedVariable.PropertyMapping))
 			{
-				BinarySerialization.SaveField(typeof(string), namePrefix + "PropertyMapping", sharedVariable.PropertyMapping, null);
-				if (!object.Equals(sharedVariable.PropertyMappingOwner, null))
+				SaveField(typeof(string), namePrefix + "PropertyMapping", sharedVariable.PropertyMapping, null);
+				if (!Equals(sharedVariable.PropertyMappingOwner, null))
 				{
-					BinarySerialization.SaveField(typeof(GameObject), namePrefix + "PropertyMappingOwner", sharedVariable.PropertyMappingOwner, null);
+					SaveField(typeof(GameObject), namePrefix + "PropertyMappingOwner", sharedVariable.PropertyMappingOwner, null);
 				}
 			}
-			BinarySerialization.SaveFields(sharedVariable, namePrefix);
+			SaveFields(sharedVariable, namePrefix);
 		}
 
 		private static void SaveFields(object obj, string namePrefix)
@@ -158,8 +158,8 @@ namespace BehaviorDesigner.Editor
 		private static void SaveField(Type fieldType, string fieldName, object value, FieldInfo fieldInfo = null)
 		{
 			string text = fieldType.Name + fieldName;
-			BinarySerialization.fieldSerializationData.typeName.Add(text);
-			BinarySerialization.fieldSerializationData.startIndex.Add(BinarySerialization.fieldIndex);
+			fieldSerializationData.typeName.Add(text);
+			fieldSerializationData.startIndex.Add(fieldIndex);
 			if (typeof(IList).IsAssignableFrom(fieldType))
 			{
 				Type fieldType2;
@@ -179,22 +179,22 @@ namespace BehaviorDesigner.Editor
 				IList list = value as IList;
 				if (list == null)
 				{
-					BinarySerialization.AddByteData(typeof(int), BinarySerialization.IntToBytes(0));
+					AddByteData(typeof(int), IntToBytes(0));
 				}
 				else
 				{
-					BinarySerialization.AddByteData(typeof(int), BinarySerialization.IntToBytes(list.Count));
+					AddByteData(typeof(int), IntToBytes(list.Count));
 					if (list.Count > 0)
 					{
 						for (int i = 0; i < list.Count; i++)
 						{
-							if (object.ReferenceEquals(list[i], null))
+							if (ReferenceEquals(list[i], null))
 							{
-								BinarySerialization.AddByteData(fieldType2, BinarySerialization.IntToBytes(-1));
+								AddByteData(fieldType2, IntToBytes(-1));
 							}
 							else
 							{
-								BinarySerialization.SaveField(fieldType2, text + i, list[i], fieldInfo);
+								SaveField(fieldType2, text + i, list[i], fieldInfo);
 							}
 						}
 					}
@@ -204,46 +204,46 @@ namespace BehaviorDesigner.Editor
 			{
 				if (fieldInfo != null && BehaviorDesignerUtility.HasAttribute(fieldInfo, typeof(InspectTaskAttribute)))
 				{
-					BinarySerialization.AddByteData(fieldType, BinarySerialization.StringToBytes(value.GetType().ToString()));
-					BinarySerialization.SaveFields(value, text);
+					AddByteData(fieldType, StringToBytes(value.GetType().ToString()));
+					SaveFields(value, text);
 				}
 				else
 				{
-					BinarySerialization.AddByteData(fieldType, BinarySerialization.IntToBytes((value as Task).ID));
+					AddByteData(fieldType, IntToBytes((value as Task).ID));
 				}
 			}
 			else if (typeof(SharedVariable).IsAssignableFrom(fieldType))
 			{
-				BinarySerialization.SaveSharedVariable(value as SharedVariable, text);
+				SaveSharedVariable(value as SharedVariable, text);
 			}
 			else if (typeof(UnityEngine.Object).IsAssignableFrom(fieldType))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.IntToBytes(BinarySerialization.fieldSerializationData.unityObjects.Count));
-				BinarySerialization.fieldSerializationData.unityObjects.Add(value as UnityEngine.Object);
+				AddByteData(fieldType, IntToBytes(fieldSerializationData.unityObjects.Count));
+				fieldSerializationData.unityObjects.Add(value as UnityEngine.Object);
 			}
 			else if (fieldType.Equals(typeof(int)) || fieldType.IsEnum)
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.IntToBytes((int)value));
+				AddByteData(fieldType, IntToBytes((int)value));
 			}
 			else if (fieldType.Equals(typeof(short)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.Int16ToBytes((short)value));
+				AddByteData(fieldType, Int16ToBytes((short)value));
 			}
 			else if (fieldType.Equals(typeof(uint)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.UIntToBytes((uint)value));
+				AddByteData(fieldType, UIntToBytes((uint)value));
 			}
 			else if (fieldType.Equals(typeof(float)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.FloatToBytes((float)value));
+				AddByteData(fieldType, FloatToBytes((float)value));
 			}
 			else if (fieldType.Equals(typeof(double)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.DoubleToBytes((double)value));
+				AddByteData(fieldType, DoubleToBytes((double)value));
 			}
 			else if (fieldType.Equals(typeof(long)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.LongToBytes((long)value));
+				AddByteData(fieldType, LongToBytes((long)value));
 			}
 			else if (fieldType.Equals(typeof(bool)))
 			{
@@ -287,19 +287,19 @@ namespace BehaviorDesigner.Editor
 			}
 			else if (fieldType.Equals(typeof(LayerMask)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.IntToBytes(((LayerMask)value).value));
+				AddByteData(fieldType, IntToBytes(((LayerMask)value).value));
 			}
 			else if (fieldType.Equals(typeof(AnimationCurve)))
 			{
-				BinarySerialization.AddByteData(fieldType, BinarySerialization.AnimationCurveToBytes((AnimationCurve)value));
+				AddByteData(fieldType, AnimationCurveToBytes((AnimationCurve)value));
 			}
 			else if (fieldType.IsClass || (fieldType.IsValueType && !fieldType.IsPrimitive))
 			{
-				if (object.ReferenceEquals(value, null))
+				if (ReferenceEquals(value, null))
 				{
 					value = Activator.CreateInstance(fieldType, true);
 				}
-				BinarySerialization.SaveFields(value, text);
+				SaveFields(value, text);
 			}
 			else
 			{

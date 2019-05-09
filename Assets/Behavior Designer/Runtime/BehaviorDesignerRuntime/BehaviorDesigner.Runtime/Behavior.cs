@@ -885,7 +885,7 @@ namespace BehaviorDesigner.Runtime
 
 		public void SendEvent<T>(string name, T arg1)
 		{
-			Action<T> action = this.GetDelegate(name, typeof(Action<T>)) as Action<T>;
+			Action<T> action = GetDelegate(name, typeof(Action<T>)) as Action<T>;
 			if (action != null)
 			{
 				action(arg1);

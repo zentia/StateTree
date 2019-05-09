@@ -317,7 +317,7 @@ namespace BehaviorDesigner.Runtime
 					sharedVariable.PropertyMapping = (obj2 as string);
 					if (dict.TryGetValue("PropertyMappingOwner", out obj2))
 					{
-						sharedVariable.PropertyMappingOwner = (DeserializeJSON.IndexToUnityObject(Convert.ToInt32(obj2), unityObjects) as GameObject);
+						sharedVariable.PropertyMappingOwner = IndexToUnityObject(Convert.ToInt32(obj2), unityObjects) as GameObject;
 					}
 					sharedVariable.InitializePropertyMapping(variableSource as BehaviorSource);
 				}

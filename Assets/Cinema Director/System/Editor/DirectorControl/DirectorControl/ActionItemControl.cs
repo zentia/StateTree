@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,8 +10,6 @@ public class ActionItemControl : TrackItemControl
 
 	protected Texture actionIcon;
 
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	public event ActionItemEventHandler AlterAction;
 
 	public override void HandleInput(DirectorControlState state, Rect trackPosition)
@@ -36,18 +32,18 @@ public class ActionItemControl : TrackItemControl
 		EditorGUIUtility.AddCursorRect(rect, (MouseCursor)3);
 		EditorGUIUtility.AddCursorRect(rect2, (MouseCursor)5);
 		EditorGUIUtility.AddCursorRect(rect3, (MouseCursor)3);
-		this.controlID = GUIUtility.GetControlID(base.Wrapper.Behaviour.GetInstanceID(), (FocusType)2, this.controlPosition);
-		int controlID = GUIUtility.GetControlID(base.Wrapper.Behaviour.GetInstanceID(), (FocusType)2, rect);
-		int controlID2 = GUIUtility.GetControlID(base.Wrapper.Behaviour.GetInstanceID(), (FocusType)2, rect2);
-		int controlID3 = GUIUtility.GetControlID(base.Wrapper.Behaviour.GetInstanceID(), (FocusType)2, rect3);
-		if (Event.current.GetTypeForControl(this.controlID) == EventType.MouseDown && rect2.Contains(Event.current.mousePosition) && (int)Event.current.button == 1)
+		this.controlID = GUIUtility.GetControlID(Wrapper.Behaviour.GetInstanceID(), (FocusType)2, this.controlPosition);
+		int controlID = GUIUtility.GetControlID(Wrapper.Behaviour.GetInstanceID(), (FocusType)2, rect);
+		int controlID2 = GUIUtility.GetControlID(Wrapper.Behaviour.GetInstanceID(), (FocusType)2, rect2);
+		int controlID3 = GUIUtility.GetControlID(Wrapper.Behaviour.GetInstanceID(), (FocusType)2, rect3);
+		if (Event.current.GetTypeForControl(this.controlID) == EventType.MouseDown && rect2.Contains(Event.current.mousePosition) && Event.current.button == 1)
 		{
-			if (!base.IsSelected)
+			if (!IsSelected)
 			{
 				GameObject[] gameObjects = Selection.gameObjects;
-				ArrayUtility.Add<GameObject>(ref gameObjects, base.Wrapper.Behaviour.gameObject);
+				ArrayUtility.Add(ref gameObjects, Wrapper.Behaviour.gameObject);
 				Selection.objects=(gameObjects);
-				this.hasSelectionChanged = true;
+				hasSelectionChanged = true;
 			}
 			this.showContextMenu(base.Wrapper.Behaviour);
 			Event.current.Use();

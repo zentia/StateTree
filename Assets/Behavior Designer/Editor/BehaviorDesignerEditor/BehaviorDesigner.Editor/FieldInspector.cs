@@ -218,7 +218,7 @@ namespace BehaviorDesigner.Editor
 				bool flag = guiContent.text.GetHashCode() == editingFieldHash;
 				int num = (!flag) ? list.Count : savedArraySize;
 				int num2 = EditorGUILayout.IntField("Size", num);
-				if (flag && editingArray && (GUIUtility.keyboardControl != currentKeyboardControl || Event.current.keyCode == (KeyCode)13))
+				if (flag && editingArray && (GUIUtility.keyboardControl != currentKeyboardControl || Event.current.keyCode == KeyCode.Return))
 				{
 					if (num2 != list.Count)
 					{
@@ -259,17 +259,17 @@ namespace BehaviorDesigner.Editor
 							}
 						}
 					}
-					FieldInspector.editingArray = false;
-					FieldInspector.savedArraySize = -1;
-					FieldInspector.editingFieldHash = -1;
-					GUI.changed=(true);
+					editingArray = false;
+					savedArraySize = -1;
+					editingFieldHash = -1;
+					GUI.changed = true;
 				}
 				else if (num2 != num)
 				{
-					if (!FieldInspector.editingArray)
+					if (!editingArray)
 					{
-						FieldInspector.currentKeyboardControl = GUIUtility.keyboardControl;
-						FieldInspector.editingArray = true;
+						currentKeyboardControl = GUIUtility.keyboardControl;
+						editingArray = true;
 						editingFieldHash = guiContent.text.GetHashCode();
 					}
 					savedArraySize = num2;
@@ -292,56 +292,56 @@ namespace BehaviorDesigner.Editor
 		{
 			if (fieldType.Equals(typeof(int)))
 			{
-				return EditorGUILayout.IntField(guiContent, (int)value, new GUILayoutOption[0]);
+				return EditorGUILayout.IntField(guiContent, (int)value);
 			}
 			if (fieldType.Equals(typeof(float)))
 			{
-				return EditorGUILayout.FloatField(guiContent, (float)value, new GUILayoutOption[0]);
+				return EditorGUILayout.FloatField(guiContent, (float)value);
 			}
 			if (fieldType.Equals(typeof(double)))
 			{
-				return EditorGUILayout.FloatField(guiContent, Convert.ToSingle((double)value), new GUILayoutOption[0]);
+				return EditorGUILayout.FloatField(guiContent, Convert.ToSingle((double)value));
 			}
 			if (fieldType.Equals(typeof(long)))
 			{
-				return (long)EditorGUILayout.IntField(guiContent, Convert.ToInt32((long)value), new GUILayoutOption[0]);
+				return (long)EditorGUILayout.IntField(guiContent, Convert.ToInt32((long)value));
 			}
 			if (fieldType.Equals(typeof(bool)))
 			{
-				return EditorGUILayout.Toggle(guiContent, (bool)value, new GUILayoutOption[0]);
+				return EditorGUILayout.Toggle(guiContent, (bool)value);
 			}
 			if (fieldType.Equals(typeof(string)))
 			{
-				return EditorGUILayout.TextField(guiContent, (string)value, new GUILayoutOption[0]);
+				return EditorGUILayout.TextField(guiContent, (string)value);
 			}
 			if (fieldType.Equals(typeof(byte)))
 			{
-				return Convert.ToByte(EditorGUILayout.IntField(guiContent, Convert.ToInt32(value), new GUILayoutOption[0]));
+				return Convert.ToByte(EditorGUILayout.IntField(guiContent, Convert.ToInt32(value)));
 			}
 			if (fieldType.Equals(typeof(Vector2)))
 			{
-				return EditorGUILayout.Vector2Field(guiContent.text, (Vector2)value, new GUILayoutOption[0]);
+				return EditorGUILayout.Vector2Field(guiContent.text, (Vector2)value);
 			}
 			if (fieldType.Equals(typeof(Vector3)))
 			{
-				return EditorGUILayout.Vector3Field(guiContent.text, (Vector3)value, new GUILayoutOption[0]);
+				return EditorGUILayout.Vector3Field(guiContent.text, (Vector3)value);
 			}
 			if (fieldType.Equals(typeof(Vector4)))
 			{
-				return EditorGUILayout.Vector4Field(guiContent.text, (Vector4)value, new GUILayoutOption[0]);
+				return EditorGUILayout.Vector4Field(guiContent.text, (Vector4)value);
 			}
 			if (fieldType.Equals(typeof(Quaternion)))
 			{
 				Quaternion quaternion = (Quaternion)value;
 				Vector4 vector = Vector4.zero;
 				vector.Set(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
-				vector = EditorGUILayout.Vector4Field(guiContent.text, vector, new GUILayoutOption[0]);
+				vector = EditorGUILayout.Vector4Field(guiContent.text, vector);
 				quaternion.Set(vector.x, vector.y, vector.z, vector.w);
 				return quaternion;
 			}
 			if (fieldType.Equals(typeof(Color)))
 			{
-				return EditorGUILayout.ColorField(guiContent, (Color)value, new GUILayoutOption[0]);
+				return EditorGUILayout.ColorField(guiContent, (Color)value);
 			}
 			if (fieldType.Equals(typeof(Rect)))
 			{
@@ -349,8 +349,8 @@ namespace BehaviorDesigner.Editor
 			}
 			if (fieldType.Equals(typeof(Matrix4x4)))
 			{
-				GUILayout.BeginVertical(new GUILayoutOption[0]);
-				if (FieldInspector.DrawFoldout(value.GetHashCode(), guiContent))
+				GUILayout.BeginVertical();
+				if (DrawFoldout(value.GetHashCode(), guiContent))
 				{
 					EditorGUI.indentLevel=(EditorGUI.indentLevel + 1);
 					Matrix4x4 matrix4x = (Matrix4x4)value;
@@ -359,10 +359,10 @@ namespace BehaviorDesigner.Editor
 						for (int j = 0; j < 4; j++)
 						{
 							EditorGUI.BeginChangeCheck();
-							//matrix4x=(i, j, EditorGUILayout.FloatField("E" + i.ToString() + j.ToString(), matrix4x[i, j], new GUILayoutOption[0]));
+							//matrix4x=(i, j, EditorGUILayout.FloatField("E" + i.ToString() + j.ToString(), matrix4x[i, j]));
 							if (EditorGUI.EndChangeCheck())
 							{
-								GUI.changed=(true);
+								GUI.changed = true;
 							}
 						}
 					}
@@ -378,7 +378,7 @@ namespace BehaviorDesigner.Editor
 				{
 					value = new AnimationCurve();
 				}
-				return EditorGUILayout.CurveField(guiContent, (AnimationCurve)value, new GUILayoutOption[0]);
+				return EditorGUILayout.CurveField(guiContent, (AnimationCurve)value);
 			}
 			if (fieldType.Equals(typeof(LayerMask)))
 			{
@@ -390,27 +390,27 @@ namespace BehaviorDesigner.Editor
 			}
 			if (typeof(UnityEngine.Object).IsAssignableFrom(fieldType))
 			{
-				return EditorGUILayout.ObjectField(guiContent, (UnityEngine.Object)value, fieldType, true, new GUILayoutOption[0]);
+				return EditorGUILayout.ObjectField(guiContent, (UnityEngine.Object)value, fieldType, true);
 			}
 			if (fieldType.IsEnum)
 			{
-				return EditorGUILayout.EnumPopup(guiContent, (Enum)value, new GUILayoutOption[0]);
+				return EditorGUILayout.EnumPopup(guiContent, (Enum)value);
 			}
 			if (!fieldType.IsClass && (!fieldType.IsValueType || fieldType.IsPrimitive))
 			{
-				EditorGUILayout.LabelField("Unsupported Type: " + fieldType, new GUILayoutOption[0]);
+				EditorGUILayout.LabelField("Unsupported Type: " + fieldType);
 				return null;
 			}
 			int hashCode = guiContent.text.GetHashCode();
-			if (FieldInspector.drawnObjects.Contains(hashCode))
+			if (drawnObjects.Contains(hashCode))
 			{
 				return null;
 			}
-			FieldInspector.drawnObjects.Add(hashCode);
-			GUILayout.BeginVertical(new GUILayoutOption[0]);
+			drawnObjects.Add(hashCode);
+			GUILayout.BeginVertical();
 			if (fieldType.IsAbstract)
 			{
-				EditorGUILayout.LabelField(guiContent, new GUILayoutOption[0]);
+				EditorGUILayout.LabelField(guiContent);
 				GUILayout.EndVertical();
 				return null;
 			}
@@ -422,14 +422,14 @@ namespace BehaviorDesigner.Editor
 				}
 				value = Activator.CreateInstance(fieldType, true);
 			}
-			if (FieldInspector.DrawFoldout(value.GetHashCode(), guiContent))
+			if (DrawFoldout(value.GetHashCode(), guiContent))
 			{
 				EditorGUI.indentLevel=(EditorGUI.indentLevel + 1);
 				value = DrawFields(task, value);
 				EditorGUI.indentLevel=(EditorGUI.indentLevel - 1);
 			}
 			GUILayout.EndVertical();
-			FieldInspector.drawnObjects.Remove(hashCode);
+			drawnObjects.Remove(hashCode);
 			return value;
 		}
 
@@ -484,7 +484,7 @@ namespace BehaviorDesigner.Editor
 				}
 				if (!fieldType.Equals(typeof(SharedVariable)) && !TaskUtility.HasAttribute(fieldInfo, typeof(RequiredFieldAttribute)) && !TaskUtility.HasAttribute(fieldInfo, typeof(SharedRequiredAttribute)))
 				{
-					sharedVariable = FieldInspector.DrawSharedVariableToggleSharedButton(sharedVariable);
+					sharedVariable = DrawSharedVariableToggleSharedButton(sharedVariable);
 					GUILayout.Space(-3f);
 				}
 				GUILayout.EndHorizontal();
@@ -584,7 +584,7 @@ namespace BehaviorDesigner.Editor
 				bool isShared = !sharedVariable.IsShared;
 				if (sharedVariable.GetType().Equals(typeof(SharedVariable)))
 				{
-					sharedVariable = (Activator.CreateInstance(FieldInspector.FriendlySharedVariableName(sharedVariable.GetType().GetProperty("Value").PropertyType), true) as SharedVariable);
+					sharedVariable = (Activator.CreateInstance(FriendlySharedVariableName(sharedVariable.GetType().GetProperty("Value").PropertyType), true) as SharedVariable);
 				}
 				else
 				{
@@ -626,27 +626,27 @@ namespace BehaviorDesigner.Editor
 
 		private static LayerMask DrawLayerMask(GUIContent guiContent, LayerMask layerMask)
 		{
-			if (FieldInspector.layerNames == null)
+			if (layerNames == null)
 			{
-				FieldInspector.InitLayers();
+				InitLayers();
 			}
 			int num = 0;
-			for (int i = 0; i < FieldInspector.layerNames.Length; i++)
+			for (int i = 0; i < layerNames.Length; i++)
 			{
-				if ((layerMask.value & FieldInspector.maskValues[i]) == FieldInspector.maskValues[i])
+				if ((layerMask.value & maskValues[i]) == maskValues[i])
 				{
 					num |= 1 << i;
 				}
 			}
-			int num2 = EditorGUILayout.MaskField(guiContent, num, FieldInspector.layerNames, new GUILayoutOption[0]);
+			int num2 = EditorGUILayout.MaskField(guiContent, num, layerNames);
 			if (num2 != num)
 			{
 				num = 0;
-				for (int j = 0; j < FieldInspector.layerNames.Length; j++)
+				for (int j = 0; j < layerNames.Length; j++)
 				{
 					if ((num2 & 1 << j) != 0)
 					{
-						num |= FieldInspector.maskValues[j];
+						num |= maskValues[j];
 					}
 				}
 				layerMask.value=(num);
@@ -667,8 +667,8 @@ namespace BehaviorDesigner.Editor
 					list2.Add(1 << i);
 				}
 			}
-			FieldInspector.layerNames = list.ToArray();
-			FieldInspector.maskValues = list2.ToArray();
+			layerNames = list.ToArray();
+			maskValues = list2.ToArray();
 		}
 	}
 }

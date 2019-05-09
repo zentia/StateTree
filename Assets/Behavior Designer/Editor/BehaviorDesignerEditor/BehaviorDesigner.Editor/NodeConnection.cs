@@ -46,11 +46,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.originatingNodeDesigner;
+				return originatingNodeDesigner;
 			}
 			set
 			{
-				this.originatingNodeDesigner = value;
+				originatingNodeDesigner = value;
 			}
 		}
 
@@ -58,11 +58,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.destinationNodeDesigner;
+				return destinationNodeDesigner;
 			}
 			set
 			{
-				this.destinationNodeDesigner = value;
+				destinationNodeDesigner = value;
 			}
 		}
 
@@ -70,11 +70,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.nodeConnectionType;
+				return nodeConnectionType;
 			}
 			set
 			{
-				this.nodeConnectionType = value;
+				nodeConnectionType = value;
 			}
 		}
 
@@ -82,24 +82,24 @@ namespace BehaviorDesigner.Editor
 		{
 			set
 			{
-				this.horizontalHeight = value;
-				this.horizontalDirty = true;
+				horizontalHeight = value;
+				horizontalDirty = true;
 			}
 		}
 
 		public void select()
 		{
-			this.selected = true;
+			selected = true;
 		}
 
 		public void deselect()
 		{
-			this.selected = false;
+			selected = false;
 		}
 
 		public void OnEnable()
 		{
-			base.hideFlags=(HideFlags)(61);
+			hideFlags = HideFlags.HideAndDontSave;
 		}
 
 		public void LoadConnection(NodeDesigner nodeDesigner, NodeConnectionType nodeConnectionType)

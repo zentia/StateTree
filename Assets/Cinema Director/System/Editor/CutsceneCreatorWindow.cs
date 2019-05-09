@@ -19,7 +19,6 @@ public class CutsceneCreatorWindow : EditorWindow
     private int actorTrackGroupsSelection = 0;
     private int multiActorTrackGroupsSelection = 0;
     private int characterTrackGroupsSelection = 0;
-    private int entityTrackGroupsSelection = 0;
 
     private int shotTrackSelection = 1;
     private int audioTrackSelection = 2;

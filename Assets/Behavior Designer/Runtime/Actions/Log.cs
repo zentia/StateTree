@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace BehaviorDesigner.Runtime.Tasks
 {
     [TaskDescription("Log is a simple task which will output the specified text and return success. It can be used for UnityEngine.Debugging.")]

@@ -64,11 +64,11 @@ namespace BehaviorDesigner.Runtime
 		{
 			get
 			{
-				return this.mPropertyMapping;
+				return mPropertyMapping;
 			}
 			set
 			{
-				this.mPropertyMapping = value;
+				mPropertyMapping = value;
 			}
 		}
 
@@ -76,11 +76,11 @@ namespace BehaviorDesigner.Runtime
 		{
 			get
 			{
-				return this.mPropertyMappingOwner;
+				return mPropertyMappingOwner;
 			}
 			set
 			{
-				this.mPropertyMappingOwner = value;
+				mPropertyMappingOwner = value;
 			}
 		}
 
@@ -88,11 +88,11 @@ namespace BehaviorDesigner.Runtime
 		{
 			get
 			{
-				return this.mNetworkSync;
+				return mNetworkSync;
 			}
 			set
 			{
-				this.mNetworkSync = value;
+				mNetworkSync = value;
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace BehaviorDesigner.Runtime
 		{
 			get
 			{
-				return this.mIsShared && string.IsNullOrEmpty(this.mName);
+				return mIsShared && string.IsNullOrEmpty(mName);
 			}
 		}
 
@@ -129,22 +129,22 @@ namespace BehaviorDesigner.Runtime
 		{
 			get
 			{
-				return (this.mGetter == null) ? this.mValue : this.mGetter();
+				return (mGetter == null) ? mValue : mGetter();
 			}
 			set
 			{
-				bool flag = !object.Equals(this.Value, value);
-				if (this.mSetter != null)
+				bool flag = !Equals(Value, value);
+				if (mSetter != null)
 				{
-					this.mSetter(value);
+					mSetter(value);
 				}
 				else
 				{
-					this.mValue = value;
+					mValue = value;
 				}
 				if (flag)
 				{
-					base.ValueChanged();
+					ValueChanged();
 				}
 			}
 		}
@@ -155,9 +155,9 @@ namespace BehaviorDesigner.Runtime
 			{
 				return;
 			}
-			if (!string.IsNullOrEmpty(base.PropertyMapping))
+			if (!string.IsNullOrEmpty(PropertyMapping))
 			{
-				string[] array = base.PropertyMapping.Split(new char[]
+				string[] array = PropertyMapping.Split(new char[]
 				{
 					'/'
 				});
@@ -196,13 +196,13 @@ namespace BehaviorDesigner.Runtime
 
 		public override void SetValue(object value)
 		{
-			if (this.mSetter != null)
+			if (mSetter != null)
 			{
-				this.mSetter((T)((object)value));
+				mSetter((T)(value));
 			}
 			else
 			{
-				this.mValue = (T)((object)value);
+				mValue = (T)((object)value);
 			}
 		}
 

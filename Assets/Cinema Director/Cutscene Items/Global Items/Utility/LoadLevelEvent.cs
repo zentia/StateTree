@@ -1,8 +1,6 @@
-// Cinema Suite
 using UnityEngine;
-#if UNITY_5_3
 using UnityEngine.SceneManagement;
-#endif
+
 namespace CinemaDirector
 {
     /// <summary>
@@ -45,70 +43,38 @@ namespace CinemaDirector
                 {
                     if (Type == LoadLevelType.Standard)
                     {
-#if UNITY_5_3
                         SceneManager.LoadScene(Level);
-#else
-                        Application.LoadLevel(Level);
-#endif
                     }
                     else if (Type == LoadLevelType.Additive)
                     {
-#if UNITY_5_3
                         SceneManager.LoadScene(Level);
-#else
-                        Application.LoadLevelAdditive(Level);
-#endif
                     }
                     else if (Type == LoadLevelType.Async)
                     {
-#if UNITY_5_3
                         SceneManager.LoadSceneAsync(Level);
-#else
-                        Application.LoadLevelAsync(Level);
-#endif
                     }
                     else if (Type == LoadLevelType.AdditiveAsync)
                     {
-#if UNITY_5_3
                         SceneManager.LoadSceneAsync(Level);
-#else
-                        Application.LoadLevelAdditiveAsync(Level);
-#endif
                     }
                 }
                 else if (Argument == LoadLevelArgument.ByName)
                 {
                     if (Type == LoadLevelType.Standard)
                     {
-#if UNITY_5_3
                         SceneManager.LoadScene(LevelName);
-#else
-                        Application.LoadLevel(LevelName);
-#endif
                     }
                     else if (Type == LoadLevelType.Additive)
                     {
-#if UNITY_5_3
                         SceneManager.LoadScene(LevelName);
-#else
-                        Application.LoadLevelAdditive(LevelName);
-#endif
                     }
                     else if (Type == LoadLevelType.Async)
                     {
-#if UNITY_5_3
                         SceneManager.LoadSceneAsync(LevelName);
-#else
-                        Application.LoadLevelAsync(LevelName);
-#endif
                     }
                     else if (Type == LoadLevelType.AdditiveAsync)
                     {
-#if UNITY_5_3
                         SceneManager.LoadSceneAsync(LevelName);
-#else
-                        Application.LoadLevelAdditiveAsync(LevelName);
-#endif
                     }
                 }
             }
