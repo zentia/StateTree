@@ -13,30 +13,30 @@ public class SharedGenericVariableDrawer : ObjectDrawer
 	public override void OnGUI(GUIContent label)
 	{
 		GenericVariable genericVariable = this.value as GenericVariable;
-		EditorGUILayout.BeginVertical(new GUILayoutOption[0]);
+		EditorGUILayout.BeginVertical();
 		if (FieldInspector.DrawFoldout(genericVariable.GetHashCode(), label))
 		{
 			EditorGUI.indentLevel=(EditorGUI.indentLevel + 1);
-			if (SharedGenericVariableDrawer.variableNames == null)
+			if (variableNames == null)
 			{
 				List<Type> list = VariableInspector.FindAllSharedVariableTypes(true);
-				SharedGenericVariableDrawer.variableNames = new string[list.Count];
+				variableNames = new string[list.Count];
 				for (int i = 0; i < list.Count; i++)
 				{
-					SharedGenericVariableDrawer.variableNames[i] = list[i].Name.Remove(0, 6);
+					variableNames[i] = list[i].Name.Remove(0, 6);
 				}
 			}
 			int num = 0;
 			string value = genericVariable.type.Remove(0, 6);
-			for (int j = 0; j < SharedGenericVariableDrawer.variableNames.Length; j++)
+			for (int j = 0; j < variableNames.Length; j++)
 			{
-				if (SharedGenericVariableDrawer.variableNames[j].Equals(value))
+				if (variableNames[j].Equals(value))
 				{
 					num = j;
 					break;
 				}
 			}
-			int num2 = EditorGUILayout.Popup("Type", num, SharedGenericVariableDrawer.variableNames, BehaviorDesignerUtility.SharedVariableToolbarPopup, new GUILayoutOption[0]);
+			int num2 = EditorGUILayout.Popup("Type", num, variableNames, BehaviorDesignerUtility.SharedVariableToolbarPopup);
 			Type type = VariableInspector.FindAllSharedVariableTypes(true)[num2];
 			if (num2 != num)
 			{
@@ -44,7 +44,7 @@ public class SharedGenericVariableDrawer : ObjectDrawer
 				genericVariable.value = (Activator.CreateInstance(type) as SharedVariable);
 			}
 			GUILayout.Space(3f);
-			genericVariable.type = "Shared" + SharedGenericVariableDrawer.variableNames[num];
+			genericVariable.type = "Shared" + variableNames[num];
 			genericVariable.value = FieldInspector.DrawSharedVariable(null, new GUIContent("Value"), null, type, genericVariable.value);
 			EditorGUI.indentLevel=(EditorGUI.indentLevel - 1);
 		}

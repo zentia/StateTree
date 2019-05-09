@@ -67,7 +67,7 @@ namespace BehaviorDesigner.Editor
 
 		public static object DrawFields(Task task, object obj)
 		{
-			return FieldInspector.DrawFields(task, obj, null);
+			return DrawFields(task, obj, null);
 		}
 
 		public static object DrawFields(Task task, object obj, GUIContent guiContent)
@@ -76,7 +76,7 @@ namespace BehaviorDesigner.Editor
 			{
 				return null;
 			}
-			List<Type> baseClasses = FieldInspector.GetBaseClasses(obj.GetType());
+			List<Type> baseClasses = GetBaseClasses(obj.GetType());
 			BindingFlags bindingAttr = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 			for (int i = baseClasses.Count - 1; i > -1; i--)
 			{
@@ -88,8 +88,8 @@ namespace BehaviorDesigner.Editor
 						if (guiContent == null)
 						{
 							string name = fields[j].Name;
-							BehaviorDesigner.Runtime.Tasks.TooltipAttribute[] array;
-							if ((array = (fields[j].GetCustomAttributes(typeof(BehaviorDesigner.Runtime.Tasks.TooltipAttribute), false) as BehaviorDesigner.Runtime.Tasks.TooltipAttribute[])).Length > 0)
+							Runtime.Tasks.TooltipAttribute[] array;
+							if ((array = (fields[j].GetCustomAttributes(typeof(Runtime.Tasks.TooltipAttribute), false) as Runtime.Tasks.TooltipAttribute[])).Length > 0)
 							{
 								guiContent = new GUIContent(BehaviorDesignerUtility.SplitCamelCase(name), array[0].Tooltip);
 							}
@@ -99,7 +99,7 @@ namespace BehaviorDesigner.Editor
 							}
 						}
 						EditorGUI.BeginChangeCheck();
-						object value = FieldInspector.DrawField(task, guiContent, fields[j], fields[j].GetValue(obj));
+						object value = DrawField(task, guiContent, fields[j], fields[j].GetValue(obj));
 						if (EditorGUI.EndChangeCheck())
 						{
 							fields[j].SetValue(obj, value);
@@ -157,16 +157,16 @@ namespace BehaviorDesigner.Editor
 				}
 				return value;
 			}
-			return FieldInspector.DrawField(task, guiContent, field, field.FieldType, value);
+			return DrawField(task, guiContent, field, field.FieldType, value);
 		}
 
 		private static object DrawField(Task task, GUIContent guiContent, FieldInfo fieldInfo, Type fieldType, object value)
 		{
 			if (typeof(IList).IsAssignableFrom(fieldType))
 			{
-				return FieldInspector.DrawArrayField(task, guiContent, fieldInfo, fieldType, value);
+				return DrawArrayField(task, guiContent, fieldInfo, fieldType, value);
 			}
-			return FieldInspector.DrawSingleField(task, guiContent, fieldInfo, fieldType, value);
+			return DrawSingleField(task, guiContent, fieldInfo, fieldType, value);
 		}
 
 		private static object DrawArrayField(Task task, GUIContent guiContent, FieldInfo fieldInfo, Type fieldType, object value)
@@ -211,14 +211,14 @@ namespace BehaviorDesigner.Editor
 			{
 				list = (IList)value;
 			}
-			EditorGUILayout.BeginVertical(new GUILayoutOption[0]);
-			if (FieldInspector.DrawFoldout(list.GetHashCode(), guiContent))
+			EditorGUILayout.BeginVertical();
+			if (DrawFoldout(list.GetHashCode(), guiContent))
 			{
 				EditorGUI.indentLevel=(EditorGUI.indentLevel + 1);
-				bool flag = guiContent.text.GetHashCode() == FieldInspector.editingFieldHash;
-				int num = (!flag) ? list.Count : FieldInspector.savedArraySize;
-				int num2 = EditorGUILayout.IntField("Size", num, new GUILayoutOption[0]);
-				if (flag && FieldInspector.editingArray && (GUIUtility.keyboardControl != FieldInspector.currentKeyboardControl || Event.current.keyCode == (KeyCode)13))
+				bool flag = guiContent.text.GetHashCode() == editingFieldHash;
+				int num = (!flag) ? list.Count : savedArraySize;
+				int num2 = EditorGUILayout.IntField("Size", num);
+				if (flag && editingArray && (GUIUtility.keyboardControl != currentKeyboardControl || Event.current.keyCode == (KeyCode)13))
 				{
 					if (num2 != list.Count)
 					{
@@ -270,15 +270,15 @@ namespace BehaviorDesigner.Editor
 					{
 						FieldInspector.currentKeyboardControl = GUIUtility.keyboardControl;
 						FieldInspector.editingArray = true;
-						FieldInspector.editingFieldHash = guiContent.text.GetHashCode();
+						editingFieldHash = guiContent.text.GetHashCode();
 					}
-					FieldInspector.savedArraySize = num2;
+					savedArraySize = num2;
 				}
 				for (int k = 0; k < list.Count; k++)
 				{
-					GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+					GUILayout.BeginHorizontal();
 					guiContent.text=("Element " + k);
-					list[k] = FieldInspector.DrawField(task, guiContent, fieldInfo, type, list[k]);
+					list[k] = DrawField(task, guiContent, fieldInfo, type, list[k]);
 					GUILayout.Space(6f);
 					GUILayout.EndHorizontal();
 				}
@@ -345,7 +345,7 @@ namespace BehaviorDesigner.Editor
 			}
 			if (fieldType.Equals(typeof(Rect)))
 			{
-				return EditorGUILayout.RectField(guiContent, (Rect)value, new GUILayoutOption[0]);
+				return EditorGUILayout.RectField(guiContent, (Rect)value);
 			}
 			if (fieldType.Equals(typeof(Matrix4x4)))
 			{
@@ -386,7 +386,7 @@ namespace BehaviorDesigner.Editor
 			}
 			if (typeof(SharedVariable).IsAssignableFrom(fieldType))
 			{
-				return FieldInspector.DrawSharedVariable(task, guiContent, fieldInfo, fieldType, value as SharedVariable);
+				return DrawSharedVariable(task, guiContent, fieldInfo, fieldType, value as SharedVariable);
 			}
 			if (typeof(UnityEngine.Object).IsAssignableFrom(fieldType))
 			{
@@ -425,7 +425,7 @@ namespace BehaviorDesigner.Editor
 			if (FieldInspector.DrawFoldout(value.GetHashCode(), guiContent))
 			{
 				EditorGUI.indentLevel=(EditorGUI.indentLevel + 1);
-				value = FieldInspector.DrawFields(task, value);
+				value = DrawFields(task, value);
 				EditorGUI.indentLevel=(EditorGUI.indentLevel - 1);
 			}
 			GUILayout.EndVertical();
@@ -446,7 +446,7 @@ namespace BehaviorDesigner.Editor
 			}
 			if (sharedVariable == null || sharedVariable.IsShared)
 			{
-				GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+				GUILayout.BeginHorizontal();
 				string[] array = null;
 				int num = -1;
 				int num2 = FieldInspector.GetVariablesOfType((sharedVariable == null) ? null : sharedVariable.GetType().GetProperty("Value").PropertyType, sharedVariable != null && sharedVariable.IsGlobal, (sharedVariable == null) ? string.Empty : sharedVariable.Name, FieldInspector.behaviorSource, out array, ref num, fieldType.Equals(typeof(SharedVariable)));
@@ -478,7 +478,7 @@ namespace BehaviorDesigner.Editor
 					}
 					else
 					{
-						sharedVariable = FieldInspector.behaviorSource.GetVariable(array[num2]);
+						sharedVariable = behaviorSource.GetVariable(array[num2]);
 					}
 					GUI.changed=(true);
 				}
@@ -492,7 +492,7 @@ namespace BehaviorDesigner.Editor
 			}
 			else
 			{
-				GUILayout.BeginHorizontal(new GUILayoutOption[0]);
+				GUILayout.BeginHorizontal();
 				ObjectDrawerAttribute[] array2;
 				ObjectDrawer objectDrawer;
 				if (fieldInfo != null && (array2 = (fieldInfo.GetCustomAttributes(typeof(ObjectDrawerAttribute), true) as ObjectDrawerAttribute[])).Length > 0 && (objectDrawer = ObjectDrawerUtility.GetObjectDrawer(task, array2[0])) != null)
@@ -502,7 +502,7 @@ namespace BehaviorDesigner.Editor
 				}
 				else
 				{
-					FieldInspector.DrawFields(task, sharedVariable, guiContent);
+					DrawFields(task, sharedVariable, guiContent);
 				}
 				if (!TaskUtility.HasAttribute(fieldInfo, typeof(RequiredFieldAttribute)) && !TaskUtility.HasAttribute(fieldInfo, typeof(SharedRequiredAttribute)))
 				{

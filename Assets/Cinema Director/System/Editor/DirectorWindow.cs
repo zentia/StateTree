@@ -23,7 +23,7 @@ public class DirectorWindow : EditorWindow
     private GUIContent new_cutscene = new GUIContent("新剧情");
 
     const string TITLE = "导演";
-    const string MENU_ITEM = "Scene/剧情编辑器/导演 %#d";
+    const string MENU_ITEM = "Tools/StateTree/导演 %#d";
 
     private Texture settingsImage = null;
     private Texture rescaleImage = null;

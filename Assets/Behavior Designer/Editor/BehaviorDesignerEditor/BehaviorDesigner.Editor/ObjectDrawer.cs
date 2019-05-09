@@ -1,5 +1,4 @@
 using BehaviorDesigner.Runtime.Tasks;
-using System;
 using System.Reflection;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.fieldInfo;
+				return fieldInfo;
 			}
 			set
 			{

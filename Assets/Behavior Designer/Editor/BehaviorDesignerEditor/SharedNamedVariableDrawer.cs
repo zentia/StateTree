@@ -13,31 +13,31 @@ public class SharedNamedVariableDrawer : ObjectDrawer
 	public override void OnGUI(GUIContent label)
 	{
 		NamedVariable namedVariable = this.value as NamedVariable;
-		EditorGUILayout.BeginVertical(new GUILayoutOption[0]);
+		EditorGUILayout.BeginVertical();
 		if (FieldInspector.DrawFoldout(namedVariable.GetHashCode(), label))
 		{
 			EditorGUI.indentLevel=(EditorGUI.indentLevel + 1);
-			if (SharedNamedVariableDrawer.variableNames == null)
+			if (variableNames == null)
 			{
 				List<Type> list = VariableInspector.FindAllSharedVariableTypes(true);
-				SharedNamedVariableDrawer.variableNames = new string[list.Count];
+				variableNames = new string[list.Count];
 				for (int i = 0; i < list.Count; i++)
 				{
-					SharedNamedVariableDrawer.variableNames[i] = list[i].Name.Remove(0, 6);
+					variableNames[i] = list[i].Name.Remove(0, 6);
 				}
 			}
 			int num = 0;
 			string value = namedVariable.type.Remove(0, 6);
-			for (int j = 0; j < SharedNamedVariableDrawer.variableNames.Length; j++)
+			for (int j = 0; j < variableNames.Length; j++)
 			{
-				if (SharedNamedVariableDrawer.variableNames[j].Equals(value))
+				if (variableNames[j].Equals(value))
 				{
 					num = j;
 					break;
 				}
 			}
-			namedVariable.name = EditorGUILayout.TextField("Name", namedVariable.name, new GUILayoutOption[0]);
-			int num2 = EditorGUILayout.Popup("Type", num, SharedNamedVariableDrawer.variableNames, BehaviorDesignerUtility.SharedVariableToolbarPopup, new GUILayoutOption[0]);
+			namedVariable.name = EditorGUILayout.TextField("Name", namedVariable.name);
+			int num2 = EditorGUILayout.Popup("Type", num, variableNames, BehaviorDesignerUtility.SharedVariableToolbarPopup, new GUILayoutOption[0]);
 			Type type = VariableInspector.FindAllSharedVariableTypes(true)[num2];
 			if (num2 != num)
 			{
