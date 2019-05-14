@@ -448,7 +448,7 @@ public class CinemaAnimationCurveWrapper
 
 	internal void SetKeyFreeSmooth(int index)
 	{
-		Keyframe keyframe = this.curve[index];
+		Keyframe keyframe = curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, keyframe.outTangent);
 		keyframe2.tangentMode=(0);
 		this.curve.MoveKey(index, keyframe2);
@@ -471,49 +471,48 @@ public class CinemaAnimationCurveWrapper
 
 	internal bool IsLeftFree(int index)
 	{
-		return this.IsBroken(index) && this.curve[index].tangentMode % 8 == 1;
+        return AnimationUtility.GetKeyLeftTangentMode(curve, index) == AnimationUtility.TangentMode.Free;
 	}
 
 	internal bool IsLeftLinear(int index)
 	{
-		return this.IsBroken(index) && this.curve[index].tangentMode % 8 == 5;
+        return AnimationUtility.GetKeyLeftTangentMode(curve, index) == AnimationUtility.TangentMode.Linear;
 	}
 
 	internal bool IsLeftConstant(int index)
 	{
-		return this.IsBroken(index) && this.curve[index].tangentMode % 8 == 7;
+        return AnimationUtility.GetKeyLeftTangentMode(curve, index) == AnimationUtility.TangentMode.Constant;
 	}
 
 	internal bool IsRightFree(int index)
 	{
-		return this.IsBroken(index) && this.curve[index].tangentMode / 8 == 0;
+        return AnimationUtility.GetKeyRightTangentMode(curve, index) == AnimationUtility.TangentMode.Free;
 	}
 
 	internal bool IsRightLinear(int index)
 	{
-		return this.curve[index].tangentMode / 8 == 2;
+        return AnimationUtility.GetKeyRightTangentMode(curve, index) == AnimationUtility.TangentMode.Linear;
 	}
 
 	internal bool IsRightConstant(int index)
 	{
-		return this.curve[index].tangentMode / 8 == 3;
+        return AnimationUtility.GetKeyRightTangentMode(curve, index) == AnimationUtility.TangentMode.Constant;
 	}
 
 	internal void CollapseEnd(float oldEndTime, float newEndTime)
 	{
-		for (int i = this.curve.length - 2; i > 0; i--)
+		for (int i = curve.length - 2; i > 0; i--)
 		{
-			if (this.curve[i].time >= newEndTime && this.curve[i].time <= oldEndTime)
+			if (curve[i].time >= newEndTime && curve[i].time <= oldEndTime)
 			{
-				this.RemoveKey(i);
+				RemoveKey(i);
 			}
 		}
-		if (newEndTime > this.GetKeyframe(0).time)
+		if (newEndTime > GetKeyframe(0).time)
 		{
-			Keyframe keyframe = this.GetKeyframe(this.KeyframeCount - 1);
+			Keyframe keyframe = GetKeyframe(KeyframeCount - 1);
 			Keyframe kf = new Keyframe(newEndTime, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-			kf.tangentMode=(keyframe.tangentMode);
-			this.MoveKey(this.KeyframeCount - 1, kf);
+			MoveKey(KeyframeCount - 1, kf);
 		}
 	}
 

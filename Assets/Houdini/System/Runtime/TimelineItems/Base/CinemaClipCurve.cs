@@ -107,7 +107,6 @@ namespace CinemaDirector
                         if (Mathf.Abs(kf.time - oldTime) < 0.00001)
                         {
                             Keyframe newKeyframe = new Keyframe(newTime, kf.value, kf.inTangent, kf.outTangent);
-                            newKeyframe.tangentMode = kf.tangentMode;
                             AnimationCurveHelper.MoveKey(animationCurve, j, newKeyframe);
                         }
                     }

@@ -63,7 +63,6 @@ namespace CinemaDirector
                 return null;
             }
             Type type = component.GetType();
-            object value = null;
             if (IsProperty)
             {
                 PropertyInfo propertyInfo = ReflectionHelper.GetProperty(type, PropertyName);

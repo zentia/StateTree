@@ -327,7 +327,6 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 									num2 = keyframe2.time;
 								}
 								Keyframe kf = new Keyframe(num2, num3, keyframe2.inTangent, keyframe2.outTangent);
-								kf.tangentMode = keyframe2.tangentMode;
 								if ((num2 > clipCurveWrapper.Firetime && num2 < clipCurveWrapper.Firetime + clipCurveWrapper.Duration) | flag2)
 								{
 									selection.KeyId = cinemaAnimationCurveWrapper.MoveKey(k, kf);
@@ -400,7 +399,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 							case 3:
 								if (GUIUtility.hotControl == controlID)
 								{
-									Vector2 vector2 = new Vector2((Event.current.mousePosition.x - state.Translation.x) / state.Scale.x, (curveTrackSafeArea.y + this.curveTrackSafeArea.height - Event.current.mousePosition.y) / this.curveTrackSafeArea.height * verticalRange + this.viewingSpace.y) - new Vector2(keyframe.time, keyframe.value);
+									Vector2 vector2 = new Vector2((Event.current.mousePosition.x - state.Translation.x) / state.Scale.x, (curveTrackSafeArea.y + curveTrackSafeArea.height - Event.current.mousePosition.y) / this.curveTrackSafeArea.height * verticalRange + this.viewingSpace.y) - new Vector2(keyframe.time, keyframe.value);
 									float num = vector2.y / vector2.x;
 									float num2 = keyframe.outTangent;
 									if (cinemaAnimationCurveWrapper.IsFreeSmooth(k))
@@ -408,9 +407,8 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 										num2 = num;
 									}
 									Keyframe kf = new Keyframe(keyframe.time, keyframe.value, num, num2);
-									kf.tangentMode=(keyframe.tangentMode);
 									cinemaAnimationCurveWrapper.MoveKey(k, kf);
-                                        if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
+                                        if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
                                         {
                                             CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
                                         }
@@ -461,7 +459,6 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 										num4 = num3;
 									}
 									Keyframe kf2 = new Keyframe(keyframe.time, keyframe.value, num4, num3);
-									kf2.tangentMode=(keyframe.tangentMode);
 									cinemaAnimationCurveWrapper.MoveKey(k, kf2);
                                         if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper4)
                                         {
@@ -668,7 +665,6 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
                                                 {
                                                     cinemaAnimationCurveWrapper.GetKeyframeWrapper(l);
                                                     Keyframe kf = new Keyframe(keyframe.time + deltaTime, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-                                                    kf.tangentMode = keyframe.tangentMode;
                                                     cinemaAnimationCurveWrapper.MoveKey(l, kf);
                                                     flag = true;
                                                     change = true;
@@ -684,7 +680,6 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
                                                 {
                                                     cinemaAnimationCurveWrapper.GetKeyframeWrapper(l);
                                                     Keyframe kf = new Keyframe(keyframe.time + deltaTime, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-                                                    kf.tangentMode = keyframe.tangentMode;
                                                     cinemaAnimationCurveWrapper.MoveKey(l, kf);
                                                     flag = true;
                                                     change = true;
