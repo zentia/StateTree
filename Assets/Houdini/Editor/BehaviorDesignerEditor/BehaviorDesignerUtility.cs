@@ -1460,7 +1460,6 @@ namespace BehaviorDesigner.Editor
 			return Path.GetDirectoryName(text.Substring(Application.dataPath.Length - 6));
 		}
 
-	    public static string RootDir = "Assets/Houdini/Editor/BehaviorDesignerEditor/";
 		public static Texture2D LoadTexture(string imageName, bool useSkinColor = true, UnityEngine.Object obj = null)
 		{
 		    if (textureCache.TryGetValue(imageName, out Texture2D tex))
@@ -1476,8 +1475,8 @@ namespace BehaviorDesigner.Editor
 		    }
 			
 			Texture2D texture2D = null;
-			string name = string.Format("{0}{1}", (!useSkinColor) ? string.Empty : ((!EditorGUIUtility.isProSkin) ? "Light" : "Dark"), imageName);
-			texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(RootDir + name);
+			string name = string.Format("{0}{1}", !useSkinColor ? string.Empty : ((!EditorGUIUtility.isProSkin) ? "Light" : "Dark"), imageName);
+			texture2D = Resources.Load<Texture2D>(name);
             if (texture2D != null)
 			    texture2D.hideFlags=(HideFlags.HideAndDontSave);
             else
@@ -1496,7 +1495,7 @@ namespace BehaviorDesigner.Editor
 			}
 			Texture2D texture2D = null;
 			string name = string.Format("{0}{1}", (!useSkinColor) ? string.Empty : ((!EditorGUIUtility.isProSkin) ? "Light" : "Dark"), imageName);
-			texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(RootDir + name);
+			texture2D = Resources.Load<Texture2D>(name);
 			if (texture2D == null)
 			{
 				Debug.Log(string.Format("{0}/Images/Task Backgrounds/{1}{2}", GetEditorBaseDirectory(obj), (!useSkinColor) ? string.Empty : ((!EditorGUIUtility.isProSkin) ? "Light" : "Dark"), imageName));
@@ -1515,10 +1514,10 @@ namespace BehaviorDesigner.Editor
 			}
 			Texture2D texture2D = null;
 			string name = iconName.Replace("{SkinColor}", (!EditorGUIUtility.isProSkin) ? "Light" : "Dark");
-			texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(RootDir + name);
+			texture2D = Resources.Load<Texture2D>(name);
 			if (texture2D == null)
 			{
-				texture2D = (AssetDatabase.LoadAssetAtPath(iconName.Replace("{SkinColor}", (!EditorGUIUtility.isProSkin) ? "Light" : "Dark"), typeof(Texture2D)) as Texture2D);
+				texture2D = Resources.Load<Texture2D>(iconName.Replace("{SkinColor}", !EditorGUIUtility.isProSkin ? "Light" : "Dark"));
 			}
 			if (texture2D != null)
 			{
@@ -1952,11 +1951,13 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitPlainTextureGUIStyle()
 		{
-			BehaviorDesignerUtility.plainTextureGUIStyle = new GUIStyle();
-			BehaviorDesignerUtility.plainTextureGUIStyle.border=(new RectOffset(0, 0, 0, 0));
-			BehaviorDesignerUtility.plainTextureGUIStyle.margin=(new RectOffset(0, 0, 0, 0));
-			BehaviorDesignerUtility.plainTextureGUIStyle.padding=(new RectOffset(0, 0, 0, 0));
-			BehaviorDesignerUtility.plainTextureGUIStyle.normal.background=(null);
+            plainTextureGUIStyle = new GUIStyle
+            {
+                border = (new RectOffset(0, 0, 0, 0)),
+                margin = (new RectOffset(0, 0, 0, 0)),
+                padding = (new RectOffset(0, 0, 0, 0))
+            };
+            BehaviorDesignerUtility.plainTextureGUIStyle.normal.background=(null);
 			BehaviorDesignerUtility.plainTextureGUIStyle.active.background=(null);
 			BehaviorDesignerUtility.plainTextureGUIStyle.hover.background=(null);
 			BehaviorDesignerUtility.plainTextureGUIStyle.focused.background=(null);
@@ -1964,31 +1965,33 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitArrowSeparatorGUIStyle()
 		{
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle = new GUIStyle();
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.border=(new RectOffset(0, 0, 0, 0));
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.margin=(new RectOffset(0, 0, 3, 0));
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.padding=(new RectOffset(0, 0, 0, 0));
-			Texture2D background = LoadTexture("ArrowSeparator.png", true, null);
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.normal.background=(background);
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.active.background=(background);
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.hover.background=(background);
-			BehaviorDesignerUtility.arrowSeparatorGUIStyle.focused.background=(background);
+            arrowSeparatorGUIStyle = new GUIStyle
+            {
+                border = (new RectOffset(0, 0, 0, 0)),
+                margin = (new RectOffset(0, 0, 3, 0)),
+                padding = (new RectOffset(0, 0, 0, 0))
+            };
+            Texture2D background = LoadTexture("ArrowSeparator.png", true, null);
+			arrowSeparatorGUIStyle.normal.background=(background);
+			arrowSeparatorGUIStyle.active.background=(background);
+			arrowSeparatorGUIStyle.hover.background=(background);
+			arrowSeparatorGUIStyle.focused.background=(background);
 		}
 
 		private static void InitSelectedBackgroundGUIStyle()
 		{
-			Texture2D texture2D = new Texture2D(1, 1, (TextureFormat)4, false, true);
+			Texture2D texture2D = new Texture2D(1, 1, TextureFormat.RGBA32, false, true);
 			Color color = (!EditorGUIUtility.isProSkin) ? new Color(0.243f, 0.5686f, 0.839f, 0.5f) : new Color(0.188f, 0.4588f, 0.6862f, 0.5f);
 			texture2D.SetPixel(1, 1, color);
 			texture2D.hideFlags=(HideFlags)(61);
 			texture2D.Apply();
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle = new GUIStyle();
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle.border=(new RectOffset(0, 0, 0, 0));
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle.margin=(new RectOffset(0, 0, -2, 2));
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle.normal.background=(texture2D);
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle.active.background=(texture2D);
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle.hover.background=(texture2D);
-			BehaviorDesignerUtility.selectedBackgroundGUIStyle.focused.background=(texture2D);
+			selectedBackgroundGUIStyle = new GUIStyle();
+			selectedBackgroundGUIStyle.border=(new RectOffset(0, 0, 0, 0));
+			selectedBackgroundGUIStyle.margin=(new RectOffset(0, 0, -2, 2));
+			selectedBackgroundGUIStyle.normal.background=(texture2D);
+			selectedBackgroundGUIStyle.active.background=(texture2D);
+			selectedBackgroundGUIStyle.hover.background=(texture2D);
+			selectedBackgroundGUIStyle.focused.background=(texture2D);
 		}
 
 		private static void InitErrorListDarkBackground()
@@ -1998,266 +2001,266 @@ namespace BehaviorDesigner.Editor
 			texture2D.SetPixel(1, 1, color);
 			texture2D.hideFlags=(HideFlags)(61);
 			texture2D.Apply();
-			BehaviorDesignerUtility.errorListDarkBackground = new GUIStyle();
-			BehaviorDesignerUtility.errorListDarkBackground.padding=(new RectOffset(2, 0, 2, 0));
-			BehaviorDesignerUtility.errorListDarkBackground.normal.background=(texture2D);
-			BehaviorDesignerUtility.errorListDarkBackground.active.background=(texture2D);
-			BehaviorDesignerUtility.errorListDarkBackground.hover.background=(texture2D);
-			BehaviorDesignerUtility.errorListDarkBackground.focused.background=(texture2D);
-			BehaviorDesignerUtility.errorListDarkBackground.normal.textColor=((!EditorGUIUtility.isProSkin) ? new Color(0.206f, 0.206f, 0.206f) : new Color(0.706f, 0.706f, 0.706f));
-			BehaviorDesignerUtility.errorListDarkBackground.alignment=(0);
-			BehaviorDesignerUtility.errorListDarkBackground.wordWrap=(false);
+			errorListDarkBackground = new GUIStyle();
+			errorListDarkBackground.padding=(new RectOffset(2, 0, 2, 0));
+			errorListDarkBackground.normal.background=(texture2D);
+			errorListDarkBackground.active.background=(texture2D);
+			errorListDarkBackground.hover.background=(texture2D);
+			errorListDarkBackground.focused.background=(texture2D);
+			errorListDarkBackground.normal.textColor=((!EditorGUIUtility.isProSkin) ? new Color(0.206f, 0.206f, 0.206f) : new Color(0.706f, 0.706f, 0.706f));
+			errorListDarkBackground.alignment=(0);
+			errorListDarkBackground.wordWrap=(false);
 		}
 
 		private static void InitErrorListLightBackground()
 		{
-			BehaviorDesignerUtility.errorListLightBackground = new GUIStyle();
-			BehaviorDesignerUtility.errorListLightBackground.padding=(new RectOffset(2, 0, 2, 0));
-			BehaviorDesignerUtility.errorListLightBackground.normal.textColor=((!EditorGUIUtility.isProSkin) ? new Color(0.106f, 0.106f, 0.106f) : new Color(0.706f, 0.706f, 0.706f));
-			BehaviorDesignerUtility.errorListLightBackground.alignment=(0);
-			BehaviorDesignerUtility.errorListLightBackground.wordWrap=(false);
+			errorListLightBackground = new GUIStyle();
+			errorListLightBackground.padding=(new RectOffset(2, 0, 2, 0));
+			errorListLightBackground.normal.textColor=((!EditorGUIUtility.isProSkin) ? new Color(0.106f, 0.106f, 0.106f) : new Color(0.706f, 0.706f, 0.706f));
+			errorListLightBackground.alignment=(0);
+			errorListLightBackground.wordWrap=(false);
 		}
 
 		private static void InitWelcomeScreenIntroGUIStyle()
 		{
-			BehaviorDesignerUtility.welcomeScreenIntroGUIStyle = new GUIStyle(GUI.skin.label);
-			BehaviorDesignerUtility.welcomeScreenIntroGUIStyle.fontSize=(16);
-			BehaviorDesignerUtility.welcomeScreenIntroGUIStyle.fontStyle=(FontStyle)(1);
-			BehaviorDesignerUtility.welcomeScreenIntroGUIStyle.normal.textColor=(new Color(0.706f, 0.706f, 0.706f));
+			welcomeScreenIntroGUIStyle = new GUIStyle(GUI.skin.label);
+			welcomeScreenIntroGUIStyle.fontSize=(16);
+			welcomeScreenIntroGUIStyle.fontStyle=(FontStyle)(1);
+			welcomeScreenIntroGUIStyle.normal.textColor=(new Color(0.706f, 0.706f, 0.706f));
 		}
 
 		private static void InitWelcomeScreenTextHeaderGUIStyle()
 		{
-			BehaviorDesignerUtility.welcomeScreenTextHeaderGUIStyle = new GUIStyle(GUI.skin.label);
-			BehaviorDesignerUtility.welcomeScreenTextHeaderGUIStyle.alignment=(TextAnchor)(3);
-			BehaviorDesignerUtility.welcomeScreenTextHeaderGUIStyle.fontSize=(14);
-			BehaviorDesignerUtility.welcomeScreenTextHeaderGUIStyle.fontStyle=(FontStyle)(1);
+			welcomeScreenTextHeaderGUIStyle = new GUIStyle(GUI.skin.label);
+			welcomeScreenTextHeaderGUIStyle.alignment=(TextAnchor)(3);
+			welcomeScreenTextHeaderGUIStyle.fontSize=(14);
+			welcomeScreenTextHeaderGUIStyle.fontStyle=(FontStyle)(1);
 		}
 
 		private static void InitWelcomeScreenTextDescriptionGUIStyle()
 		{
-			BehaviorDesignerUtility.welcomeScreenTextDescriptionGUIStyle = new GUIStyle(GUI.skin.label);
-			BehaviorDesignerUtility.welcomeScreenTextDescriptionGUIStyle.wordWrap=(true);
+			welcomeScreenTextDescriptionGUIStyle = new GUIStyle(GUI.skin.label);
+			welcomeScreenTextDescriptionGUIStyle.wordWrap=(true);
 		}
 
 		private static void InitTaskBorderTexture(int colorIndex)
 		{
-			BehaviorDesignerUtility.taskBorderTexture[colorIndex] = BehaviorDesignerUtility.LoadTaskTexture("TaskBorder" + BehaviorDesignerUtility.ColorIndexToColorString(colorIndex) + ".png", true, null);
+			taskBorderTexture[colorIndex] = LoadTaskTexture("TaskBorder" + ColorIndexToColorString(colorIndex), true, null);
 		}
 
 		private static void InitTaskBorderRunningTexture()
 		{
-			BehaviorDesignerUtility.taskBorderRunningTexture = BehaviorDesignerUtility.LoadTaskTexture("TaskBorderRunning.png", true, null);
+			taskBorderRunningTexture = LoadTaskTexture("TaskBorderRunning", true, null);
 		}
 
 		private static void InitTaskBorderIdentifyTexture()
 		{
-			BehaviorDesignerUtility.taskBorderIdentifyTexture = BehaviorDesignerUtility.LoadTaskTexture("TaskBorderIdentify.png", true, null);
+			taskBorderIdentifyTexture = LoadTaskTexture("TaskBorderIdentify", true, null);
 		}
 
 		private static void InitTaskConnectionTopTexture(int colorIndex)
 		{
-			BehaviorDesignerUtility.taskConnectionTopTexture[colorIndex] = BehaviorDesignerUtility.LoadTaskTexture("TaskConnectionTop" + BehaviorDesignerUtility.ColorIndexToColorString(colorIndex) + ".png", true, null);
+			taskConnectionTopTexture[colorIndex] = LoadTaskTexture("TaskConnectionTop" + ColorIndexToColorString(colorIndex), true, null);
 		}
 
 		private static void InitTaskConnectionBottomTexture(int colorIndex)
 		{
-			BehaviorDesignerUtility.taskConnectionBottomTexture[colorIndex] = BehaviorDesignerUtility.LoadTaskTexture("TaskConnectionBottom" + BehaviorDesignerUtility.ColorIndexToColorString(colorIndex) + ".png", true, null);
+			taskConnectionBottomTexture[colorIndex] = LoadTaskTexture("TaskConnectionBottom" + ColorIndexToColorString(colorIndex), true, null);
 		}
 
 		private static void InitTaskConnectionRunningTopTexture()
 		{
-			BehaviorDesignerUtility.taskConnectionRunningTopTexture = BehaviorDesignerUtility.LoadTaskTexture("TaskConnectionRunningTop.png", true, null);
+			taskConnectionRunningTopTexture = LoadTaskTexture("TaskConnectionRunningTop", true, null);
 		}
 
 		private static void InitTaskConnectionRunningBottomTexture()
 		{
-			BehaviorDesignerUtility.taskConnectionRunningBottomTexture = BehaviorDesignerUtility.LoadTaskTexture("TaskConnectionRunningBottom.png", true, null);
+			taskConnectionRunningBottomTexture = LoadTaskTexture("TaskConnectionRunningBottom", true, null);
 		}
 
 		private static void InitTaskConnectionIdentifyTopTexture()
 		{
-			BehaviorDesignerUtility.taskConnectionIdentifyTopTexture = BehaviorDesignerUtility.LoadTaskTexture("TaskConnectionIdentifyTop.png", true, null);
+			taskConnectionIdentifyTopTexture = LoadTaskTexture("TaskConnectionIdentifyTop", true, null);
 		}
 
 		private static void InitTaskConnectionIdentifyBottomTexture()
 		{
-			taskConnectionIdentifyBottomTexture = LoadTaskTexture("TaskConnectionIdentifyBottom.png", true, null);
+			taskConnectionIdentifyBottomTexture = LoadTaskTexture("TaskConnectionIdentifyBottom", true, null);
 		}
 
 		private static void InitTaskConnectionCollapsedTexture()
 		{
-			taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed.png", true, null);
+			taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed", true, null);
 		}
 
 		private static void InitContentSeparatorTexture()
 		{
-			contentSeparatorTexture = LoadTexture("ContentSeparator.png");
+			contentSeparatorTexture = LoadTexture("ContentSeparator");
 		}
 
 		private static void InitDocTexture()
 		{
-			docTexture = LoadTexture("DocIcon.png", true, null);
+			docTexture = LoadTexture("DocIcon", true, null);
 		}
 
 		private static void InitGearTexture()
 		{
-			gearTexture = LoadTexture("GearIcon.png", true, null);
+			gearTexture = LoadTexture("GearIcon", true, null);
 		}
 
 		private static void InitColorSelectorTexture(int colorIndex)
 		{
-			colorSelectorTexture[colorIndex] = LoadTexture("ColorSelector" + ColorIndexToColorString(colorIndex) + ".png", true, null);
+			colorSelectorTexture[colorIndex] = LoadTexture("ColorSelector" + ColorIndexToColorString(colorIndex), true, null);
 		}
 
 		private static void InitVariableButtonTexture()
 		{
-			variableButtonTexture = LoadTexture("VariableButton.png", true, null);
+			variableButtonTexture = LoadTexture("VariableButton", true, null);
 		}
 
 		private static void InitVariableButtonSelectedTexture()
 		{
-			variableButtonSelectedTexture = LoadTexture("VariableButtonSelected.png", true, null);
+			variableButtonSelectedTexture = LoadTexture("VariableButtonSelected", true, null);
 		}
 
 		private static void InitVariableWatchButtonTexture()
 		{
-			variableWatchButtonTexture = LoadTexture("VariableWatchButton.png", true, null);
+			variableWatchButtonTexture = LoadTexture("VariableWatchButton", true, null);
 		}
 
 		private static void InitVariableWatchButtonSelectedTexture()
 		{
-			variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected.png", true, null);
+			variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected", true, null);
 		}
 
 		private static void InitReferencedTexture()
 		{
-			referencedTexture = LoadTexture("LinkedIcon.png", true, null);
+			referencedTexture = LoadTexture("LinkedIcon", true, null);
 		}
 
 		private static void InitConditionalAbortSelfTexture()
 		{
-			conditionalAbortSelfTexture = LoadTexture("ConditionalAbortSelfIcon.png", true, null);
+			conditionalAbortSelfTexture = LoadTexture("ConditionalAbortSelfIcon", true, null);
 		}
 
 		private static void InitConditionalAbortLowerPriorityTexture()
 		{
-			conditionalAbortLowerPriorityTexture = LoadTexture("ConditionalAbortLowerPriorityIcon.png", true, null);
+			conditionalAbortLowerPriorityTexture = LoadTexture("ConditionalAbortLowerPriorityIcon", true, null);
 		}
 
 		private static void InitConditionalAbortBothTexture()
 		{
-			conditionalAbortBothTexture = LoadTexture("ConditionalAbortBothIcon.png", true, null);
+			conditionalAbortBothTexture = LoadTexture("ConditionalAbortBothIcon", true, null);
 		}
 
 		private static void InitDeleteButtonTexture()
 		{
-			deleteButtonTexture = LoadTexture("DeleteButton.png", true, null);
+			deleteButtonTexture = LoadTexture("DeleteButton", true, null);
 		}
 
 		private static void InitVariableDeleteButtonTexture()
 		{
-			variableDeleteButtonTexture = LoadTexture("VariableDeleteButton.png", true, null);
+			variableDeleteButtonTexture = LoadTexture("VariableDeleteButton", true, null);
 		}
 
 		private static void InitDownArrowButtonTexture()
 		{
-			downArrowButtonTexture = LoadTexture("DownArrowButton.png", true, null);
+			downArrowButtonTexture = LoadTexture("DownArrowButton", true, null);
 		}
 
 		private static void InitUpArrowButtonTexture()
 		{
-			upArrowButtonTexture = LoadTexture("UpArrowButton.png", true, null);
+			upArrowButtonTexture = LoadTexture("UpArrowButton", true, null);
 		}
 
 		private static void InitVariableMapButtonTexture()
 		{
-			variableMapButtonTexture = LoadTexture("VariableMapButton.png", true, null);
+			variableMapButtonTexture = LoadTexture("VariableMapButton", true, null);
 		}
 
 		private static void InitIdentifyButtonTexture()
 		{
-			identifyButtonTexture = LoadTexture("IdentifyButton.png", true, null);
+			identifyButtonTexture = LoadTexture("IdentifyButton", true, null);
 		}
 
 		private static void InitBreakpointTexture()
 		{
-			breakpointTexture = LoadTexture("BreakpointIcon.png", false, null);
+			breakpointTexture = LoadTexture("BreakpointIcon", false, null);
 		}
 
 		private static void InitErrorIconTexture()
 		{
-			errorIconTexture = LoadTexture("ErrorIcon.png", true, null);
+			errorIconTexture = LoadTexture("ErrorIcon", true, null);
 		}
 
 		private static void InitSmallErrorIconTexture()
 		{
-			smallErrorIconTexture = LoadTexture("SmallErrorIcon.png", true, null);
+			smallErrorIconTexture = LoadTexture("SmallErrorIcon", true, null);
 		}
 
 		private static void InitEnableTaskTexture()
 		{
-			enableTaskTexture = LoadTexture("TaskEnableIcon.png", false, null);
+			enableTaskTexture = LoadTexture("TaskEnableIcon", false, null);
 		}
 
 		private static void InitDisableTaskTexture()
 		{
-			disableTaskTexture = LoadTexture("TaskDisableIcon.png", false, null);
+			disableTaskTexture = LoadTexture("TaskDisableIcon", false, null);
 		}
 
 		private static void InitExpandTaskTexture()
 		{
-			expandTaskTexture = LoadTexture("TaskExpandIcon.png", false, null);
+			expandTaskTexture = LoadTexture("TaskExpandIcon", false, null);
 		}
 
 		private static void InitCollapseTaskTexture()
 		{
-			collapseTaskTexture = LoadTexture("TaskCollapseIcon.png", false, null);
+			collapseTaskTexture = LoadTexture("TaskCollapseIcon", false, null);
 		}
 
 		private static void InitExecutionSuccessTexture()
 		{
-			executionSuccessTexture = LoadTexture("ExecutionSuccess.png", false, null);
+			executionSuccessTexture = LoadTexture("ExecutionSuccess", false, null);
 		}
 
 		private static void InitExecutionFailureTexture()
 		{
-			executionFailureTexture = LoadTexture("ExecutionFailure.png", false, null);
+			executionFailureTexture = LoadTexture("ExecutionFailure", false, null);
 		}
 
 		private static void InitExecutionSuccessRepeatTexture()
 		{
-			executionSuccessRepeatTexture = LoadTexture("ExecutionSuccessRepeat.png", false, null);
+			executionSuccessRepeatTexture = LoadTexture("ExecutionSuccessRepeat", false, null);
 		}
 
 		private static void InitExecutionFailureRepeatTexture()
 		{
-			executionFailureRepeatTexture = LoadTexture("ExecutionFailureRepeat.png", false, null);
+			executionFailureRepeatTexture = LoadTexture("ExecutionFailureRepeat", false, null);
 		}
 
 		private static void InitHistoryBackwardTexture()
 		{
-			historyBackwardTexture = LoadTexture("HistoryBackward.png", true, null);
+			historyBackwardTexture = LoadTexture("HistoryBackward", true, null);
 		}
 
 		private static void InitHistoryForwardTexture()
 		{
-			historyForwardTexture = LoadTexture("HistoryForward.png", true, null);
+			historyForwardTexture = LoadTexture("HistoryForward", true, null);
 		}
 
 		private static void InitPlayTexture()
 		{
-			playTexture = LoadTexture("Play.png", true, null);
+			playTexture = LoadTexture("Play", true, null);
 		}
 
 		private static void InitPauseTexture()
 		{
-			pauseTexture = LoadTexture("Pause.png", true, null);
+			pauseTexture = LoadTexture("Pause", true, null);
 		}
 
 		private static void InitStepTexture()
 		{
-			stepTexture = LoadTexture("Step.png", true, null);
+			stepTexture = LoadTexture("Step", true, null);
 		}
 
 		private static void InitScreenshotBackgroundTexture()

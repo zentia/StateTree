@@ -204,7 +204,7 @@ public class DirectorControl : TimeArea
 		}
 		if (this.frameBackwardButton == null)
 		{
-			this.frameBackwardButton = (Resources.Load("Director_FrameBackwardIcon", typeof(Texture)) as Texture);
+			frameBackwardButton = Resources.Load("Director_FrameBackwardIcon", typeof(Texture)) as Texture;
 		}
 		if (frameBackwardButton == null)
 		{

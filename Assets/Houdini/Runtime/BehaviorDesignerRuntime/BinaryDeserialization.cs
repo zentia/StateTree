@@ -687,7 +687,6 @@ public static class BinaryDeserialization
 			keyframe.inTangent = (BitConverter.ToSingle(bytes, dataPosition + 12));
 			keyframe.outTangent = (BitConverter.ToSingle(bytes, dataPosition + 16));
             animationCurve.AddKey(keyframe);
-		    AnimationUtility.SetKeyLeftTangentMode(animationCurve,i, (AnimationUtility.TangentMode)BitConverter.ToInt32(bytes, dataPosition + 20));
             dataPosition += 20;
 		}
 	    

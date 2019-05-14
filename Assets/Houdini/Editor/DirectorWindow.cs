@@ -115,8 +115,7 @@ public class DirectorWindow : EditorWindow
         EditorApplication.playModeStateChanged += PlayModeStateChanged;
 
         GUISkin skin = CreateInstance<GUISkin>();
-        string dir = "Assets/Houdini/Editor/EditorResources/";
-        skin = EditorGUIUtility.isProSkin ? AssetDatabase.LoadAssetAtPath<GUISkin>(dir + PRO_SKIN) : AssetDatabase.LoadAssetAtPath<GUISkin>(dir + FREE_SKIN);
+        skin = EditorGUIUtility.isProSkin ? Resources.Load<GUISkin>(PRO_SKIN) : Resources.Load<GUISkin>(FREE_SKIN);
         loadTextures();
 
         titleContent = new GUIContent(TITLE, titleImage);

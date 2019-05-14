@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,9 +22,9 @@ internal class TickHandler
 	{
 		for (int i = 0; i < m_TickModulos.Length; i++)
 		{
-			if (this.m_TickModulos[i] * this.m_PixelRange / (this.m_MaxValue - this.m_MinValue) >= pixelSeparation)
+			if (m_TickModulos[i] * m_PixelRange / (m_MaxValue - m_MinValue) >= pixelSeparation)
 			{
-				return i - this.m_SmallestTick;
+				return i - m_SmallestTick;
 			}
 		}
 		return -1;
@@ -43,9 +42,9 @@ internal class TickHandler
 
 	internal float[] GetTicksAtLevel(int level, bool excludeTicksFromHigherlevels)
 	{
-		int num = Mathf.Clamp(this.m_SmallestTick + level, 0, this.m_TickModulos.Length - 1);
+		int num = Mathf.Clamp(m_SmallestTick + level, 0, m_TickModulos.Length - 1);
 		List<float> list = new List<float>();
-		int arg_48_0 = Mathf.FloorToInt(this.m_MinValue / this.m_TickModulos[num]);
+		int arg_48_0 = Mathf.FloorToInt(m_MinValue / this.m_TickModulos[num]);
 		int num2 = Mathf.CeilToInt(this.m_MaxValue / this.m_TickModulos[num]);
 		for (int i = arg_48_0; i <= num2; i++)
 		{

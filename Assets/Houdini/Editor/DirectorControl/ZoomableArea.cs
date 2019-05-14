@@ -21,7 +21,7 @@ public class ZoomableArea
 		public Styles()
 		{
 			visualSliderWidth = 15f;
-			this.sliderWidth = 15f;
+			sliderWidth = 15f;
 		}
 
 		public void InitGUIStyles()
@@ -389,7 +389,7 @@ public class ZoomableArea
 			case EventType.MouseDown:
 				if (drawArea.Contains(Event.current.mousePosition))
 				{
-					GUIUtility.keyboardControl=(controlID);
+					GUIUtility.keyboardControl = controlID;
 					if (IsZoomEvent() || IsPanEvent())
 					{
 						GUIUtility.hotControl=(controlID);
@@ -401,7 +401,7 @@ public class ZoomableArea
 			case EventType.MouseUp:
 				if (GUIUtility.hotControl == controlID)
 				{
-					GUIUtility.hotControl=(0);
+					GUIUtility.hotControl = 0;
 					m_MouseDownPosition = new Vector2(-1000000f, -1000000f);
 				}
 				break;
@@ -518,32 +518,32 @@ public class ZoomableArea
 
 	internal void SetShownHRange(float min, float max)
 	{
-		this.m_Scale.x = this.drawRect.width / (max - min);
-		this.m_Translation.x = -min * this.m_Scale.x;
-		this.EnforceScaleAndRange();
+		m_Scale.x = drawRect.width / (max - min);
+		m_Translation.x = -min * m_Scale.x;
+		EnforceScaleAndRange();
 	}
 
 	internal void SetShownHRangeInsideMargins(float min, float max)
 	{
-		this.m_Scale.x = (this.drawRect.width - this.leftmargin - this.rightmargin) / (max - min);
-		this.m_Translation.x = -min * this.m_Scale.x + this.leftmargin;
-		this.EnforceScaleAndRange();
+		m_Scale.x = (this.drawRect.width - this.leftmargin - this.rightmargin) / (max - min);
+		m_Translation.x = -min * this.m_Scale.x + this.leftmargin;
+		EnforceScaleAndRange();
 	}
 
 	private void SliderGUI()
 	{
-		if (this.m_HSlider)
+		if (m_HSlider)
 		{
 			Bounds drawingBounds = this.drawingBounds;
 			Rect shownAreaInsideMargins = this.shownAreaInsideMargins;
-			float num = this.styles.sliderWidth - this.styles.visualSliderWidth;
-			float num2 = (!this.hSlider) ? 0f : num;
-			if (this.m_HSlider)
+			float num = styles.sliderWidth - styles.visualSliderWidth;
+			float num2 = !hSlider ? 0f : num;
+			if (m_HSlider)
 			{
-				Rect arg_FE_0 = new Rect(this.drawRect.x, this.drawRect.yMax - num, this.drawRect.width - num2, this.styles.sliderWidth);
+				Rect arg_FE_0 = new Rect(drawRect.x, drawRect.yMax - num, drawRect.width - num2, styles.sliderWidth);
 				float width = shownAreaInsideMargins.width;
 				float xMin = shownAreaInsideMargins.xMin;
-				MinMaxSliderControl.MinMaxScroller(arg_FE_0, this.horizontalScrollbarID, ref xMin, ref width, drawingBounds.min.x, drawingBounds.max.x, float.NegativeInfinity, float.PositiveInfinity, this.styles.horizontalScrollbar, this.styles.horizontalMinMaxScrollbarThumb, this.styles.horizontalScrollbarLeftButton, this.styles.horizontalScrollbarRightButton, true);
+				MinMaxSliderControl.MinMaxScroller(arg_FE_0, horizontalScrollbarID, ref xMin, ref width, drawingBounds.min.x, drawingBounds.max.x, float.NegativeInfinity, float.PositiveInfinity, styles.horizontalScrollbar, this.styles.horizontalMinMaxScrollbarThumb, this.styles.horizontalScrollbarLeftButton, this.styles.horizontalScrollbarRightButton, true);
 				float num3 = xMin;
 				float num4 = xMin + width;
 				if (num3 > shownAreaInsideMargins.xMin)
@@ -601,7 +601,7 @@ public class ZoomableArea
 		float num2 = Mathf.Max(0.01f, 1f + num * 0.01f);
 		if (!m_HRangeLocked)
 		{
-			m_Translation.x = m_Translation.x - zoomAround.x * (num2 - 1f) * this.m_Scale.x;
+			m_Translation.x = m_Translation.x - zoomAround.x * (num2 - 1f) * m_Scale.x;
 			m_Scale.x = m_Scale.x * num2;
 		}
 		EnforceScaleAndRange();
