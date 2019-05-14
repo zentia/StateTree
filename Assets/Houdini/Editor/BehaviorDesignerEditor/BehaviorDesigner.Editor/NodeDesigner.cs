@@ -213,22 +213,22 @@ namespace BehaviorDesigner.Editor
 			{
 				return mIncomingRectangle;
 			}
-			Rect rect = this.Rectangle(offset, false, false);
-			this.mIncomingRectangle = new Rect(rect.x + (rect.width - 42f) / 2f, rect.y - 14f, 42f, 14f);
-			this.mIncomingRectIsDirty = false;
-			return this.mIncomingRectangle;
+			Rect rect = Rectangle(offset, false, false);
+			mIncomingRectangle = new Rect(rect.x + (rect.width - 42f) / 2f, rect.y - 14f, 42f, 14f);
+			mIncomingRectIsDirty = false;
+			return mIncomingRectangle;
 		}
 
 		public Rect OutgoingConnectionRect(Vector2 offset)
 		{
-			if (!this.mOutgoingRectIsDirty)
+			if (!mOutgoingRectIsDirty)
 			{
-				return this.mOutgoingRectangle;
+				return mOutgoingRectangle;
 			}
-			Rect rect = this.Rectangle(offset, false, false);
-			this.mOutgoingRectangle = new Rect(rect.x + (rect.width - 42f) / 2f, rect.yMax, 42f, 16f);
-			this.mOutgoingRectIsDirty = false;
-			return this.mOutgoingRectangle;
+			Rect rect = Rectangle(offset, false, false);
+			mOutgoingRectangle = new Rect(rect.x + (rect.width - 42f) / 2f, rect.yMax, 42f, 16f);
+			mOutgoingRectIsDirty = false;
+			return mOutgoingRectangle;
 		}
 
 		public void OnEnable()
@@ -246,7 +246,7 @@ namespace BehaviorDesigner.Editor
 			mTask.Owner = owner;
 			mTask.ID = id++;
 			mTask.NodeData.NodeDesigner = this;
-			mTask.NodeData.InitWatchedFields(this.mTask);
+			mTask.NodeData.InitWatchedFields(mTask);
 			if (!mTask.NodeData.FriendlyName.Equals(string.Empty))
 			{
 				mTask.FriendlyName = mTask.NodeData.FriendlyName;
@@ -272,7 +272,7 @@ namespace BehaviorDesigner.Editor
 				{
 					if (typeof(SharedVariable).IsAssignableFrom(fields[j].FieldType) && !fields[j].FieldType.IsAbstract)
 					{
-						SharedVariable sharedVariable = fields[j].GetValue(this.mTask) as SharedVariable;
+						SharedVariable sharedVariable = fields[j].GetValue(mTask) as SharedVariable;
 						if (sharedVariable == null)
 						{
 							sharedVariable = (Activator.CreateInstance(fields[j].FieldType) as SharedVariable);
@@ -292,14 +292,14 @@ namespace BehaviorDesigner.Editor
 				{
 					for (int k = 0; k < parentTask.Children.Count; k++)
 					{
-						NodeDesigner nodeDesigner = ScriptableObject.CreateInstance<NodeDesigner>();
+						NodeDesigner nodeDesigner = CreateInstance<NodeDesigner>();
 						nodeDesigner.LoadTask(parentTask.Children[k], owner, ref id);
-						NodeConnection nodeConnection = ScriptableObject.CreateInstance<NodeConnection>();
+						NodeConnection nodeConnection = CreateInstance<NodeConnection>();
 						nodeConnection.LoadConnection(this, NodeConnectionType.Fixed);
-						this.AddChildNode(nodeDesigner, nodeConnection, true, true, k);
+						AddChildNode(nodeDesigner, nodeConnection, true, true, k);
 					}
 				}
-				this.mConnectionIsDirty = true;
+				mConnectionIsDirty = true;
 			}
 		}
 
@@ -323,7 +323,7 @@ namespace BehaviorDesigner.Editor
 					mTask.Owner.gameObject.AddComponent(componentType);
 				}
 			}
-			List<Type> baseClasses = FieldInspector.GetBaseClasses(this.mTask.GetType());
+			List<Type> baseClasses = FieldInspector.GetBaseClasses(mTask.GetType());
 			BindingFlags bindingAttr = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 			for (int i = baseClasses.Count - 1; i > -1; i--)
 			{
@@ -332,7 +332,7 @@ namespace BehaviorDesigner.Editor
 				{
 					if (typeof(SharedVariable).IsAssignableFrom(fields[j].FieldType) && !fields[j].FieldType.IsAbstract)
 					{
-						SharedVariable sharedVariable = fields[j].GetValue(this.mTask) as SharedVariable;
+						SharedVariable sharedVariable = fields[j].GetValue(mTask) as SharedVariable;
 						if (sharedVariable == null)
 						{
 							sharedVariable = (Activator.CreateInstance(fields[j].FieldType) as SharedVariable);
@@ -341,7 +341,7 @@ namespace BehaviorDesigner.Editor
 						{
 							sharedVariable.IsShared = true;
 						}
-						fields[j].SetValue(this.mTask, sharedVariable);
+						fields[j].SetValue(mTask, sharedVariable);
 					}
 				}
 			}
@@ -349,28 +349,28 @@ namespace BehaviorDesigner.Editor
 
 		private void LoadTaskIcon()
 		{
-			this.mTask.NodeData.Icon = null;
+			mTask.NodeData.Icon = null;
 			TaskIconAttribute[] array;
-			if ((array = (this.mTask.GetType().GetCustomAttributes(typeof(TaskIconAttribute), false) as TaskIconAttribute[])).Length > 0)
+			if ((array = (mTask.GetType().GetCustomAttributes(typeof(TaskIconAttribute), false) as TaskIconAttribute[])).Length > 0)
 			{
-				this.mTask.NodeData.Icon = BehaviorDesignerUtility.LoadIcon(array[0].IconPath, null);
+				mTask.NodeData.Icon = BehaviorDesignerUtility.LoadIcon(array[0].IconPath, null);
 			}
-			if (this.mTask.NodeData.Icon == null)
+			if (mTask.NodeData.Icon == null)
 			{
 				string iconName = string.Empty;
-				if (this.mTask.GetType().IsSubclassOf(typeof(BehaviorDesigner.Runtime.Tasks.Action)))
+				if (mTask.GetType().IsSubclassOf(typeof(Runtime.Tasks.Action)))
 				{
 					iconName = "{SkinColor}ActionIcon.png";
 				}
-				else if (this.mTask.GetType().IsSubclassOf(typeof(Conditional)))
+				else if (mTask.GetType().IsSubclassOf(typeof(Conditional)))
 				{
 					iconName = "{SkinColor}ConditionalIcon.png";
 				}
-				else if (this.mTask.GetType().IsSubclassOf(typeof(Composite)))
+				else if (mTask.GetType().IsSubclassOf(typeof(Composite)))
 				{
 					iconName = "{SkinColor}CompositeIcon.png";
 				}
-				else if (this.mTask.GetType().IsSubclassOf(typeof(Decorator)))
+				else if (mTask.GetType().IsSubclassOf(typeof(Decorator)))
 				{
 					iconName = "{SkinColor}DecoratorIcon.png";
 				}

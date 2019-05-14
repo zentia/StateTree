@@ -40,7 +40,7 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				return this.mRootNode;
+				return mRootNode;
 			}
 		}
 

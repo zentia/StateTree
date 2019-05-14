@@ -1461,7 +1461,7 @@ namespace BehaviorDesigner.Editor
 			return Path.GetDirectoryName(text.Substring(Application.dataPath.Length - 6));
 		}
 
-	    public static string RootDir = "Assets/Behavior Designer/Editor/BehaviorDesignerEditor/";
+	    public static string RootDir = "Assets/Houdini/Editor/BehaviorDesignerEditor/";
 		public static Texture2D LoadTexture(string imageName, bool useSkinColor = true, UnityEngine.Object obj = null)
 		{
 		    if (textureCache.TryGetValue(imageName, out Texture2D tex))

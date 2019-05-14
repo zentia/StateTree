@@ -178,7 +178,7 @@ namespace BehaviorDesigner.Editor
         {
             get
             {
-                return this.mErrorDetails;
+                return mErrorDetails;
             }
         }
 
@@ -186,7 +186,7 @@ namespace BehaviorDesigner.Editor
         {
             get
             {
-                return this.mActiveBehaviorID;
+                return mActiveBehaviorID;
             }
         }
 
@@ -196,22 +196,22 @@ namespace BehaviorDesigner.Editor
             {
                 try
                 {
-                    if (this.mLastUpdateCheck != DateTime.MinValue)
+                    if (mLastUpdateCheck != DateTime.MinValue)
                     {
-                        return this.mLastUpdateCheck;
+                        return mLastUpdateCheck;
                     }
-                    this.mLastUpdateCheck = DateTime.Parse(EditorPrefs.GetString("BehaviorDesignerLastUpdateCheck", "1/1/1971 00:00:01"), CultureInfo.InvariantCulture);
+                    mLastUpdateCheck = DateTime.Parse(EditorPrefs.GetString("BehaviorDesignerLastUpdateCheck", "1/1/1971 00:00:01"), CultureInfo.InvariantCulture);
                 }
                 catch (Exception)
                 {
-                    this.mLastUpdateCheck = DateTime.UtcNow;
+                    mLastUpdateCheck = DateTime.UtcNow;
                 }
                 return this.mLastUpdateCheck;
             }
             set
             {
-                this.mLastUpdateCheck = value;
-                EditorPrefs.SetString("BehaviorDesignerLastUpdateCheck", this.mLastUpdateCheck.ToString(CultureInfo.InvariantCulture));
+                mLastUpdateCheck = value;
+                EditorPrefs.SetString("BehaviorDesignerLastUpdateCheck", mLastUpdateCheck.ToString(CultureInfo.InvariantCulture));
             }
         }
 
@@ -221,10 +221,10 @@ namespace BehaviorDesigner.Editor
             {
                 if (!string.IsNullOrEmpty(mLatestVersion))
                 {
-                    return this.mLatestVersion;
+                    return mLatestVersion;
                 }
-                this.mLatestVersion = EditorPrefs.GetString("BehaviorDesignerLatestVersion", "1.5.5".ToString());
-                return this.mLatestVersion;
+                mLatestVersion = EditorPrefs.GetString("BehaviorDesignerLatestVersion", "1.5.5".ToString());
+                return mLatestVersion;
             }
             set
             {
@@ -232,6 +232,8 @@ namespace BehaviorDesigner.Editor
                 EditorPrefs.SetString("BehaviorDesignerLatestVersion", mLatestVersion);
             }
         }
+
+        public DirectorControl directorControl;
 
         [MenuItem("Tools/Behavior Designer/Editor", false, 0)]
         public static void ShowWindow()

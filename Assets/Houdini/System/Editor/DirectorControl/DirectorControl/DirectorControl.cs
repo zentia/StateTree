@@ -1,8 +1,6 @@
 using DirectorEditor;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using CinemaDirector;
 using UnityEditor;
 using UnityEngine;
@@ -140,7 +138,7 @@ public class DirectorControl : TimeArea
 
 	public DirectorControl()
 	{
-		rect = default(Rect);
+        rect = default;
 		frameRate = 30;
 		margin = 20f;
 		settings = new DirectorControlSettings
@@ -172,25 +170,25 @@ public class DirectorControl : TimeArea
 		{
 			track_header_area_width = EditorPrefs.GetFloat("DirectorControl.SidebarWidth");
 		}
-		if (this.playButton == null)
+		if (playButton == null)
 		{
-			this.playButton = (Resources.Load("Director_PlayIcon", typeof(Texture)) as Texture);
+			playButton = (Resources.Load("Director_PlayIcon", typeof(Texture)) as Texture);
 		}
-		if (this.playButton == null)
+		if (playButton == null)
 		{
 			Debug.Log("Play button icon missing from Resources folder.");
 		}
-		if (this.pauseButton == null)
+		if (pauseButton == null)
 		{
-			this.pauseButton = (Resources.Load("Director_PauseIcon", typeof(Texture)) as Texture);
+			pauseButton = (Resources.Load("Director_PauseIcon", typeof(Texture)) as Texture);
 		}
-		if (this.pauseButton == null)
+		if (pauseButton == null)
 		{
 			Debug.Log("Pause button missing from Resources folder.");
 		}
-		if (this.stopButton == null)
+		if (stopButton == null)
 		{
-			this.stopButton = (Resources.Load("Director_StopIcon", typeof(Texture)) as Texture);
+			stopButton = (Resources.Load("Director_StopIcon", typeof(Texture)) as Texture);
 		}
 		if (this.stopButton == null)
 		{
@@ -281,18 +279,18 @@ public class DirectorControl : TimeArea
 			if (GUIUtility.hotControl == controlID)
 			{
 				isBoxSelecting = false;
-				selectionBox = default(Rect);
+				selectionBox = default;
 				GUIUtility.hotControl=(0);
 			}
 			break;
 		case EventType.MouseDrag:
 			if (GUIUtility.hotControl == controlID)
 			{
-				float num = Mathf.Clamp(Event.current.mousePosition.x, trackBodyBackgroundNoScrollbars.x, this.trackBodyBackgroundNoScrollbars.xMax);
-				float num2 = Mathf.Clamp(Event.current.mousePosition.y, this.trackBodyBackgroundNoScrollbars.y, trackBodyBackgroundNoScrollbars.yMax);
+				float num = Mathf.Clamp(Event.current.mousePosition.x, trackBodyBackgroundNoScrollbars.x, trackBodyBackgroundNoScrollbars.xMax);
+				float num2 = Mathf.Clamp(Event.current.mousePosition.y, trackBodyBackgroundNoScrollbars.y, trackBodyBackgroundNoScrollbars.yMax);
 				float num3 = Mathf.Min(mouseDownPosition.x, num);
-				float num4 = Mathf.Abs(num - this.mouseDownPosition.x);
-				float num5 = Mathf.Min(this.mouseDownPosition.y, num2);
+				float num4 = Mathf.Abs(num - mouseDownPosition.x);
+				float num5 = Mathf.Min(mouseDownPosition.y, num2);
 				float num6 = Mathf.Abs(mouseDownPosition.y - num2);
 				selectionBox = new Rect(num3, num5, num4, num6);
 				Rect rect = new Rect(selectionBox);
@@ -332,11 +330,8 @@ public class DirectorControl : TimeArea
 			return;
 		}
 		DragAndDrop.AcceptDrag();
-		if (DragPerformed != null)
-		{
-			DragPerformed(this, new CinemaDirectorDragArgs(cutscene.Behaviour, DragAndDrop.objectReferences));
-		}
-		current.Use();
+        DragPerformed?.Invoke(this, new CinemaDirectorDragArgs(cutscene.Behaviour, DragAndDrop.objectReferences));
+        current.Use();
 	}
 
 	private void updateControlState()
@@ -352,8 +347,8 @@ public class DirectorControl : TimeArea
 		{
 			float num = directorState.TimeToPosition(cutscene.RunningTime) + trackBodyBackground.x;
 			Color arg_15A_0 = GUI.color;
-			GUI.color = new Color(1f, 0f, 0f, 1f);
-			Handles.color = new Color(1f, 0f, 0f, 1f);
+			GUI.color = Color.red;
+			Handles.color = Color.red;
 			if (num > trackBodyBackground.x && num < bodyArea.width)
 			{
 				GUI.DrawTexture(new Rect(num - 8f, 20f, 16f, 16f), scrubHead);
@@ -392,13 +387,13 @@ public class DirectorControl : TimeArea
 				Vector2 mousePosition = Event.current.mousePosition;
 				mousePosition.x -= trackBodyBackground.x;
 				Undo.RecordObject(cutscene.Behaviour, "Changed Cutscene Duration");
-				float x = base.ViewToDrawingTransformPoint(mousePosition).x;
-				cutscene.Duration = this.directorState.SnappedTime(x);
+				float x = ViewToDrawingTransformPoint(mousePosition).x;
+				cutscene.Duration = directorState.SnappedTime(x);
 				Event.current.Use();
 			}
 			break;
 		}
-		if (num > this.trackBodyBackground.x && num < this.bodyArea.width)
+		if (num > trackBodyBackground.x && num < bodyArea.width)
 		{
 			GUI.DrawTexture(rect, this.scrubDurationHead);
 		}
@@ -406,8 +401,8 @@ public class DirectorControl : TimeArea
 		Handles.color=(new Color(0.25f, 0.5f, 0.5f));
 		if (num > trackBodyBackground.x)
 		{
-			Handles.DrawLine(new Vector3(num, 0f, 0f), new Vector2(num, this.timeRuleArea.y + this.trackBodyBackgroundNoVerticalScrollbar.height - 13f));
-			Handles.DrawLine(new Vector3(num + 1f, 0f, 0f), new Vector2(num + 1f, this.timeRuleArea.y + this.trackBodyBackgroundNoVerticalScrollbar.height - 13f));
+			Handles.DrawLine(new Vector3(num, 0f, 0f), new Vector2(num, timeRuleArea.y + trackBodyBackgroundNoVerticalScrollbar.height - 13f));
+			Handles.DrawLine(new Vector3(num + 1f, 0f, 0f), new Vector2(num + 1f, timeRuleArea.y + trackBodyBackgroundNoVerticalScrollbar.height - 13f));
 		}
 	}
 
@@ -431,7 +426,7 @@ public class DirectorControl : TimeArea
 		switch (Event.current.GetTypeForControl(controlID))
 		{
 		case EventType.MouseDown:
-			if (sidebarControlArea.Contains(Event.current.mousePosition) && (int)Event.current.button == 0)
+			if (sidebarControlArea.Contains(Event.current.mousePosition) && Event.current.button == 0)
 			{
 				GUIUtility.hotControl=(controlID);
 				Event.current.Use();
