@@ -27,9 +27,9 @@ public class ZoomableArea
 		public void InitGUIStyles()
 		{
 			horizontalMinMaxScrollbarThumb = "horizontalMinMaxScrollbarThumb";
-			this.horizontalScrollbarLeftButton = "horizontalScrollbarLeftbutton";
-			this.horizontalScrollbarRightButton = "horizontalScrollbarRightbutton";
-			this.horizontalScrollbar = GUI.skin.horizontalScrollbar;
+			horizontalScrollbarLeftButton = "horizontalScrollbarLeftbutton";
+			horizontalScrollbarRightButton = "horizontalScrollbarRightbutton";
+			horizontalScrollbar = GUI.skin.horizontalScrollbar;
 		}
 	}
 
@@ -109,7 +109,7 @@ public class ZoomableArea
 		}
 		set
 		{
-			this.m_MarginBottom = value;
+			m_MarginBottom = value;
 		}
 	}
 
@@ -117,8 +117,8 @@ public class ZoomableArea
 	{
 		get
 		{
-			bool flag = hRangeMin > float.NegativeInfinity && this.hRangeMax < float.PositiveInfinity;
-			return new Bounds(new Vector3((!flag) ? (this.HScrollMax * 0.5f) : ((this.hRangeMin + this.hRangeMax) * 0.5f), 0f, 0f), new Vector3((!flag) ? this.HScrollMax : (this.hRangeMax - this.hRangeMin), 2f, 1f));
+			bool flag = hRangeMin > float.NegativeInfinity && hRangeMax < float.PositiveInfinity;
+			return new Bounds(new Vector3((!flag) ? (HScrollMax * 0.5f) : ((hRangeMin + hRangeMax) * 0.5f), 0f, 0f), new Vector3((!flag) ? HScrollMax : (hRangeMax - hRangeMin), 2f, 1f));
 		}
 	}
 
@@ -126,7 +126,7 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_DrawArea;
+			return m_DrawArea;
 		}
 	}
 
@@ -134,11 +134,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_HRangeLocked;
+			return m_HRangeLocked;
 		}
 		set
 		{
-			this.m_HRangeLocked = value;
+			m_HRangeLocked = value;
 		}
 	}
 
@@ -146,11 +146,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_HRangeMax;
+			return m_HRangeMax;
 		}
 		set
 		{
-			this.m_HRangeMax = value;
+			m_HRangeMax = value;
 		}
 	}
 
@@ -158,11 +158,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_HRangeMin;
+			return m_HRangeMin;
 		}
 		set
 		{
-			this.m_HRangeMin = value;
+			m_HRangeMin = value;
 		}
 	}
 
@@ -170,12 +170,12 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_HSlider;
+			return m_HSlider;
 		}
 		set
 		{
 			Rect rect = this.rect;
-			this.m_HSlider = value;
+			m_HSlider = value;
 			this.rect = rect;
 		}
 	}
@@ -184,11 +184,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_IgnoreScrollWheelUntilClicked;
+			return m_IgnoreScrollWheelUntilClicked;
 		}
 		set
 		{
-			this.m_IgnoreScrollWheelUntilClicked = value;
+			m_IgnoreScrollWheelUntilClicked = value;
 		}
 	}
 
@@ -196,11 +196,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_MarginLeft;
+			return m_MarginLeft;
 		}
 		set
 		{
-			this.m_MarginLeft = value;
+			m_MarginLeft = value;
 		}
 	}
 
@@ -208,10 +208,10 @@ public class ZoomableArea
 	{
 		set
 		{
-			this.m_MarginBottom = value;
-			this.m_MarginTop = value;
-			this.m_MarginRight = value;
-			this.m_MarginLeft = value;
+			m_MarginBottom = value;
+			m_MarginTop = value;
+			m_MarginRight = value;
+			m_MarginLeft = value;
 		}
 	}
 
@@ -219,7 +219,7 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.ViewToDrawingTransformPoint(Event.current.mousePosition);
+			return ViewToDrawingTransformPoint(Event.current.mousePosition);
 		}
 	}
 
@@ -227,7 +227,7 @@ public class ZoomableArea
 	{
 		get
 		{
-			return new Rect(this.drawRect.x, this.drawRect.y, this.drawRect.width, this.drawRect.height + ((!this.m_HSlider) ? 0f : this.styles.visualSliderWidth));
+			return new Rect(drawRect.x, drawRect.y, drawRect.width, drawRect.height + ((!m_HSlider) ? 0f : styles.visualSliderWidth));
 		}
 		set
 		{
@@ -253,11 +253,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_MarginRight;
+			return m_MarginRight;
 		}
 		set
 		{
-			this.m_MarginRight = value;
+			m_MarginRight = value;
 		}
 	}
 
@@ -277,7 +277,7 @@ public class ZoomableArea
 		}
 		set
 		{
-			this.m_ScaleWithWindow = value;
+			m_ScaleWithWindow = value;
 		}
 	}
 
@@ -316,8 +316,8 @@ public class ZoomableArea
 		}
 		set
 		{
-			this.shownAreaInsideMarginsInternal = value;
-			this.EnforceScaleAndRange();
+			shownAreaInsideMarginsInternal = value;
+			EnforceScaleAndRange();
 		}
 	}
 
@@ -325,10 +325,10 @@ public class ZoomableArea
 	{
 		get
 		{
-			float num = this.leftmargin / this.m_Scale.x;
-			float num2 = this.rightmargin / this.m_Scale.x;
-			float num3 = this.topmargin / this.m_Scale.y;
-			float num4 = this.bottommargin / this.m_Scale.y;
+			float num = leftmargin / m_Scale.x;
+			float num2 = rightmargin / m_Scale.x;
+			float num3 = topmargin / m_Scale.y;
+			float num4 = bottommargin / m_Scale.y;
 			Rect shownArea = this.shownArea;
 			shownArea.x=(shownArea.x + num);
 			shownArea.y=(shownArea.y - num3);
@@ -348,112 +348,112 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_MarginTop;
+			return m_MarginTop;
 		}
 		set
 		{
-			this.m_MarginTop = value;
+			m_MarginTop = value;
 		}
 	}
 
 	public ZoomableArea()
 	{
-		this.m_HRangeMin = float.NegativeInfinity;
-		this.m_HRangeMax = float.PositiveInfinity;
-		this.m_HScaleMin = 0.001f;
-		this.m_HScaleMax = 100000f;
-		this.m_HSlider = true;
-		this.m_DrawArea = new Rect(0f, 0f, 100f, 100f);
-		this.m_Scale = new Vector2(1f, -1f);
-		this.m_Translation = new Vector2(0f, 0f);
-		this.m_LastShownAreaInsideMargins = new Rect(0f, 0f, 100f, 100f);
-		this.m_MinimalGUI = false;
-		this.styles = new ZoomableArea.Styles();
+		m_HRangeMin = float.NegativeInfinity;
+		m_HRangeMax = float.PositiveInfinity;
+		m_HScaleMin = 0.001f;
+		m_HScaleMax = 100000f;
+		m_HSlider = true;
+		m_DrawArea = new Rect(0f, 0f, 100f, 100f);
+		m_Scale = new Vector2(1f, -1f);
+		m_Translation = new Vector2(0f, 0f);
+		m_LastShownAreaInsideMargins = new Rect(0f, 0f, 100f, 100f);
+		m_MinimalGUI = false;
+		styles = new Styles();
 	}
 
 	public void BeginViewGUI(bool handleUserInteraction)
 	{
-		if (this.styles.horizontalScrollbar == null)
+		if (styles.horizontalScrollbar == null)
 		{
-			this.styles.InitGUIStyles();
+			styles.InitGUIStyles();
 		}
-		Rect drawArea = this.m_DrawArea;
-		drawArea.x=(0f);
-		drawArea.y=(0f);
-		GUILayout.BeginArea(this.drawRect);
+		Rect drawArea = m_DrawArea;
+		drawArea.x = 0f;
+		drawArea.y = 0f;
+		GUILayout.BeginArea(drawRect);
 		if (handleUserInteraction)
 		{
-			int controlID = GUIUtility.GetControlID(ZoomableArea.zoomableAreaHash, 0, drawArea);
-			switch ((int)Event.current.GetTypeForControl(controlID))
+			int controlID = GUIUtility.GetControlID(zoomableAreaHash, 0, drawArea);
+			switch (Event.current.GetTypeForControl(controlID))
 			{
-			case 0:
+			case EventType.MouseDown:
 				if (drawArea.Contains(Event.current.mousePosition))
 				{
 					GUIUtility.keyboardControl=(controlID);
-					if (this.IsZoomEvent() || this.IsPanEvent())
+					if (IsZoomEvent() || IsPanEvent())
 					{
 						GUIUtility.hotControl=(controlID);
-						ZoomableArea.m_MouseDownPosition = this.mousePositionInDrawing;
+						m_MouseDownPosition = mousePositionInDrawing;
 						Event.current.Use();
 					}
 				}
 				break;
-			case 1:
+			case EventType.MouseUp:
 				if (GUIUtility.hotControl == controlID)
 				{
 					GUIUtility.hotControl=(0);
-					ZoomableArea.m_MouseDownPosition = new Vector2(-1000000f, -1000000f);
+					m_MouseDownPosition = new Vector2(-1000000f, -1000000f);
 				}
 				break;
-			case 3:
+			case EventType.MouseDrag:
 				if (GUIUtility.hotControl == controlID)
 				{
-					if (this.IsZoomEvent())
+					if (IsZoomEvent())
 					{
-						this.Zoom(ZoomableArea.m_MouseDownPosition, false);
+						Zoom(m_MouseDownPosition, false);
 						Event.current.Use();
 					}
-					else if (this.IsPanEvent())
+					else if (IsPanEvent())
 					{
-						this.Pan();
+						Pan();
 						Event.current.Use();
 					}
 				}
 				break;
-			case 6:
+			case EventType.ScrollWheel:
 				if (drawArea.Contains(Event.current.mousePosition) && GUIUtility.keyboardControl == controlID)
 				{
-					this.Zoom(this.mousePositionInDrawing, true);
+					Zoom(mousePositionInDrawing, true);
 					Event.current.Use();
 				}
 				break;
 			}
 		}
 		GUILayout.EndArea();
-		this.horizontalScrollbarID = GUIUtility.GetControlID(MinMaxSliderControl.s_MinMaxSliderHash, (FocusType)2);
-		if (!this.m_MinimalGUI || Event.current.type != (EventType)7)
+		horizontalScrollbarID = GUIUtility.GetControlID(MinMaxSliderControl.s_MinMaxSliderHash, (FocusType)2);
+		if (!m_MinimalGUI || Event.current.type != EventType.Repaint)
 		{
-			this.SliderGUI();
+			SliderGUI();
 		}
 	}
 
 	public void EndViewGUI()
 	{
-		if (this.m_MinimalGUI && Event.current.type == (EventType)7)
+		if (m_MinimalGUI && Event.current.type == EventType.Repaint)
 		{
-			this.SliderGUI();
+			SliderGUI();
 		}
 	}
 
 	private void EnforceScaleAndRange()
 	{
-		float hScaleMin = this.m_HScaleMin;
-		float num = this.m_HScaleMax;
-		if (this.hRangeMax != float.PositiveInfinity && this.hRangeMin != float.NegativeInfinity)
+		float hScaleMin = m_HScaleMin;
+		float num = m_HScaleMax;
+		if (hRangeMax != float.PositiveInfinity && hRangeMin != float.NegativeInfinity)
 		{
-			num = Mathf.Min(this.m_HScaleMax, this.hRangeMax - this.hRangeMin);
+			num = Mathf.Min(m_HScaleMax, hRangeMax - hRangeMin);
 		}
-		Rect lastShownAreaInsideMargins = this.m_LastShownAreaInsideMargins;
+		Rect lastShownAreaInsideMargins = m_LastShownAreaInsideMargins;
 		Rect shownAreaInsideMargins = this.shownAreaInsideMargins;
 		if (shownAreaInsideMargins != lastShownAreaInsideMargins)
 		{
@@ -484,22 +484,22 @@ public class ZoomableArea
 				float num12 = Mathf.Lerp(lastShownAreaInsideMargins.y, shownAreaInsideMargins.y, num11);
 				shownAreaInsideMargins = new Rect(shownAreaInsideMargins.x, num12, shownAreaInsideMargins.width, Mathf.Lerp(lastShownAreaInsideMargins.height, shownAreaInsideMargins.height, num11));
 			}
-			if (shownAreaInsideMargins.xMin < this.hRangeMin)
+			if (shownAreaInsideMargins.xMin < hRangeMin)
 			{
-				shownAreaInsideMargins.x=(this.hRangeMin);
+				shownAreaInsideMargins.x = hRangeMin;
 			}
-			if (shownAreaInsideMargins.xMax > this.hRangeMax)
+			if (shownAreaInsideMargins.xMax > hRangeMax)
 			{
-				shownAreaInsideMargins.x=(this.hRangeMax - shownAreaInsideMargins.width);
+				shownAreaInsideMargins.x=(hRangeMax - shownAreaInsideMargins.width);
 			}
-			this.shownAreaInsideMarginsInternal = shownAreaInsideMargins;
-			this.m_LastShownAreaInsideMargins = shownAreaInsideMargins;
+			shownAreaInsideMarginsInternal = shownAreaInsideMargins;
+			m_LastShownAreaInsideMargins = shownAreaInsideMargins;
 		}
 	}
 
 	private bool IsPanEvent()
 	{
-		return ((int)Event.current.button == 0 && Event.current.alt) || ((int)Event.current.button == 2 && !Event.current.command);
+		return (Event.current.button == 0 && Event.current.alt) || (Event.current.button == 2 && !Event.current.command);
 	}
 
 	private bool IsZoomEvent()
@@ -509,11 +509,11 @@ public class ZoomableArea
 
 	private void Pan()
 	{
-		if (!this.m_HRangeLocked)
+		if (!m_HRangeLocked)
 		{
-			this.m_Translation.x = this.m_Translation.x + Event.current.delta.x;
+			m_Translation.x = m_Translation.x + Event.current.delta.x;
 		}
-		this.EnforceScaleAndRange();
+		EnforceScaleAndRange();
 	}
 
 	internal void SetShownHRange(float min, float max)
@@ -601,9 +601,9 @@ public class ZoomableArea
 		float num2 = Mathf.Max(0.01f, 1f + num * 0.01f);
 		if (!m_HRangeLocked)
 		{
-			this.m_Translation.x = this.m_Translation.x - zoomAround.x * (num2 - 1f) * this.m_Scale.x;
-			this.m_Scale.x = this.m_Scale.x * num2;
+			m_Translation.x = m_Translation.x - zoomAround.x * (num2 - 1f) * this.m_Scale.x;
+			m_Scale.x = m_Scale.x * num2;
 		}
-		this.EnforceScaleAndRange();
+		EnforceScaleAndRange();
 	}
 }

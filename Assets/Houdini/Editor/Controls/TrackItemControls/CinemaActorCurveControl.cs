@@ -209,7 +209,6 @@ public class CinemaActorCurveControl : CinemaCurveControl
             if (akt.ContainsTime(k.time))
             {
                 Keyframe newKeyframe = new Keyframe(k.time, value, k.inTangent, k.outTangent);
-                newKeyframe.tangentMode = k.tangentMode;
                 AnimationCurveHelper.MoveKey(curve, j, newKeyframe);
                 doesKeyExist = true;
             }

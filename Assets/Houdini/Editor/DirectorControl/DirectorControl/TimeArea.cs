@@ -27,21 +27,21 @@ public class TimeArea : ZoomableArea
 	{
 		get
 		{
-			return this.m_Settings;
+			return m_Settings;
 		}
 		set
 		{
 			if (value != null)
 			{
-				this.m_Settings = value;
-				this.ApplySettings();
+				m_Settings = value;
+				ApplySettings();
 			}
 		}
 	}
 
 	public TimeArea()
 	{
-		this.m_Settings = new DirectorControlSettings();
+		m_Settings = new DirectorControlSettings();
 		float[] tickModulos = new float[]
 		{
 			0.0005f,
@@ -61,8 +61,8 @@ public class TimeArea : ZoomableArea
 			5000f,
 			10000f
 		};
-		this.hTicks = new TickHandler();
-		this.hTicks.SetTickModulos(tickModulos);
+		hTicks = new TickHandler();
+		hTicks.SetTickModulos(tickModulos);
 	}
 
 	private void ApplySettings()

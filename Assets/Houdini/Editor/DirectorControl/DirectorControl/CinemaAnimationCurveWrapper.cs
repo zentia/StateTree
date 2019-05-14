@@ -95,10 +95,11 @@ public class CinemaAnimationCurveWrapper
         }
         return -1;
     }
+
 	public void AddKey(float time, float value, int tangentMode)
 	{
-	    Keyframe keyframe = default(Keyframe);
-	    Keyframe keyframe2 = default(Keyframe);
+	    Keyframe keyframe = default;
+	    Keyframe keyframe2 = default;
 	    AnimationKeyTime akt = AnimationKeyTime.Time(time, DirectorWindow.directorControl.frameRate);
 	    time = (float)akt.m_Frame / DirectorWindow.directorControl.frameRate;
         int num = GetKeyframeIndex(akt);

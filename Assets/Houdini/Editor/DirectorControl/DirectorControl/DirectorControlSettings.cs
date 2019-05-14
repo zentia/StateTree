@@ -1,5 +1,3 @@
-using System;
-
 internal class DirectorControlSettings
 {
 	private bool m_HRangeLocked;
@@ -16,7 +14,7 @@ internal class DirectorControlSettings
 	{
 		get
 		{
-			return this.m_HRangeLocked;
+			return m_HRangeLocked;
 		}
 		set
 		{
@@ -52,7 +50,7 @@ internal class DirectorControlSettings
 	{
 		get
 		{
-			return this.m_HSlider;
+			return m_HSlider;
 		}
 		set
 		{
@@ -64,7 +62,7 @@ internal class DirectorControlSettings
 	{
 		get
 		{
-			return this.m_ScaleWithWindow;
+			return m_ScaleWithWindow;
 		}
 		set
 		{

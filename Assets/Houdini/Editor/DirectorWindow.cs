@@ -14,7 +14,7 @@ public class DirectorWindow : EditorWindow
     private float previousTime;
     private bool isSnappingEnabled;
     private Cutscene[] cachedCutscenes;
-    private static Timer timer;
+    private static readonly Timer timer;
 
     private bool betaFeaturesEnabled = false;
 
@@ -115,7 +115,8 @@ public class DirectorWindow : EditorWindow
         EditorApplication.playModeStateChanged += PlayModeStateChanged;
 
         GUISkin skin = CreateInstance<GUISkin>();
-        skin = (EditorGUIUtility.isProSkin) ? Resources.Load<GUISkin>(PRO_SKIN) : Resources.Load<GUISkin>(FREE_SKIN);
+        string dir = "Assets/Houdini/Editor/EditorResources/";
+        skin = EditorGUIUtility.isProSkin ? AssetDatabase.LoadAssetAtPath<GUISkin>(dir + PRO_SKIN) : Resources.Load<GUISkin>(dir + FREE_SKIN);
         loadTextures();
 
         titleContent = new GUIContent(TITLE, titleImage);

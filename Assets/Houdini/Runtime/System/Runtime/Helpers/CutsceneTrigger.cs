@@ -39,7 +39,7 @@ namespace CinemaDirector
         private IEnumerator PlayCutscene()
         {
             yield return new WaitForSeconds(Delay);
-            this.Cutscene.Play();
+            Cutscene.Play();
         }
 
         void Update()
@@ -49,7 +49,7 @@ namespace CinemaDirector
                 // Check if the user wants to skip.
                 if (Input.GetButtonDown(SkipButtonName))
                 {
-                    if (Cutscene != null && Cutscene.State == CinemaDirector.Cutscene.CutsceneState.Playing)
+                    if (Cutscene != null && Cutscene.State == Cutscene.CutsceneState.Playing)
                     {
                         Cutscene.Skip();
                     }
