@@ -55,7 +55,6 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 					{
 						Keyframe keyframe = cinemaAnimationCurveWrapper.GetKeyframe(k);
 						Keyframe kf = new Keyframe(keyframe.time + amount, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-						kf.tangentMode=(keyframe.tangentMode);
 						cinemaAnimationCurveWrapper.MoveKey(k, kf);
 					}
 				}
@@ -65,7 +64,6 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 					{
 						Keyframe keyframe2 = cinemaAnimationCurveWrapper.GetKeyframe(l);
 						Keyframe kf2 = new Keyframe(keyframe2.time + amount, keyframe2.value, keyframe2.inTangent, keyframe2.outTangent);
-						kf2.tangentMode=(keyframe2.tangentMode);
 						cinemaAnimationCurveWrapper.MoveKey(l, kf2);
 					}
 				}
@@ -75,13 +73,13 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 
 	internal void CropFiretime(float newFiretime)
 	{
-		if (newFiretime >= Firetime + base.Duration)
+		if (newFiretime >= Firetime + Duration)
 		{
 			return;
 		}
-		if (newFiretime < base.Firetime)
+		if (newFiretime < Firetime)
 		{
-			this.updateKeyframeTime(base.Firetime, newFiretime);
+			updateKeyframeTime(Firetime, newFiretime);
 		}
 		else
 		{
@@ -91,7 +89,7 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 				CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
 				for (int j = 0; j < animationCurves.Length; j++)
 				{
-					animationCurves[j].CollapseStart(base.Firetime, newFiretime);
+					animationCurves[j].CollapseStart(Firetime, newFiretime);
 				}
 			}
 		}
@@ -130,7 +128,7 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 		}
 		else
 		{
-			CinemaMemberCurveWrapper[] memberCurves = this.MemberCurves;
+			CinemaMemberCurveWrapper[] memberCurves = MemberCurves;
 			for (int i = 0; i < memberCurves.Length; i++)
 			{
 				CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
@@ -185,7 +183,7 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 
 	private void updateKeyframeTime(float oldTime, float newTime)
 	{
-		CinemaMemberCurveWrapper[] memberCurves = this.MemberCurves;
+		CinemaMemberCurveWrapper[] memberCurves = MemberCurves;
 		for (int i = 0; i < memberCurves.Length; i++)
 		{
 			CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
@@ -195,10 +193,9 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 				for (int k = 0; k < cinemaAnimationCurveWrapper.KeyframeCount; k++)
 				{
 					Keyframe keyframe = cinemaAnimationCurveWrapper.GetKeyframe(k);
-					if ((double)Mathf.Abs(keyframe.time - oldTime) < 1E-05)
+					if (Mathf.Abs(keyframe.time - oldTime) < 1E-05)
 					{
 						Keyframe kf = new Keyframe(newTime, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-						kf.tangentMode=(keyframe.tangentMode);
 						cinemaAnimationCurveWrapper.MoveKey(k, kf);
 					}
 				}
@@ -209,7 +206,7 @@ public class CinemaClipCurveWrapper : CinemaActionWrapper
 	public bool TryGetValue(string type, string propertyName, out CinemaMemberCurveWrapper memberWrapper)
 	{
 		memberWrapper = null;
-		CinemaMemberCurveWrapper[] memberCurves = this.MemberCurves;
+		CinemaMemberCurveWrapper[] memberCurves = MemberCurves;
 		for (int i = 0; i < memberCurves.Length; i++)
 		{
 			CinemaMemberCurveWrapper cinemaMemberCurveWrapper = memberCurves[i];

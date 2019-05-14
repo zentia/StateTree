@@ -6,6 +6,6 @@ public class Test : MonoBehaviour
     public RawImage mRawImage;
     public void LoadTexture()
     {
-        mRawImage.texture = Resources.Load<Texture2D>("Cinema Suite Monochrome");
+        mRawImage.texture = Resources.Load<Texture2D>("2DToolkitIcon");
     }
 }

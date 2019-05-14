@@ -1,5 +1,4 @@
 using BehaviorDesigner.Runtime;
-using System;
 using UnityEngine;
 
 public class AOTLinker : MonoBehaviour

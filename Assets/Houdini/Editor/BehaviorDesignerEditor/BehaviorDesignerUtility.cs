@@ -1957,10 +1957,10 @@ namespace BehaviorDesigner.Editor
                 margin = (new RectOffset(0, 0, 0, 0)),
                 padding = (new RectOffset(0, 0, 0, 0))
             };
-            BehaviorDesignerUtility.plainTextureGUIStyle.normal.background=(null);
-			BehaviorDesignerUtility.plainTextureGUIStyle.active.background=(null);
-			BehaviorDesignerUtility.plainTextureGUIStyle.hover.background=(null);
-			BehaviorDesignerUtility.plainTextureGUIStyle.focused.background=(null);
+            plainTextureGUIStyle.normal.background=(null);
+			plainTextureGUIStyle.active.background=(null);
+			plainTextureGUIStyle.hover.background=(null);
+			plainTextureGUIStyle.focused.background=(null);
 		}
 
 		private static void InitArrowSeparatorGUIStyle()

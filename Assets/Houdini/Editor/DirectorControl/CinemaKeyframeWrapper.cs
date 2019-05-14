@@ -35,8 +35,8 @@ public class CinemaKeyframeWrapper
         this.curve = curve;
         m_InTangent = key.inTangent;
         m_OutTanger = key.outTangent;
-        m_TangentMode = key.tangentMode;
     }
+
     public CinemaAnimationCurveWrapper curve
     {
         get { return m_curve; }

@@ -116,7 +116,6 @@ public class CinemaAnimationCurveWrapper
 	            }
 	        }
 	        Keyframe keyframe5 = new Keyframe(time, value);
-	        keyframe5.tangentMode = tangentMode;
 	        num = curve.AddKey(keyframe5);
 	        ArrayUtility.Insert(ref KeyframeControls, num, new CinemaKeyframeWrapper(this, keyframe5));
         }
@@ -359,24 +358,21 @@ public class CinemaAnimationCurveWrapper
 
 	internal void FlattenKey(int index)
 	{
-		Keyframe keyframe = new Keyframe(curve[index].time, this.curve[index].value, 0f, 0f);
-		keyframe.tangentMode=(0);
+		Keyframe keyframe = new Keyframe(curve[index].time, curve[index].value, 0f, 0f);
 		curve.MoveKey(index, keyframe);
 	}
 
 	internal void SetKeyLeftLinear(int index)
 	{
-		Keyframe keyframe = this.curve[index];
+		Keyframe keyframe = curve[index];
 		float num = keyframe.inTangent;
 		if (index > 0)
 		{
-			Keyframe keyframe2 = this.curve[index-1];
+			Keyframe keyframe2 = curve[index-1];
 			num = (keyframe.value - keyframe2.value) / (keyframe.time - keyframe2.time);
 		}
 		Keyframe keyframe3 = new Keyframe(keyframe.time, keyframe.value, num, keyframe.outTangent);
-		int num2 = (keyframe.tangentMode > 16) ? (keyframe.tangentMode / 8 * 8) : 0;
-		keyframe3.tangentMode=(num2 + 1 + 4);
-		this.curve.MoveKey(index, keyframe3);
+		curve.MoveKey(index, keyframe3);
 	}
 
 	internal void SetKeyRightLinear(int index)
@@ -389,9 +385,7 @@ public class CinemaAnimationCurveWrapper
 			num = (keyframe2.value - keyframe.value) / (keyframe2.time - keyframe.time);
 		}
 		Keyframe keyframe3 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, num);
-		int num2 = (keyframe.tangentMode == 10 || keyframe.tangentMode == 0) ? 0 : (keyframe.tangentMode % 8 - 1);
-		keyframe3.tangentMode=(num2 + 16 + 1);
-		this.curve.MoveKey(index, keyframe3);
+		curve.MoveKey(index, keyframe3);
 	}
 
 	internal void SetKeyLeftConstant(int index)
@@ -467,7 +461,7 @@ public class CinemaAnimationCurveWrapper
 
 	internal bool IsBroken(int index)
 	{
-		return this.curve[index].tangentMode % 2 == 1;
+		return curve[index].tangentMode % 2 == 1;
 	}
 
 	internal bool IsLeftFree(int index)

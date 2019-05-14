@@ -364,7 +364,7 @@ namespace BehaviorDesigner.Runtime
 							bool flag = type.Equals(typeof(Task)) || type.IsSubclassOf(typeof(Task));
 							if (flag)
 							{
-								if (DeserializeJSON.taskIDs != null)
+								if (taskIDs != null)
 								{
 									List<int> list2 = new List<int>();
 									for (int j = 0; j < list.Count; j++)
@@ -460,7 +460,7 @@ namespace BehaviorDesigner.Runtime
 		{
 			if (type.Equals(typeof(SharedVariable)) || type.IsSubclassOf(typeof(SharedVariable)))
 			{
-				SharedVariable sharedVariable = DeserializeJSON.DeserializeSharedVariable(obj as Dictionary<string, object>, variableSource, false, unityObjects);
+				SharedVariable sharedVariable = DeserializeSharedVariable(obj as Dictionary<string, object>, variableSource, false, unityObjects);
 				if (sharedVariable == null)
 				{
 					sharedVariable = (TaskUtility.CreateInstance(type) as SharedVariable);
@@ -469,7 +469,7 @@ namespace BehaviorDesigner.Runtime
 			}
 			if (type.Equals(typeof(UnityEngine.Object)) || type.IsSubclassOf(typeof(UnityEngine.Object)))
 			{
-				return DeserializeJSON.IndexToUnityObject(Convert.ToInt32(obj), unityObjects);
+				return IndexToUnityObject(Convert.ToInt32(obj), unityObjects);
 			}
 			if (!type.IsPrimitive)
 			{
@@ -504,42 +504,42 @@ namespace BehaviorDesigner.Runtime
 			}
 			if (type.Equals(typeof(Vector2)))
 			{
-				return DeserializeJSON.StringToVector2((string)obj);
+				return StringToVector2((string)obj);
 			}
 			if (type.Equals(typeof(Vector3)))
 			{
-				return DeserializeJSON.StringToVector3((string)obj);
+				return StringToVector3((string)obj);
 			}
 			if (type.Equals(typeof(Vector4)))
 			{
-				return DeserializeJSON.StringToVector4((string)obj);
+				return StringToVector4((string)obj);
 			}
 			if (type.Equals(typeof(Quaternion)))
 			{
-				return DeserializeJSON.StringToQuaternion((string)obj);
+				return StringToQuaternion((string)obj);
 			}
 			if (type.Equals(typeof(Matrix4x4)))
 			{
-				return DeserializeJSON.StringToMatrix4x4((string)obj);
+				return StringToMatrix4x4((string)obj);
 			}
 			if (type.Equals(typeof(Color)))
 			{
-				return DeserializeJSON.StringToColor((string)obj);
+				return StringToColor((string)obj);
 			}
 			if (type.Equals(typeof(Rect)))
 			{
-				return DeserializeJSON.StringToRect((string)obj);
+				return StringToRect((string)obj);
 			}
 			if (type.Equals(typeof(LayerMask)))
 			{
-				return DeserializeJSON.ValueToLayerMask(Convert.ToInt32(obj));
+				return ValueToLayerMask(Convert.ToInt32(obj));
 			}
 			if (type.Equals(typeof(AnimationCurve)))
 			{
 				return ValueToAnimationCurve((Dictionary<string, object>)obj);
 			}
 			object obj2 = TaskUtility.CreateInstance(type);
-			DeserializeJSON.DeserializeObject(task, obj2, obj as Dictionary<string, object>, variableSource, unityObjects);
+			DeserializeObject(task, obj2, obj as Dictionary<string, object>, variableSource, unityObjects);
 			return obj2;
 		}
 
@@ -614,10 +614,7 @@ namespace BehaviorDesigner.Runtime
 
 		private static Rect StringToRect(string rectString)
 		{
-			string[] array = rectString.Substring(1, rectString.Length - 2).Split(new char[]
-			{
-				','
-			});
+			string[] array = rectString.Substring(1, rectString.Length - 2).Split(new char[]{','});
 			return new Rect(float.Parse(array[0].Substring(2, array[0].Length - 2)), float.Parse(array[1].Substring(3, array[1].Length - 3)), float.Parse(array[2].Substring(7, array[2].Length - 7)), float.Parse(array[3].Substring(8, array[3].Length - 8)));
 		}
 
@@ -638,8 +635,6 @@ namespace BehaviorDesigner.Runtime
 				{
 					List<object> list2 = list[i] as List<object>;
 					Keyframe keyframe = new Keyframe((float)Convert.ChangeType(list2[0], typeof(float)), (float)Convert.ChangeType(list2[1], typeof(float)), (float)Convert.ChangeType(list2[2], typeof(float)), (float)Convert.ChangeType(list2[3], typeof(float)));
-					keyframe.tangentMode = ((int)Convert.ChangeType(list2[4], typeof(int)));
-                    
 					animationCurve.AddKey(keyframe);
 				}
 			}
