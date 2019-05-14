@@ -1209,11 +1209,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				if (BehaviorDesignerUtility.playTexture == null)
+				if (playTexture == null)
 				{
-					BehaviorDesignerUtility.InitPlayTexture();
+					InitPlayTexture();
 				}
-				return BehaviorDesignerUtility.playTexture;
+				return playTexture;
 			}
 		}
 

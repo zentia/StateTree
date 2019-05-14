@@ -38,8 +38,6 @@ namespace BehaviorDesigner.Editor
 
         private Rect mPreferencesPaneRect;
 
-        private Rect mZoomableAreaRect;
-
         private Vector2 mGraphScrollSize = new Vector2(20000f, 20000f);
 
         private bool mSizesInitialized;
@@ -234,8 +232,6 @@ namespace BehaviorDesigner.Editor
                 EditorPrefs.SetString("BehaviorDesignerLatestVersion", mLatestVersion);
             }
         }
-
-        public ZoomableArea mZoomableArea = new ZoomableArea();
 
         [MenuItem("Tools/Behavior Designer/Editor", false, 0)]
         public static void ShowWindow()
@@ -930,7 +926,7 @@ namespace BehaviorDesigner.Editor
                             this.mNodeDesignerTaskMap.Add(nodeDesigner, taskList[i]);
                         }
                     }
-                    this.mUpdateNodeTaskMap = false;
+                    mUpdateNodeTaskMap = false;
                 }
             }
         }
@@ -950,11 +946,11 @@ namespace BehaviorDesigner.Editor
                 result = true;
             }
             DrawPreferencesPane();
+            DrawTimeline();
             if (mTakingScreenshot)
             {
                 GUI.DrawTexture(new Rect(0f, 0f, Screen.width, Screen.height), BehaviorDesignerUtility.ScreenshotBackgroundTexture, 0, false);
             }
-            mZoomableArea.BeginViewGUI(true);
             GUI.color = color;
             GUI.backgroundColor = backgroundColor;
             return result;
@@ -1138,41 +1134,26 @@ namespace BehaviorDesigner.Editor
 
         private void DrawDebugToolbar()
         {
-            GUILayout.BeginArea(this.mDebugToolBarRect, EditorStyles.toolbar);
+            GUILayout.BeginArea(mDebugToolBarRect, EditorStyles.toolbar);
             GUILayout.BeginHorizontal(new GUILayoutOption[0]);
-            if (GUILayout.Button(BehaviorDesignerUtility.PlayTexture, (!EditorApplication.isPlaying) ? EditorStyles.toolbarButton : BehaviorDesignerUtility.ToolbarButtonSelectionGUIStyle, new GUILayoutOption[]
-            {
-                        GUILayout.Width(40f)
-            }))
+            if (GUILayout.Button(BehaviorDesignerUtility.PlayTexture, (!EditorApplication.isPlaying) ? EditorStyles.toolbarButton : BehaviorDesignerUtility.ToolbarButtonSelectionGUIStyle, new GUILayoutOption[]{GUILayout.Width(30f)}))
             {
                 EditorApplication.isPlaying = !EditorApplication.isPlaying;
             }
-            if (GUILayout.Button(BehaviorDesignerUtility.PauseTexture, (!EditorApplication.isPaused) ? EditorStyles.toolbarButton : BehaviorDesignerUtility.ToolbarButtonSelectionGUIStyle, new GUILayoutOption[]
+            if (GUILayout.Button(BehaviorDesignerUtility.PauseTexture, (!EditorApplication.isPaused) ? EditorStyles.toolbarButton : BehaviorDesignerUtility.ToolbarButtonSelectionGUIStyle, new GUILayoutOption[]{GUILayout.Width(30f)}))
             {
-                        GUILayout.Width(40f)
-            }))
-            {
-                EditorApplication.isPaused = (!EditorApplication.isPaused);
+                EditorApplication.isPaused = !EditorApplication.isPaused;
             }
-            if (GUILayout.Button(BehaviorDesignerUtility.StepTexture, EditorStyles.toolbarButton, new GUILayoutOption[]
-            {
-                        GUILayout.Width(40f)
-            }) && EditorApplication.isPlaying)
+            if (GUILayout.Button(BehaviorDesignerUtility.StepTexture, EditorStyles.toolbarButton, new GUILayoutOption[]{GUILayout.Width(30f)}) && EditorApplication.isPlaying)
             {
                 mStepApplication = true;
             }
-            if (mErrorDetails != null && this.mErrorDetails.Count > 0 && GUILayout.Button(new GUIContent(this.mErrorDetails.Count + " Error" + ((this.mErrorDetails.Count <= 1) ? string.Empty : "s"), BehaviorDesignerUtility.SmallErrorIconTexture), BehaviorDesignerUtility.ToolbarButtonLeftAlignGUIStyle, new GUILayoutOption[]
-            {
-                        GUILayout.Width(85f)
-            }))
+
+            if (mErrorDetails != null && mErrorDetails.Count > 0 && GUILayout.Button(new GUIContent(mErrorDetails.Count + " Error" + ((mErrorDetails.Count <= 1) ? string.Empty : "s"), BehaviorDesignerUtility.SmallErrorIconTexture), BehaviorDesignerUtility.ToolbarButtonLeftAlignGUIStyle, new GUILayoutOption[]{GUILayout.Width(85f)}))
             {
                 ErrorWindow.ShowWindow();
             }
             GUILayout.FlexibleSpace();
-            if ("1.5.5".ToString().CompareTo(this.LatestVersion) < 0)
-            {
-                GUILayout.Label("Behavior Designer " + this.LatestVersion + " is now available.", BehaviorDesignerUtility.ToolbarLabelGUIStyle, new GUILayoutOption[0]);
-            }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
@@ -1181,15 +1162,15 @@ namespace BehaviorDesigner.Editor
         {
             if (mShowPrefPane)
             {
-                GUILayout.BeginArea(this.mPreferencesPaneRect, BehaviorDesignerUtility.PreferencesPaneGUIStyle);
-                BehaviorDesignerPreferences.DrawPreferencesPane(new PreferenceChangeHandler(this.OnPreferenceChange));
+                GUILayout.BeginArea(mPreferencesPaneRect, BehaviorDesignerUtility.PreferencesPaneGUIStyle);
+                BehaviorDesignerPreferences.DrawPreferencesPane(new PreferenceChangeHandler(OnPreferenceChange));
                 GUILayout.EndArea();
             }
         }
 
         private void DrawPropertiesBox()
         {
-            GUILayout.BeginArea(this.mPropertyToolbarRect, EditorStyles.toolbar);
+            GUILayout.BeginArea(mPropertyToolbarRect, EditorStyles.toolbar);
             int num = this.mBehaviorToolbarSelection;
             this.mBehaviorToolbarSelection = GUILayout.Toolbar(this.mBehaviorToolbarSelection, this.mBehaviorToolbarStrings, EditorStyles.toolbarButton, new GUILayoutOption[0]);
             GUILayout.EndArea();
@@ -1221,13 +1202,10 @@ namespace BehaviorDesigner.Editor
                 else
                 {
                     GUILayout.Space(5f);
-                    GUILayout.Label("No behavior tree selected. Create a new behavior tree or select one from the hierarchy.", BehaviorDesignerUtility.LabelWrapGUIStyle, new GUILayoutOption[]
-                    {
-                                GUILayout.Width(285f)
-                    });
+                    GUILayout.Label("No behavior tree selected. Create a new behavior tree or select one from the hierarchy.", BehaviorDesignerUtility.LabelWrapGUIStyle, new GUILayoutOption[]{GUILayout.Width(285f)});
                 }
             }
-            else if (this.mBehaviorToolbarSelection == 1)
+            else if (mBehaviorToolbarSelection == 1)
             {
                 this.mTaskList.DrawTaskList(this, !this.ViewOnlyMode(true) && !EditorApplication.isCompiling);
                 if (num != 1)
@@ -1257,7 +1235,7 @@ namespace BehaviorDesigner.Editor
                     });
                 }
             }
-            else if (this.mBehaviorToolbarSelection == 3)
+            else if (mBehaviorToolbarSelection == 3)
             {
                 if (this.mGraphDesigner.SelectedNodes.Count == 1 && !this.mGraphDesigner.SelectedNodes[0].IsEntryDisplay)
                 {
@@ -1299,20 +1277,20 @@ namespace BehaviorDesigner.Editor
 
         private bool DrawGraphArea()
         {
-            if (Event.current.type != (EventType)6 && !mTakingScreenshot)
+            if (Event.current.type != EventType.ScrollWheel && !mTakingScreenshot)
             {
-                Vector2 vector = GUI.BeginScrollView(new Rect(mGraphRect.x, mGraphRect.y, mGraphRect.width + 15f, this.mGraphRect.height + 15f), this.mGraphScrollPosition, new Rect(0f, 0f, this.mGraphScrollSize.x, this.mGraphScrollSize.y), true, true);
+                Vector2 vector = GUI.BeginScrollView(new Rect(mGraphRect.x, mGraphRect.y, mGraphRect.width + 15f, mGraphRect.height + 15f), mGraphScrollPosition, new Rect(0f, 0f, mGraphScrollSize.x, mGraphScrollSize.y), true, true);
                 if (vector != mGraphScrollPosition && Event.current.type != (EventType)9 && Event.current.type != (EventType)11)
                 {
-                    mGraphOffset -= (vector - this.mGraphScrollPosition) / mGraphZoom;
+                    mGraphOffset -= (vector - mGraphScrollPosition) / mGraphZoom;
                     mGraphScrollPosition = vector;
                     mGraphDesigner.GraphDirty();
                 }
                 GUI.EndScrollView();
             }
-            GUI.Box(this.mGraphRect, string.Empty, BehaviorDesignerUtility.GraphBackgroundGUIStyle);
+            GUI.Box(mGraphRect, string.Empty, BehaviorDesignerUtility.GraphBackgroundGUIStyle);
             DrawGrid();
-            EditorZoomArea.Begin(this.mGraphRect, this.mGraphZoom);
+            EditorZoomArea.Begin(mGraphRect, mGraphZoom);
             if (!GetMousePositionInGraph(out Vector2 mousePosition))
             {
                 mousePosition = new Vector2(-1f, -1f);
@@ -1322,18 +1300,23 @@ namespace BehaviorDesigner.Editor
             {
                 result = true;
             }
-            if (this.mTakingScreenshot && Event.current.type == (EventType)7)
+            if (mTakingScreenshot && Event.current.type == (EventType)7)
             {
-                this.RenderScreenshotTile();
+                RenderScreenshotTile();
             }
-            if (this.mIsSelecting)
+            if (mIsSelecting)
             {
-                GUI.Box(this.GetSelectionArea(), string.Empty, BehaviorDesignerUtility.SelectionGUIStyle);
+                GUI.Box(GetSelectionArea(), string.Empty, BehaviorDesignerUtility.SelectionGUIStyle);
             }
             EditorZoomArea.End();
-            this.DrawGraphStatus();
-            this.DrawSelectedTaskDescription();
+            DrawGraphStatus();
+            DrawSelectedTaskDescription();
             return result;
+        }
+
+        private void DrawTimeline()
+        {
+
         }
 
         private void DrawGrid()
@@ -1342,7 +1325,7 @@ namespace BehaviorDesigner.Editor
             {
                 return;
             }
-            this.mGridMaterial.SetPass((!EditorGUIUtility.isProSkin) ? 1 : 0);
+            mGridMaterial.SetPass((!EditorGUIUtility.isProSkin) ? 1 : 0);
             GL.PushMatrix();
             GL.Begin(1);
             this.DrawGridLines(10f * this.mGraphZoom, new Vector2(this.mGraphOffset.x % 10f * this.mGraphZoom, this.mGraphOffset.y % 10f * this.mGraphZoom));
@@ -1358,7 +1341,7 @@ namespace BehaviorDesigner.Editor
 
         private void DrawGridLines(float gridSize, Vector2 offset)
         {
-            float num = this.mGraphRect.x + offset.x;
+            float num = mGraphRect.x + offset.x;
             if (offset.x < 0f)
             {
                 num += gridSize;
@@ -1386,9 +1369,9 @@ namespace BehaviorDesigner.Editor
 
         private void DrawGraphStatus()
         {
-            if (!this.mGraphStatus.Equals(string.Empty))
+            if (!mGraphStatus.Equals(string.Empty))
             {
-                GUI.Label(new Rect(this.mGraphRect.x + 5f, this.mGraphRect.y + 5f, this.mGraphRect.width, 30f), this.mGraphStatus, BehaviorDesignerUtility.GraphStatusGUIStyle);
+                GUI.Label(new Rect(mGraphRect.x + 5f, mGraphRect.y + 5f, mGraphRect.width, 30f), mGraphStatus, BehaviorDesignerUtility.GraphStatusGUIStyle);
             }
         }
 
@@ -1400,7 +1383,7 @@ namespace BehaviorDesigner.Editor
                 BehaviorDesignerUtility.TaskCommentGUIStyle.CalcMinMaxWidth(new GUIContent(array[0].Description), out float num, out float num2);
                 float num3 = Mathf.Min(400f, num2 + 20f);
                 float num4 = Mathf.Min(300f, BehaviorDesignerUtility.TaskCommentGUIStyle.CalcHeight(new GUIContent(array[0].Description), num3)) + 3f;
-                GUI.Box(new Rect(this.mGraphRect.x + 5f, this.mGraphRect.yMax - num4 - 5f, num3, num4), string.Empty, BehaviorDesignerUtility.TaskDescriptionGUIStyle);
+                GUI.Box(new Rect(mGraphRect.x + 5f, this.mGraphRect.yMax - num4 - 5f, num3, num4), string.Empty, BehaviorDesignerUtility.TaskDescriptionGUIStyle);
                 GUI.Box(new Rect(this.mGraphRect.x + 2f, this.mGraphRect.yMax - num4 - 5f, num3, num4), array[0].Description, BehaviorDesignerUtility.TaskCommentGUIStyle);
             }
         }
@@ -2400,22 +2383,22 @@ namespace BehaviorDesigner.Editor
             }
             if (BehaviorDesignerPreferences.GetBool(BDPreferences.PropertiesPanelOnLeft))
             {
-                mFileToolBarRect = new Rect(300f, 0f, (Screen.width - 300), 18f);
-                mPropertyToolbarRect = new Rect(0f, 0f, 300f, 18f);
-                mPropertyBoxRect = new Rect(0f, this.mPropertyToolbarRect.height, 300f, (float)Screen.height - this.mPropertyToolbarRect.height - 21f);
-                mGraphRect = new Rect(300f, 18f, (float)(Screen.width - 300 - 15), (float)(Screen.height - 36 - 21 - 15));
-                mPreferencesPaneRect = new Rect(300f + this.mGraphRect.width - 290f, (float)(18 + ((!EditorGUIUtility.isProSkin) ? 2 : 1)), 290f, 348f);
+                mFileToolBarRect = new Rect(300f, 0f, Screen.width - 300, 18f);// ÓÒÉÏ
+                mPropertyToolbarRect = new Rect(0f, 0f, 300f, 18f);// ×óÉÏ
+                mPropertyBoxRect = new Rect(0f, mPropertyToolbarRect.height, 300f, Screen.height - mPropertyToolbarRect.height - 21f); // ×óÏÂ
+                mGraphRect = new Rect(300f, 18f, Screen.width - 300 - 15, Screen.height - 36 - 21 - 15);
+                mPreferencesPaneRect = new Rect(300f + mGraphRect.width - 290f, (18 + ((!EditorGUIUtility.isProSkin) ? 2 : 1)), 290f, 348f);
             }
             else
             {
                 mFileToolBarRect = new Rect(0f, 0f, (Screen.width - 300), 18f);
                 mPropertyToolbarRect = new Rect((float)(Screen.width - 300), 0f, 300f, 18f);
-                mPropertyBoxRect = new Rect((float)(Screen.width - 300), this.mPropertyToolbarRect.height, 300f, (float)Screen.height - this.mPropertyToolbarRect.height - 21f);
+                mPropertyBoxRect = new Rect((float)(Screen.width - 300), this.mPropertyToolbarRect.height, 300f, Screen.height - this.mPropertyToolbarRect.height - 21f);
                 mGraphRect = new Rect(0f, 18f, (float)(Screen.width - 300 - 15), (float)(Screen.height - 36 - 21 - 15));
                 mPreferencesPaneRect = new Rect(this.mGraphRect.width - 290f, (float)(18 + ((!EditorGUIUtility.isProSkin) ? 2 : 1)), 290f, 348f);
             }
-            mDebugToolBarRect = new Rect(this.mGraphRect.x, (float)(Screen.height - 18 - 21), this.mGraphRect.width + 15f, 18f);
-            mGraphScrollRect.Set(this.mGraphRect.xMin + 15f, this.mGraphRect.yMin + 15f, this.mGraphRect.width - 30f, this.mGraphRect.height - 30f);
+            mDebugToolBarRect = new Rect(mGraphRect.x, Screen.height - 18 - 21, mGraphRect.width + 15f, 18f);
+            mGraphScrollRect.Set(mGraphRect.xMin + 15f, mGraphRect.yMin + 15f, this.mGraphRect.width - 30f, this.mGraphRect.height - 30f);
             if (mGraphScrollPosition == new Vector2(-1f, -1f))
             {
                 mGraphScrollPosition = (this.mGraphScrollSize - new Vector2(this.mGraphRect.width, this.mGraphRect.height)) / 2f - 2f * new Vector2(15f, 15f);

@@ -1,5 +1,3 @@
-using System;
-
 namespace BehaviorDesigner.Editor
 {
 	public enum BDPreferences

@@ -16,7 +16,7 @@ namespace BehaviorDesigner.Editor
 
 		private bool m_CSharp = true;
 
-		private AssetCreator.AssetClassType m_classType;
+		private AssetClassType m_classType;
 
 		private string m_AssetName;
 
@@ -24,33 +24,33 @@ namespace BehaviorDesigner.Editor
 		{
 			set
 			{
-				this.m_CSharp = value;
+				m_CSharp = value;
 			}
 		}
 
-		private AssetCreator.AssetClassType ClassType
+		private AssetClassType ClassType
 		{
 			set
 			{
-				this.m_classType = value;
-				switch (this.m_classType)
+				m_classType = value;
+				switch (m_classType)
 				{
-				case AssetCreator.AssetClassType.Action:
-					this.m_AssetName = "NewAction";
+				case AssetClassType.Action:
+					m_AssetName = "NewAction";
 					break;
-				case AssetCreator.AssetClassType.Conditional:
-					this.m_AssetName = "NewConditional";
+				case AssetClassType.Conditional:
+					m_AssetName = "NewConditional";
 					break;
-				case AssetCreator.AssetClassType.SharedVariable:
-					this.m_AssetName = "SharedNewVariable";
+				case AssetClassType.SharedVariable:
+					m_AssetName = "SharedNewVariable";
 					break;
 				}
 			}
 		}
 
-		public static void ShowWindow(AssetCreator.AssetClassType classType, bool cSharp)
+		public static void ShowWindow(AssetClassType classType, bool cSharp)
 		{
-			AssetCreator window = EditorWindow.GetWindow<AssetCreator>(true, "Asset Name");
+			AssetCreator window = GetWindow<AssetCreator>(true, "Asset Name");
 			EditorWindow arg_25_0 = window;
 			Vector2 vector = new Vector2(300f, 55f);
 			window.maxSize=(vector);
@@ -61,23 +61,23 @@ namespace BehaviorDesigner.Editor
 
 		private void OnGUI()
 		{
-			this.m_AssetName = EditorGUILayout.TextField("Name", this.m_AssetName, new GUILayoutOption[0]);
+			m_AssetName = EditorGUILayout.TextField("Name", m_AssetName, new GUILayoutOption[0]);
 			EditorGUILayout.BeginHorizontal(new GUILayoutOption[0]);
 			if (GUILayout.Button("OK", new GUILayoutOption[0]))
 			{
-				AssetCreator.CreateScript(this.m_AssetName, this.m_classType, this.m_CSharp);
-				base.Close();
+				CreateScript(m_AssetName, m_classType, m_CSharp);
+				Close();
 			}
 			if (GUILayout.Button("Cancel", new GUILayoutOption[0]))
 			{
-				base.Close();
+				Close();
 			}
 			EditorGUILayout.EndHorizontal();
 		}
 
 		public static void CreateAsset(Type type, string name)
 		{
-			ScriptableObject scriptableObject = ScriptableObject.CreateInstance(type);
+			ScriptableObject scriptableObject = CreateInstance(type);
 			string text = AssetDatabase.GetAssetPath(Selection.activeObject);
 			if (text == string.Empty)
 			{
@@ -92,7 +92,7 @@ namespace BehaviorDesigner.Editor
 			AssetDatabase.SaveAssets();
 		}
 
-		private static void CreateScript(string name, AssetCreator.AssetClassType classType, bool cSharp)
+		private static void CreateScript(string name, AssetClassType classType, bool cSharp)
 		{
 			string text = AssetDatabase.GetAssetPath(Selection.activeObject);
 			if (text == string.Empty)
@@ -109,14 +109,14 @@ namespace BehaviorDesigner.Editor
 			string value = string.Empty;
 			switch (classType)
 			{
-			case AssetCreator.AssetClassType.Action:
-				value = AssetCreator.ActionTaskContents(fileNameWithoutExtension, cSharp);
+			case AssetClassType.Action:
+				value = ActionTaskContents(fileNameWithoutExtension, cSharp);
 				break;
-			case AssetCreator.AssetClassType.Conditional:
-				value = AssetCreator.ConditionalTaskContents(fileNameWithoutExtension, cSharp);
+			case AssetClassType.Conditional:
+				value = ConditionalTaskContents(fileNameWithoutExtension, cSharp);
 				break;
-			case AssetCreator.AssetClassType.SharedVariable:
-				value = AssetCreator.SharedVariableContents(fileNameWithoutExtension);
+			case AssetClassType.SharedVariable:
+				value = SharedVariableContents(fileNameWithoutExtension);
 				break;
 			}
 			streamWriter.Write(value);
