@@ -83,12 +83,12 @@ namespace BehaviorDesigner.Editor
 			{
 				GUILayout.MaxWidth(146f)
 			});
-			if (GUILayout.Button(BehaviorDesignerUtility.LoadTexture((!this.setVariable) ? "RightArrowButton.png" : "LeftArrowButton.png", true, this), BehaviorDesignerUtility.ButtonGUIStyle, new GUILayoutOption[]
+			if (GUILayout.Button(BehaviorDesignerUtility.LoadTexture((!setVariable) ? "RightArrowButton" : "LeftArrowButton", true), BehaviorDesignerUtility.ButtonGUIStyle, new GUILayoutOption[]
 			{
 				GUILayout.Width(22f)
 			}))
 			{
-				this.setVariable = !this.setVariable;
+				setVariable = !setVariable;
 			}
 			EditorGUILayout.EndHorizontal();
 			EditorGUI.BeginChangeCheck();
@@ -407,7 +407,7 @@ namespace BehaviorDesigner.Editor
 			lastRect.y=(lastRect.y + (lastRect.height + 1f));
 			lastRect.height=(2f);
 			lastRect.width=(lastRect.width + 20f);
-			GUI.DrawTexture(lastRect, BehaviorDesignerUtility.LoadTexture("ContentSeparator.png", true, this));
+			GUI.DrawTexture(lastRect, BehaviorDesignerUtility.LoadTexture("ContentSeparator", true));
 			GUILayout.Space(6f);
 			for (int i = 0; i < variableSynchronizer.SynchronizedVariables.Count; i++)
 			{
@@ -430,7 +430,7 @@ namespace BehaviorDesigner.Editor
 				{
 					GUILayout.MaxWidth(120f)
 				});
-				if (GUILayout.Button(BehaviorDesignerUtility.LoadTexture((!synchronizedVariable.setVariable) ? "RightArrowButton.png" : "LeftArrowButton.png", true, this), BehaviorDesignerUtility.ButtonGUIStyle, new GUILayoutOption[]
+				if (GUILayout.Button(BehaviorDesignerUtility.LoadTexture((!synchronizedVariable.setVariable) ? "RightArrowButton" : "LeftArrowButton", true), BehaviorDesignerUtility.ButtonGUIStyle, new GUILayoutOption[]
 				{
 					GUILayout.Width(22f)
 				}) && !Application.isPlaying)
@@ -442,10 +442,7 @@ namespace BehaviorDesigner.Editor
 					GUILayout.MinWidth(120f)
 				});
 				GUILayout.FlexibleSpace();
-				if (GUILayout.Button(BehaviorDesignerUtility.LoadTexture("DeleteButton.png", true, this), BehaviorDesignerUtility.ButtonGUIStyle, new GUILayoutOption[]
-				{
-					GUILayout.Width(22f)
-				}))
+				if (GUILayout.Button(BehaviorDesignerUtility.LoadTexture("DeleteButton.png", true), BehaviorDesignerUtility.ButtonGUIStyle, new GUILayoutOption[]{GUILayout.Width(22f)}))
 				{
 					variableSynchronizer.SynchronizedVariables.RemoveAt(i);
 					EditorGUILayout.EndHorizontal();

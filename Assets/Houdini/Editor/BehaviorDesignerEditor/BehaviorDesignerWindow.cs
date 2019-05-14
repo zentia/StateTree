@@ -552,7 +552,7 @@ namespace BehaviorDesigner.Editor
             while (k < list.Count)
             {
                 UnityEngine.Object @object = list[k].Owner.GetObject();
-                if (menuType != BehaviorDesignerWindow.BreadcrumbMenuType.Behavior)
+                if (menuType != BreadcrumbMenuType.Behavior)
                 {
                     goto IL_14E;
                 }

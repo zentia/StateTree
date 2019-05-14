@@ -42,10 +42,10 @@ public class SharedNamedVariableDrawer : ObjectDrawer
 			if (num2 != num)
 			{
 				num = num2;
-				namedVariable.value = (Activator.CreateInstance(type) as SharedVariable);
+				namedVariable.value = Activator.CreateInstance(type) as SharedVariable;
 			}
 			GUILayout.Space(3f);
-			namedVariable.type = "Shared" + SharedNamedVariableDrawer.variableNames[num];
+			namedVariable.type = "Shared" + variableNames[num];
 			namedVariable.value = FieldInspector.DrawSharedVariable(null, new GUIContent("Value"), null, type, namedVariable.value);
 			EditorGUI.indentLevel=(EditorGUI.indentLevel - 1);
 		}

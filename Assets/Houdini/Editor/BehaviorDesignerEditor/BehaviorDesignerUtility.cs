@@ -268,6 +268,8 @@ namespace BehaviorDesigner.Editor
 
 		private static Texture2D stepTexture = null;
 
+        private static Texture2D playHeadTexture = null;
+
 		private static Texture2D screenshotBackgroundTexture = null;
 
 		private static Regex camelCaseRegex = new Regex("(?<=[A-Z])(?=[A-Z][a-z])|(?<=[^A-Z])(?=[A-Z])|(?<=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
@@ -1201,7 +1203,7 @@ namespace BehaviorDesigner.Editor
 				{
 					BehaviorDesignerUtility.InitHistoryForwardTexture();
 				}
-				return BehaviorDesignerUtility.historyForwardTexture;
+				return historyForwardTexture;
 			}
 		}
 
@@ -1216,6 +1218,18 @@ namespace BehaviorDesigner.Editor
 				return playTexture;
 			}
 		}
+
+        public static Texture2D PlayHeadTexture
+        {
+            get
+            {
+                if (playHeadTexture == null)
+                {
+                    InitPlayHeadTexture();
+                }
+                return playHeadTexture;
+            }
+        }
 
 		public static Texture2D PauseTexture
 		{
@@ -1460,7 +1474,7 @@ namespace BehaviorDesigner.Editor
 			return Path.GetDirectoryName(text.Substring(Application.dataPath.Length - 6));
 		}
 
-		public static Texture2D LoadTexture(string imageName, bool useSkinColor = true, UnityEngine.Object obj = null)
+		public static Texture2D LoadTexture(string imageName, bool useSkinColor = true)
 		{
 		    if (textureCache.TryGetValue(imageName, out Texture2D tex))
 		    {
@@ -1478,7 +1492,7 @@ namespace BehaviorDesigner.Editor
 			string name = string.Format("{0}{1}", !useSkinColor ? string.Empty : ((!EditorGUIUtility.isProSkin) ? "Light" : "Dark"), imageName);
 			texture2D = Resources.Load<Texture2D>(name);
             if (texture2D != null)
-			    texture2D.hideFlags=(HideFlags.HideAndDontSave);
+			    texture2D.hideFlags = HideFlags.HideAndDontSave;
             else
             {
                 return null;
@@ -1506,7 +1520,7 @@ namespace BehaviorDesigner.Editor
 			return texture2D;
 		}
 
-		public static Texture2D LoadIcon(string iconName, ScriptableObject obj = null)
+		public static Texture2D LoadIcon(string iconName)
 		{
 			if (iconCache.ContainsKey(iconName))
 			{
@@ -1971,7 +1985,7 @@ namespace BehaviorDesigner.Editor
                 margin = (new RectOffset(0, 0, 3, 0)),
                 padding = (new RectOffset(0, 0, 0, 0))
             };
-            Texture2D background = LoadTexture("ArrowSeparator.png", true, null);
+            Texture2D background = LoadTexture("ArrowSeparator", true);
 			arrowSeparatorGUIStyle.normal.background=(background);
 			arrowSeparatorGUIStyle.active.background=(background);
 			arrowSeparatorGUIStyle.hover.background=(background);
@@ -2090,7 +2104,7 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitTaskConnectionCollapsedTexture()
 		{
-			taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed", true, null);
+			taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed", true);
 		}
 
 		private static void InitContentSeparatorTexture()
@@ -2100,167 +2114,172 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitDocTexture()
 		{
-			docTexture = LoadTexture("DocIcon", true, null);
+			docTexture = LoadTexture("DocIcon", true);
 		}
 
 		private static void InitGearTexture()
 		{
-			gearTexture = LoadTexture("GearIcon", true, null);
+			gearTexture = LoadTexture("GearIcon", true);
 		}
 
 		private static void InitColorSelectorTexture(int colorIndex)
 		{
-			colorSelectorTexture[colorIndex] = LoadTexture("ColorSelector" + ColorIndexToColorString(colorIndex), true, null);
+			colorSelectorTexture[colorIndex] = LoadTexture("ColorSelector" + ColorIndexToColorString(colorIndex), true);
 		}
 
 		private static void InitVariableButtonTexture()
 		{
-			variableButtonTexture = LoadTexture("VariableButton", true, null);
+			variableButtonTexture = LoadTexture("VariableButton", true);
 		}
 
 		private static void InitVariableButtonSelectedTexture()
 		{
-			variableButtonSelectedTexture = LoadTexture("VariableButtonSelected", true, null);
+			variableButtonSelectedTexture = LoadTexture("VariableButtonSelected", true);
 		}
 
 		private static void InitVariableWatchButtonTexture()
 		{
-			variableWatchButtonTexture = LoadTexture("VariableWatchButton", true, null);
+			variableWatchButtonTexture = LoadTexture("VariableWatchButton", true);
 		}
 
 		private static void InitVariableWatchButtonSelectedTexture()
 		{
-			variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected", true, null);
+			variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected", true);
 		}
 
 		private static void InitReferencedTexture()
 		{
-			referencedTexture = LoadTexture("LinkedIcon", true, null);
+			referencedTexture = LoadTexture("LinkedIcon", true);
 		}
 
 		private static void InitConditionalAbortSelfTexture()
 		{
-			conditionalAbortSelfTexture = LoadTexture("ConditionalAbortSelfIcon", true, null);
+			conditionalAbortSelfTexture = LoadTexture("ConditionalAbortSelfIcon", true);
 		}
 
 		private static void InitConditionalAbortLowerPriorityTexture()
 		{
-			conditionalAbortLowerPriorityTexture = LoadTexture("ConditionalAbortLowerPriorityIcon", true, null);
+			conditionalAbortLowerPriorityTexture = LoadTexture("ConditionalAbortLowerPriorityIcon", true);
 		}
 
 		private static void InitConditionalAbortBothTexture()
 		{
-			conditionalAbortBothTexture = LoadTexture("ConditionalAbortBothIcon", true, null);
+			conditionalAbortBothTexture = LoadTexture("ConditionalAbortBothIcon", true);
 		}
 
 		private static void InitDeleteButtonTexture()
 		{
-			deleteButtonTexture = LoadTexture("DeleteButton", true, null);
+			deleteButtonTexture = LoadTexture("DeleteButton", true);
 		}
 
 		private static void InitVariableDeleteButtonTexture()
 		{
-			variableDeleteButtonTexture = LoadTexture("VariableDeleteButton", true, null);
+			variableDeleteButtonTexture = LoadTexture("VariableDeleteButton", true);
 		}
 
 		private static void InitDownArrowButtonTexture()
 		{
-			downArrowButtonTexture = LoadTexture("DownArrowButton", true, null);
+			downArrowButtonTexture = LoadTexture("DownArrowButton", true);
 		}
 
 		private static void InitUpArrowButtonTexture()
 		{
-			upArrowButtonTexture = LoadTexture("UpArrowButton", true, null);
+			upArrowButtonTexture = LoadTexture("UpArrowButton", true);
 		}
 
 		private static void InitVariableMapButtonTexture()
 		{
-			variableMapButtonTexture = LoadTexture("VariableMapButton", true, null);
+			variableMapButtonTexture = LoadTexture("VariableMapButton", true);
 		}
 
 		private static void InitIdentifyButtonTexture()
 		{
-			identifyButtonTexture = LoadTexture("IdentifyButton", true, null);
+			identifyButtonTexture = LoadTexture("IdentifyButton", true);
 		}
 
 		private static void InitBreakpointTexture()
 		{
-			breakpointTexture = LoadTexture("BreakpointIcon", false, null);
+			breakpointTexture = LoadTexture("BreakpointIcon", false);
 		}
 
 		private static void InitErrorIconTexture()
 		{
-			errorIconTexture = LoadTexture("ErrorIcon", true, null);
+			errorIconTexture = LoadTexture("ErrorIcon", true);
 		}
 
 		private static void InitSmallErrorIconTexture()
 		{
-			smallErrorIconTexture = LoadTexture("SmallErrorIcon", true, null);
+			smallErrorIconTexture = LoadTexture("SmallErrorIcon", true);
 		}
 
 		private static void InitEnableTaskTexture()
 		{
-			enableTaskTexture = LoadTexture("TaskEnableIcon", false, null);
+			enableTaskTexture = LoadTexture("TaskEnableIcon", false);
 		}
 
 		private static void InitDisableTaskTexture()
 		{
-			disableTaskTexture = LoadTexture("TaskDisableIcon", false, null);
+			disableTaskTexture = LoadTexture("TaskDisableIcon", false);
 		}
 
 		private static void InitExpandTaskTexture()
 		{
-			expandTaskTexture = LoadTexture("TaskExpandIcon", false, null);
+			expandTaskTexture = LoadTexture("TaskExpandIcon", false);
 		}
 
 		private static void InitCollapseTaskTexture()
 		{
-			collapseTaskTexture = LoadTexture("TaskCollapseIcon", false, null);
+			collapseTaskTexture = LoadTexture("TaskCollapseIcon", false);
 		}
 
 		private static void InitExecutionSuccessTexture()
 		{
-			executionSuccessTexture = LoadTexture("ExecutionSuccess", false, null);
+			executionSuccessTexture = LoadTexture("ExecutionSuccess", false);
 		}
 
 		private static void InitExecutionFailureTexture()
 		{
-			executionFailureTexture = LoadTexture("ExecutionFailure", false, null);
+			executionFailureTexture = LoadTexture("ExecutionFailure", false);
 		}
 
 		private static void InitExecutionSuccessRepeatTexture()
 		{
-			executionSuccessRepeatTexture = LoadTexture("ExecutionSuccessRepeat", false, null);
+			executionSuccessRepeatTexture = LoadTexture("ExecutionSuccessRepeat", false);
 		}
 
 		private static void InitExecutionFailureRepeatTexture()
 		{
-			executionFailureRepeatTexture = LoadTexture("ExecutionFailureRepeat", false, null);
+			executionFailureRepeatTexture = LoadTexture("ExecutionFailureRepeat", false);
 		}
 
 		private static void InitHistoryBackwardTexture()
 		{
-			historyBackwardTexture = LoadTexture("HistoryBackward", true, null);
+			historyBackwardTexture = LoadTexture("HistoryBackward", true);
 		}
 
 		private static void InitHistoryForwardTexture()
 		{
-			historyForwardTexture = LoadTexture("HistoryForward", true, null);
+			historyForwardTexture = LoadTexture("HistoryForward", true);
 		}
 
 		private static void InitPlayTexture()
 		{
-			playTexture = LoadTexture("Play", true, null);
+			playTexture = LoadTexture("Play", true);
 		}
+
+        private static void InitPlayHeadTexture()
+        {
+            playHeadTexture = LoadTexture("PlayHead", false);
+        }
 
 		private static void InitPauseTexture()
 		{
-			pauseTexture = LoadTexture("Pause", true, null);
+			pauseTexture = LoadTexture("Pause", true);
 		}
 
 		private static void InitStepTexture()
 		{
-			stepTexture = LoadTexture("Step", true, null);
+			stepTexture = LoadTexture("Step", true);
 		}
 
 		private static void InitScreenshotBackgroundTexture()

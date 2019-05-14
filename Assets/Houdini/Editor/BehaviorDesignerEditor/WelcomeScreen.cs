@@ -68,12 +68,12 @@ namespace BehaviorDesigner.Editor
 
 		public void OnEnable()
 		{
-			this.m_WelcomeScreenImage = BehaviorDesignerUtility.LoadTexture("WelcomeScreenHeader.png", false, this);
-			this.m_SamplesImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenSamplesIcon.png", this);
-			this.m_DocImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenDocumentationIcon.png", this);
-			this.m_VideoImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenVideosIcon.png", this);
-			this.m_ForumImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenForumIcon.png", this);
-			this.m_ContactImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenContactIcon.png", this);
+			m_WelcomeScreenImage = BehaviorDesignerUtility.LoadTexture("WelcomeScreenHeader", false);
+			m_SamplesImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenSamplesIcon");
+			m_DocImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenDocumentationIcon");
+			m_VideoImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenVideosIcon");
+			m_ForumImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenForumIcon");
+			m_ContactImage = BehaviorDesignerUtility.LoadIcon("WelcomeScreenContactIcon");
 		}
 
 		public void OnGUI()

@@ -190,19 +190,19 @@ public class DirectorControl : TimeArea
 		{
 			stopButton = (Resources.Load("Director_StopIcon", typeof(Texture)) as Texture);
 		}
-		if (this.stopButton == null)
+		if (stopButton == null)
 		{
 			Debug.Log("Stop button icon missing from Resources folder.");
 		}
-		if (this.frameForwardButton == null)
+		if (frameForwardButton == null)
 		{
-			this.frameForwardButton = (Resources.Load("Director_FrameForwardIcon", typeof(Texture)) as Texture);
+			frameForwardButton = (Resources.Load("Director_FrameForwardIcon", typeof(Texture)) as Texture);
 		}
-		if (this.frameForwardButton == null)
+		if (frameForwardButton == null)
 		{
 			Debug.Log("Director_FrameForwardIcon.png missing from Resources folder.");
 		}
-		if (this.frameBackwardButton == null)
+		if (frameBackwardButton == null)
 		{
 			frameBackwardButton = Resources.Load("Director_FrameBackwardIcon", typeof(Texture)) as Texture;
 		}

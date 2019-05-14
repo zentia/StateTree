@@ -1,4 +1,3 @@
-using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -390,28 +389,22 @@ public class CinemaAnimationCurveWrapper
 
 	internal void SetKeyLeftConstant(int index)
 	{
-		Keyframe keyframe = this.curve[index];
+		Keyframe keyframe = curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, float.PositiveInfinity, keyframe.outTangent);
-		int num = (keyframe.tangentMode > 16) ? (keyframe.tangentMode / 8 * 8) : 0;
-		keyframe2.tangentMode=(6 + num + 1);
-		this.curve.MoveKey(index, keyframe2);
+		curve.MoveKey(index, keyframe2);
 	}
 
 	internal void SetKeyRightConstant(int index)
 	{
 		Keyframe keyframe = this.curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, float.PositiveInfinity);
-		int num = (keyframe.tangentMode == 10 || keyframe.tangentMode == 0) ? 0 : (keyframe.tangentMode % 8 - 1);
-		keyframe2.tangentMode=(24 + num + 1);
-		this.curve.MoveKey(index, keyframe2);
+		curve.MoveKey(index, keyframe2);
 	}
 
 	internal void SetKeyLeftFree(int index)
 	{
 		Keyframe keyframe = this.curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-		int num = (keyframe.tangentMode > 16) ? (keyframe.tangentMode / 8 * 8) : 0;
-		keyframe2.tangentMode=(num + 1);
 		this.curve.MoveKey(index, keyframe2);
 	}
 
@@ -419,8 +412,6 @@ public class CinemaAnimationCurveWrapper
 	{
 		Keyframe keyframe = this.curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-		int num = (keyframe.tangentMode == 10 || keyframe.tangentMode == 0) ? 0 : (keyframe.tangentMode % 8 - 1);
-		keyframe2.tangentMode=(num + 1);
 		this.curve.MoveKey(index, keyframe2);
 	}
 
@@ -428,7 +419,6 @@ public class CinemaAnimationCurveWrapper
 	{
 		Keyframe keyframe = this.curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-		keyframe2.tangentMode=(1);
 		this.curve.MoveKey(index, keyframe2);
 	}
 
@@ -436,7 +426,6 @@ public class CinemaAnimationCurveWrapper
 	{
 		Keyframe keyframe = this.curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-		keyframe2.tangentMode=(10);
 		this.curve.MoveKey(index, keyframe2);
 		this.curve.SmoothTangents(index, 0f);
 	}
@@ -445,24 +434,23 @@ public class CinemaAnimationCurveWrapper
 	{
 		Keyframe keyframe = curve[index];
 		Keyframe keyframe2 = new Keyframe(keyframe.time, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-		keyframe2.tangentMode=(0);
 		this.curve.MoveKey(index, keyframe2);
 	}
 
 	internal bool IsAuto(int index)
 	{
-		return this.curve[index].tangentMode == 10;
+        return AnimationUtility.GetKeyLeftTangentMode(curve, index) == AnimationUtility.TangentMode.Auto;
 	}
 
 	internal bool IsFreeSmooth(int index)
 	{
-		return curve[index].tangentMode == 0;
+        return AnimationUtility.GetKeyLeftTangentMode(curve, index) == AnimationUtility.TangentMode.Free;
 	}
 
 	internal bool IsBroken(int index)
 	{
-		return curve[index].tangentMode % 2 == 1;
-	}
+        return AnimationUtility.GetKeyLeftTangentMode(curve, index) == AnimationUtility.TangentMode.Free;
+    }
 
 	internal bool IsLeftFree(int index)
 	{

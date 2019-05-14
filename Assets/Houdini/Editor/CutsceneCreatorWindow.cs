@@ -57,8 +57,8 @@ public class CutsceneCreatorWindow : EditorWindow
     /// </summary>
     public void Awake()
     {
-        base.titleContent = new GUIContent(TITLE);
-        this.minSize = new Vector2(250f, 150f);
+        titleContent = new GUIContent(TITLE);
+        minSize = new Vector2(250f, 150f);
         intValues1.Add(new GUIContent("0"));
         intValues1.Add(new GUIContent("1"));
 

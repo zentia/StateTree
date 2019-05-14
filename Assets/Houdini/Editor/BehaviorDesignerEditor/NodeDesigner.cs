@@ -353,53 +353,53 @@ namespace BehaviorDesigner.Editor
 			TaskIconAttribute[] array;
 			if ((array = (mTask.GetType().GetCustomAttributes(typeof(TaskIconAttribute), false) as TaskIconAttribute[])).Length > 0)
 			{
-				mTask.NodeData.Icon = BehaviorDesignerUtility.LoadIcon(array[0].IconPath, null);
+				mTask.NodeData.Icon = BehaviorDesignerUtility.LoadIcon(array[0].IconPath);
 			}
 			if (mTask.NodeData.Icon == null)
 			{
 				string iconName = string.Empty;
 				if (mTask.GetType().IsSubclassOf(typeof(Runtime.Tasks.Action)))
 				{
-					iconName = "{SkinColor}ActionIcon.png";
+					iconName = "{SkinColor}ActionIcon";
 				}
 				else if (mTask.GetType().IsSubclassOf(typeof(Conditional)))
 				{
-					iconName = "{SkinColor}ConditionalIcon.png";
+					iconName = "{SkinColor}ConditionalIcon";
 				}
 				else if (mTask.GetType().IsSubclassOf(typeof(Composite)))
 				{
-					iconName = "{SkinColor}CompositeIcon.png";
+					iconName = "{SkinColor}CompositeIcon";
 				}
 				else if (mTask.GetType().IsSubclassOf(typeof(Decorator)))
 				{
-					iconName = "{SkinColor}DecoratorIcon.png";
+					iconName = "{SkinColor}DecoratorIcon";
 				}
 				else
 				{
-					iconName = "{SkinColor}EntryIcon.png";
+					iconName = "{SkinColor}EntryIcon";
 				}
-				mTask.NodeData.Icon = BehaviorDesignerUtility.LoadIcon(iconName, null);
+				mTask.NodeData.Icon = BehaviorDesignerUtility.LoadIcon(iconName);
 			}
 		}
 
 		private void Init()
 		{
-			this.taskName = BehaviorDesignerUtility.SplitCamelCase(this.mTask.GetType().Name.ToString());
-			this.isParent = this.mTask.GetType().IsSubclassOf(typeof(ParentTask));
-			if (this.isParent)
+			taskName = BehaviorDesignerUtility.SplitCamelCase(mTask.GetType().Name.ToString());
+			isParent = mTask.GetType().IsSubclassOf(typeof(ParentTask));
+			if (isParent)
 			{
-				this.outgoingNodeConnections = new List<NodeConnection>();
+				outgoingNodeConnections = new List<NodeConnection>();
 			}
-			this.mRectIsDirty = (this.mCacheIsDirty = true);
-			this.mIncomingRectIsDirty = true;
-			this.mOutgoingRectIsDirty = true;
+			mRectIsDirty = (mCacheIsDirty = true);
+			mIncomingRectIsDirty = true;
+			mOutgoingRectIsDirty = true;
 		}
 
 		public void MakeEntryDisplay()
 		{
-			this.isEntryDisplay = (this.isParent = true);
-			this.mTask.FriendlyName = (this.taskName = "Entry");
-			this.outgoingNodeConnections = new List<NodeConnection>();
+			isEntryDisplay = (isParent = true);
+			mTask.FriendlyName = (taskName = "Entry");
+			outgoingNodeConnections = new List<NodeConnection>();
 		}
 
 		public Vector2 GetAbsolutePosition()
