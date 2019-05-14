@@ -1199,9 +1199,9 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				if (BehaviorDesignerUtility.historyForwardTexture == null)
+				if (historyForwardTexture == null)
 				{
-					BehaviorDesignerUtility.InitHistoryForwardTexture();
+					InitHistoryForwardTexture();
 				}
 				return historyForwardTexture;
 			}
@@ -1235,11 +1235,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				if (BehaviorDesignerUtility.pauseTexture == null)
+				if (pauseTexture == null)
 				{
-					BehaviorDesignerUtility.InitPauseTexture();
+					InitPauseTexture();
 				}
-				return BehaviorDesignerUtility.pauseTexture;
+				return pauseTexture;
 			}
 		}
 
@@ -1247,11 +1247,11 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				if (BehaviorDesignerUtility.stepTexture == null)
+				if (stepTexture == null)
 				{
-					BehaviorDesignerUtility.InitStepTexture();
+					InitStepTexture();
 				}
-				return BehaviorDesignerUtility.stepTexture;
+				return stepTexture;
 			}
 		}
 
@@ -1259,21 +1259,21 @@ namespace BehaviorDesigner.Editor
 		{
 			get
 			{
-				if (BehaviorDesignerUtility.screenshotBackgroundTexture == null)
+				if (screenshotBackgroundTexture == null)
 				{
-					BehaviorDesignerUtility.InitScreenshotBackgroundTexture();
+					InitScreenshotBackgroundTexture();
 				}
-				return BehaviorDesignerUtility.screenshotBackgroundTexture;
+				return screenshotBackgroundTexture;
 			}
 		}
 
 		public static GUIStyle GetTaskGUIStyle(int colorIndex)
 		{
-			if (BehaviorDesignerUtility.taskGUIStyle[colorIndex] == null)
+			if (taskGUIStyle[colorIndex] == null)
 			{
-				BehaviorDesignerUtility.InitTaskGUIStyle(colorIndex);
+				InitTaskGUIStyle(colorIndex);
 			}
-			return BehaviorDesignerUtility.taskGUIStyle[colorIndex];
+			return taskGUIStyle[colorIndex];
 		}
 
 		public static GUIStyle GetTaskCompactGUIStyle(int colorIndex)
@@ -2269,7 +2269,7 @@ namespace BehaviorDesigner.Editor
 
         private static void InitPlayHeadTexture()
         {
-            playHeadTexture = LoadTexture("PlayHead", false);
+            playHeadTexture = LoadTexture("Director_Playhead", false);
         }
 
 		private static void InitPauseTexture()

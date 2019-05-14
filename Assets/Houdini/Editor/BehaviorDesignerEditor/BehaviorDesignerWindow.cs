@@ -94,6 +94,8 @@ namespace BehaviorDesigner.Editor
 
         private Dictionary<NodeDesigner, Task> mNodeDesignerTaskMap;
 
+        public TimeArea mTimeArea;
+
         private bool mEditorAtBreakpoint;
 
         [SerializeField]
@@ -917,13 +919,13 @@ namespace BehaviorDesigner.Editor
                 List<Task> taskList = this.mBehaviorManager.GetTaskList(behavior);
                 if (taskList != null)
                 {
-                    this.mNodeDesignerTaskMap = new Dictionary<NodeDesigner, Task>();
+                    mNodeDesignerTaskMap = new Dictionary<NodeDesigner, Task>();
                     for (int i = 0; i < taskList.Count; i++)
                     {
                         NodeDesigner nodeDesigner = taskList[i].NodeData.NodeDesigner as NodeDesigner;
                         if (nodeDesigner != null && !this.mNodeDesignerTaskMap.ContainsKey(nodeDesigner))
                         {
-                            this.mNodeDesignerTaskMap.Add(nodeDesigner, taskList[i]);
+                            mNodeDesignerTaskMap.Add(nodeDesigner, taskList[i]);
                         }
                     }
                     mUpdateNodeTaskMap = false;
@@ -1148,7 +1150,12 @@ namespace BehaviorDesigner.Editor
             {
                 mStepApplication = true;
             }
-
+            if (mTimeArea == null)
+            {
+                mTimeArea = new TimeArea();
+            }
+            mTimeArea.TimeRuler(new Rect(90f, 0f, mDebugToolBarRect.width, mDebugToolBarRect.height), 30);
+            GUI.DrawTexture(new Rect(90f, 0f, 16f, 16f), BehaviorDesignerUtility.PlayHeadTexture);
             if (mErrorDetails != null && mErrorDetails.Count > 0 && GUILayout.Button(new GUIContent(mErrorDetails.Count + " Error" + ((mErrorDetails.Count <= 1) ? string.Empty : "s"), BehaviorDesignerUtility.SmallErrorIconTexture), BehaviorDesignerUtility.ToolbarButtonLeftAlignGUIStyle, new GUILayoutOption[]{GUILayout.Width(85f)}))
             {
                 ErrorWindow.ShowWindow();

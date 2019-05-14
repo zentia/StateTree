@@ -32,25 +32,25 @@ internal class TickHandler
 
 	internal float GetPeriodOfLevel(int level)
 	{
-		return this.m_TickModulos[Mathf.Clamp(this.m_SmallestTick + level, 0, this.m_TickModulos.Length - 1)];
+		return m_TickModulos[Mathf.Clamp(m_SmallestTick + level, 0, m_TickModulos.Length - 1)];
 	}
 
 	internal float GetStrengthOfLevel(int level)
 	{
-		return this.m_TickStrengths[this.m_SmallestTick + level];
+		return m_TickStrengths[m_SmallestTick + level];
 	}
 
 	internal float[] GetTicksAtLevel(int level, bool excludeTicksFromHigherlevels)
 	{
 		int num = Mathf.Clamp(m_SmallestTick + level, 0, m_TickModulos.Length - 1);
 		List<float> list = new List<float>();
-		int arg_48_0 = Mathf.FloorToInt(m_MinValue / this.m_TickModulos[num]);
-		int num2 = Mathf.CeilToInt(this.m_MaxValue / this.m_TickModulos[num]);
+		int arg_48_0 = Mathf.FloorToInt(m_MinValue / m_TickModulos[num]);
+		int num2 = Mathf.CeilToInt(m_MaxValue / m_TickModulos[num]);
 		for (int i = arg_48_0; i <= num2; i++)
 		{
-			if (!excludeTicksFromHigherlevels || num >= this.m_BiggestTick || i % Mathf.RoundToInt(this.m_TickModulos[num + 1] / this.m_TickModulos[num]) != 0)
+			if (!excludeTicksFromHigherlevels || num >= m_BiggestTick || i % Mathf.RoundToInt(this.m_TickModulos[num + 1] / this.m_TickModulos[num]) != 0)
 			{
-				list.Add((float)i * this.m_TickModulos[num]);
+				list.Add(i * m_TickModulos[num]);
 			}
 		}
 		return list.ToArray();
@@ -168,28 +168,28 @@ internal class TickHandler
 	internal void SetTickStrengths(float tickMinSpacing, float tickMaxSpacing, bool sqrt)
 	{
 		m_TickStrengths = new float[m_TickModulos.Length];
-		this.m_SmallestTick = 0;
-		this.m_BiggestTick = m_TickModulos.Length - 1;
-		for (int i = this.m_TickModulos.Length - 1; i >= 0; i--)
+		m_SmallestTick = 0;
+		m_BiggestTick = m_TickModulos.Length - 1;
+		for (int i = m_TickModulos.Length - 1; i >= 0; i--)
 		{
-			float num = this.m_TickModulos[i] * this.m_PixelRange / (this.m_MaxValue - this.m_MinValue);
-			this.m_TickStrengths[i] = (num - tickMinSpacing) / (tickMaxSpacing - tickMinSpacing);
-			if (this.m_TickStrengths[i] >= 1f)
+			float num = m_TickModulos[i] * m_PixelRange / (m_MaxValue - m_MinValue);
+			m_TickStrengths[i] = (num - tickMinSpacing) / (tickMaxSpacing - tickMinSpacing);
+			if (m_TickStrengths[i] >= 1f)
 			{
-				this.m_BiggestTick = i;
+				m_BiggestTick = i;
 			}
 			if (num <= tickMinSpacing)
 			{
-				this.m_SmallestTick = i;
+				m_SmallestTick = i;
 				break;
 			}
 		}
-		for (int j = this.m_SmallestTick; j <= this.m_BiggestTick; j++)
+		for (int j = m_SmallestTick; j <= m_BiggestTick; j++)
 		{
-			this.m_TickStrengths[j] = Mathf.Clamp01(this.m_TickStrengths[j]);
+			m_TickStrengths[j] = Mathf.Clamp01(m_TickStrengths[j]);
 			if (sqrt)
 			{
-				this.m_TickStrengths[j] = Mathf.Sqrt(this.m_TickStrengths[j]);
+				m_TickStrengths[j] = Mathf.Sqrt(m_TickStrengths[j]);
 			}
 		}
 	}

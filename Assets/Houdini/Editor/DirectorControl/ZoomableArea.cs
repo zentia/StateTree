@@ -285,11 +285,11 @@ public class ZoomableArea
 	{
 		get
 		{
-			return this.m_hScrollMax;
+			return m_hScrollMax;
 		}
 		set
 		{
-			this.m_hScrollMax = value;
+			m_hScrollMax = value;
 		}
 	}
 
@@ -297,14 +297,14 @@ public class ZoomableArea
 	{
 		get
 		{
-			return new Rect(-m_Translation.x / this.m_Scale.x, -(this.m_Translation.y - this.drawRect.height) / this.m_Scale.y, this.drawRect.width / this.m_Scale.x, this.drawRect.height / -this.m_Scale.y);
+			return new Rect(-m_Translation.x / m_Scale.x, -(m_Translation.y - drawRect.height) / m_Scale.y, drawRect.width / m_Scale.x, drawRect.height / -m_Scale.y);
 		}
 		set
 		{
-			this.m_Scale.x = this.drawRect.width / value.width;
-			this.m_Translation.x = -value.x * this.m_Scale.x;
-			this.m_Translation.y = this.drawRect.height - value.y * this.m_Scale.y;
-			this.EnforceScaleAndRange();
+			m_Scale.x = drawRect.width / value.width;
+			m_Translation.x = -value.x * m_Scale.x;
+			m_Translation.y = drawRect.height - value.y * m_Scale.y;
+			EnforceScaleAndRange();
 		}
 	}
 

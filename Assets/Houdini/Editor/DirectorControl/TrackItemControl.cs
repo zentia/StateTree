@@ -1,6 +1,4 @@
 ﻿using DirectorEditor;
-using System;
-using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using CinemaDirector;
@@ -27,33 +25,21 @@ public class TrackItemControl : DirectorBehaviourControl
 	protected bool mouseDragActivity;
 
 	protected bool hasSelectionChanged;
-
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	internal event TranslateTrackItemEventHandler RequestTrackItemTranslate;
-
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	internal event TranslateTrackItemEventHandler TrackItemTranslate;
-
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	internal event TrackItemEventHandler TrackItemUpdate;
-
-	[method: CompilerGenerated]
-	[CompilerGenerated]
 	public event TrackItemEventHandler AlterTrackItem;
 
 	public TimelineItemWrapper Wrapper
 	{
 		get
 		{
-			return this.wrapper;
+			return wrapper;
 		}
 		set
 		{
-			this.wrapper = value;
-			base.Behaviour = value.Behaviour;
+			wrapper = value;
+			Behaviour = value.Behaviour;
 		}
 	}
 
@@ -61,11 +47,11 @@ public class TrackItemControl : DirectorBehaviourControl
 	{
 		get
 		{
-			return this.track;
+			return track;
 		}
 		set
 		{
-			this.track = value;
+			track = value;
 		}
 	}
 
@@ -73,11 +59,11 @@ public class TrackItemControl : DirectorBehaviourControl
 	{
 		get
 		{
-			return this.trackControl;
+			return trackControl;
 		}
 		set
 		{
-			this.trackControl = value;
+			trackControl = value;
 		}
 	}
 
@@ -85,11 +71,11 @@ public class TrackItemControl : DirectorBehaviourControl
 	{
 		get
 		{
-			return this.drawPriority;
+			return drawPriority;
 		}
 		set
 		{
-			this.drawPriority = value;
+			drawPriority = value;
 		}
 	}
 
@@ -109,77 +95,77 @@ public class TrackItemControl : DirectorBehaviourControl
 
 	public virtual void HandleInput(DirectorControlState state, Rect trackPosition)
 	{
-		Behaviour behaviour = this.wrapper.Behaviour;
+		Behaviour behaviour = wrapper.Behaviour;
 		if (behaviour == null)
 		{
 			return;
 		}
-		float num = this.wrapper.Firetime * state.Scale.x + state.Translation.x;
-		this.controlPosition = new Rect(num - 8f, 0f, 16f, trackPosition.height);
-		this.controlID = GUIUtility.GetControlID(this.wrapper.Behaviour.GetInstanceID(), (FocusType)2, this.controlPosition);
-		switch ((int)Event.current.GetTypeForControl(this.controlID))
+		float num = wrapper.Firetime * state.Scale.x + state.Translation.x;
+		controlPosition = new Rect(num - 8f, 0f, 16f, trackPosition.height);
+		controlID = GUIUtility.GetControlID(wrapper.Behaviour.GetInstanceID(), FocusType.Passive, controlPosition);
+		switch (Event.current.GetTypeForControl(controlID))
 		{
-		case 0:
-			if (this.controlPosition.Contains(Event.current.mousePosition) && (int)Event.current.button == 0)
+		case EventType.MouseDown:
+			if (controlPosition.Contains(Event.current.mousePosition) && Event.current.button == 0)
 			{
-				GUIUtility.hotControl=(this.controlID);
+				GUIUtility.hotControl = controlID;
 				if (Event.current.control)
 				{
-					if (base.IsSelected)
+					if (IsSelected)
 					{
 						GameObject[] gameObjects = Selection.gameObjects;
-						ArrayUtility.Remove<GameObject>(ref gameObjects, this.Wrapper.Behaviour.gameObject);
+						ArrayUtility.Remove(ref gameObjects, Wrapper.Behaviour.gameObject);
 						Selection.objects=(gameObjects);
-						this.hasSelectionChanged = true;
+						hasSelectionChanged = true;
 					}
 					else
 					{
 						GameObject[] gameObjects2 = Selection.gameObjects;
-						ArrayUtility.Add<GameObject>(ref gameObjects2, this.Wrapper.Behaviour.gameObject);
+						ArrayUtility.Add(ref gameObjects2, Wrapper.Behaviour.gameObject);
 						Selection.objects=(gameObjects2);
-						this.hasSelectionChanged = true;
+						hasSelectionChanged = true;
 					}
 				}
-				else if (!base.IsSelected)
+				else if (!IsSelected)
 				{
 					Selection.activeInstanceID=(behaviour.GetInstanceID());
 				}
-				this.mouseDragActivity = false;
+				mouseDragActivity = false;
 				Event.current.Use();
 			}
-			if (this.controlPosition.Contains(Event.current.mousePosition) && (int)Event.current.button == 1)
+			if (controlPosition.Contains(Event.current.mousePosition) && Event.current.button == 1)
 			{
-				if (!base.IsSelected)
+				if (!IsSelected)
 				{
 					GameObject[] gameObjects3 = Selection.gameObjects;
-					ArrayUtility.Add<GameObject>(ref gameObjects3, this.Wrapper.Behaviour.gameObject);
+					ArrayUtility.Add(ref gameObjects3, Wrapper.Behaviour.gameObject);
 					Selection.objects=(gameObjects3);
-					this.hasSelectionChanged = true;
+					hasSelectionChanged = true;
 				}
-				this.showContextMenu(behaviour);
+				showContextMenu(behaviour);
 				Event.current.Use();
 			}
 			break;
-		case 1:
-			if (GUIUtility.hotControl == this.controlID)
+		case EventType.MouseUp:
+			if (GUIUtility.hotControl == controlID)
 			{
 				GUIUtility.hotControl=(0);
-				if (!this.mouseDragActivity)
+				if (!mouseDragActivity)
 				{
 					if (Event.current.control)
 					{
-						if (!this.hasSelectionChanged)
+						if (!hasSelectionChanged)
 						{
-							if (base.IsSelected)
+							if (IsSelected)
 							{
 								GameObject[] gameObjects4 = Selection.gameObjects;
-								ArrayUtility.Remove<GameObject>(ref gameObjects4, this.Wrapper.Behaviour.gameObject);
+								ArrayUtility.Remove(ref gameObjects4, Wrapper.Behaviour.gameObject);
 								Selection.objects=(gameObjects4);
 							}
 							else
 							{
 								GameObject[] gameObjects5 = Selection.gameObjects;
-								ArrayUtility.Add<GameObject>(ref gameObjects5, this.Wrapper.Behaviour.gameObject);
+								ArrayUtility.Add(ref gameObjects5, Wrapper.Behaviour.gameObject);
 								Selection.objects=(gameObjects5);
 							}
 						}
@@ -189,38 +175,35 @@ public class TrackItemControl : DirectorBehaviourControl
 						Selection.activeInstanceID=(behaviour.GetInstanceID());
 					}
 				}
-				else if (this.TrackItemUpdate != null)
-				{
-					this.TrackItemUpdate(this, new TrackItemEventArgs(this.wrapper.Behaviour, this.wrapper.Firetime));
-				}
-				this.hasSelectionChanged = false;
+				else
+                    {
+                        TrackItemUpdate?.Invoke(this, new TrackItemEventArgs(wrapper.Behaviour, wrapper.Firetime));
+                    }
+                    hasSelectionChanged = false;
 			}
 			break;
-		case 3:
-			if (GUIUtility.hotControl == this.controlID && !this.hasSelectionChanged)
+		case EventType.MouseDrag:
+			if (GUIUtility.hotControl == controlID && !hasSelectionChanged)
 			{
 				Undo.RecordObject(behaviour, string.Format("Changed {0}", behaviour.name));
 				float num2 = (Event.current.mousePosition.x - state.Translation.x) / state.Scale.x;
 				num2 = state.SnappedTime(num2);
-				if (!this.mouseDragActivity)
+				if (!mouseDragActivity)
 				{
-					this.mouseDragActivity = (this.Wrapper.Firetime != num2);
+					mouseDragActivity = (Wrapper.Firetime != num2);
 				}
-				if (this.RequestTrackItemTranslate != null)
+				if (RequestTrackItemTranslate != null)
 				{
-					float firetime = num2 - this.wrapper.Firetime;
-					float firetime2 = this.RequestTrackItemTranslate(this, new TrackItemEventArgs(this.wrapper.Behaviour, firetime));
-					if (this.TrackItemTranslate != null)
-					{
-						this.TrackItemTranslate(this, new TrackItemEventArgs(this.wrapper.Behaviour, firetime2));
-					}
+					float firetime = num2 - wrapper.Firetime;
+					float firetime2 = RequestTrackItemTranslate(this, new TrackItemEventArgs(wrapper.Behaviour, firetime));
+					TrackItemTranslate?.Invoke(this, new TrackItemEventArgs(wrapper.Behaviour, firetime2));
 				}
 			}
 			break;
 		}
 		if (Selection.activeGameObject == behaviour.gameObject)
 		{
-			if ((int)(int)Event.current.type == 13 && Event.current.commandName == "Copy")
+			if (Event.current.type == EventType.ValidateCommand && Event.current.commandName == "Copy")
 			{
 				Event.current.Use();
 			}
@@ -230,7 +213,7 @@ public class TrackItemControl : DirectorBehaviourControl
 				Event.current.Use();
 			}
 		}
-		if ((int)Event.current.type == 4 && (int)Event.current.keyCode == 127 && Selection.activeGameObject == behaviour.gameObject)
+		if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Delete && Selection.activeGameObject == behaviour.gameObject)
 		{
 			deleteItem(behaviour);
 			Event.current.Use();

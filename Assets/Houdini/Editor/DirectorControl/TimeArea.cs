@@ -67,21 +67,21 @@ public class TimeArea : ZoomableArea
 
 	private void ApplySettings()
 	{
-		base.hRangeLocked = this.settings.hRangeLocked;
-		base.hRangeMin = this.settings.HorizontalRangeMin;
-		base.hRangeMax = this.settings.hRangeMax;
+		hRangeLocked = settings.hRangeLocked;
+		hRangeMin = settings.HorizontalRangeMin;
+		hRangeMax = settings.hRangeMax;
 		scaleWithWindow = settings.scaleWithWindow;
-		base.hSlider = this.settings.hSlider;
+		hSlider = settings.hSlider;
 	}
 
 	public float GetMajorTickDistance(float frameRate)
 	{
 		float result = 0f;
-		for (int i = 0; i < this.hTicks.tickLevels; i++)
+		for (int i = 0; i < hTicks.tickLevels; i++)
 		{
-			if (this.hTicks.GetStrengthOfLevel(i) > 0.5f)
+			if (hTicks.GetStrengthOfLevel(i) > 0.5f)
 			{
-				return this.hTicks.GetPeriodOfLevel(i);
+				return hTicks.GetPeriodOfLevel(i);
 			}
 		}
 		return result;
@@ -91,29 +91,29 @@ public class TimeArea : ZoomableArea
 	{
 		Color color = Handles.color;
 		GUI.BeginGroup(position);
-		if ((int)Event.current.type != 7)
+		if (Event.current.type != EventType.Repaint)
 		{
 			GUI.EndGroup();
 			return;
 		}
-		TimeArea.InitStyles();
-		this.SetTickMarkerRanges();
-		this.hTicks.SetTickStrengths(3f, 80f, true);
-		Color textColor = TimeArea.styles.TimelineTick.normal.textColor;
+		InitStyles();
+		SetTickMarkerRanges();
+		hTicks.SetTickStrengths(3f, 80f, true);
+		Color textColor = styles.TimelineTick.normal.textColor;
 		textColor.a = 0.3f;
-		Handles.color=(textColor);
-		for (int i = 0; i < this.hTicks.tickLevels; i++)
+		Handles.color = textColor;
+		for (int i = 0; i < hTicks.tickLevels; i++)
 		{
-			float strengthOfLevel = this.hTicks.GetStrengthOfLevel(i);
+			float strengthOfLevel = hTicks.GetStrengthOfLevel(i);
 			if (strengthOfLevel > 0.5f)
 			{
-				float[] ticksAtLevel = this.hTicks.GetTicksAtLevel(i, true);
+				float[] ticksAtLevel = hTicks.GetTicksAtLevel(i, true);
 				for (int j = 0; j < ticksAtLevel.Length; j++)
 				{
 					if (ticksAtLevel[j] >= 0f)
 					{
 						int num = Mathf.RoundToInt(ticksAtLevel[j] * frameRate);
-						float num2 = this.FrameToPixel((float)num, frameRate, position);
+						float num2 = FrameToPixel(num, frameRate, position);
 						Handles.DrawLine(new Vector3(num2, 0f, 0f), new Vector3(num2, position.height, 0f));
 						if (strengthOfLevel > 0.8f)
 						{
@@ -124,7 +124,7 @@ public class TimeArea : ZoomableArea
 			}
 		}
 		GUI.EndGroup();
-		Handles.color=(color);
+		Handles.color=color;
 	}
 
 	public string FormatFrame(int frame, float frameRate)
@@ -167,23 +167,23 @@ public class TimeArea : ZoomableArea
 		}
 		InitStyles();
 		SetTickMarkerRanges();
-		this.hTicks.SetTickStrengths(3f, 80f, true);
-		Color textColor = TimeArea.styles.TimelineTick.normal.textColor;
+		hTicks.SetTickStrengths(3f, 80f, true);
+		Color textColor = styles.TimelineTick.normal.textColor;
 		textColor.a = 0.3f;
-		Handles.color=(textColor);
-		for (int i = 0; i < this.hTicks.tickLevels; i++)
+		Handles.color = textColor;
+		for (int i = 0; i < hTicks.tickLevels; i++)
 		{
-			float strengthOfLevel = this.hTicks.GetStrengthOfLevel(i);
+			float strengthOfLevel = hTicks.GetStrengthOfLevel(i);
 			if (strengthOfLevel > 0.2f)
 			{
-				float[] ticksAtLevel = this.hTicks.GetTicksAtLevel(i, true);
+				float[] ticksAtLevel = hTicks.GetTicksAtLevel(i, true);
 				for (int j = 0; j < ticksAtLevel.Length; j++)
 				{
-					if (ticksAtLevel[j] >= base.hRangeMin && ticksAtLevel[j] <= base.hRangeMax)
+					if (ticksAtLevel[j] >= hRangeMin && ticksAtLevel[j] <= hRangeMax)
 					{
 						int num = Mathf.RoundToInt(ticksAtLevel[j] * frameRate);
 						float num2 = position.height * Mathf.Min(1f, strengthOfLevel) * 0.7f;
-						float num3 = this.FrameToPixel((float)num, frameRate, position);
+						float num3 = FrameToPixel(num, frameRate, position);
 						Handles.DrawLine(new Vector3(num3, position.height - num2 + 0.5f, 0f), new Vector3(num3, position.height - 0.5f, 0f));
 						if (strengthOfLevel > 0.5f)
 						{

@@ -26,7 +26,6 @@ public class DirectorControl : TimeArea
 	private Texture stopButton;
 	private Texture frameForwardButton;
 	private Texture frameBackwardButton;
-	private Texture scrubHead;
 	private Texture scrubDurationHead;
 	private const float HEADER_HEIGHT = 17f;
 	private const float SCROLLBAR_WIDTH = 15f;
@@ -210,14 +209,6 @@ public class DirectorControl : TimeArea
 		{
 			Debug.Log("Director_FrameBackwardIcon.png missing from Resources folder.");
 		}
-		if (scrubHead == null)
-		{
-			scrubHead = Resources.Load("Director_Playhead", typeof(Texture)) as Texture;
-		}
-		if (scrubHead == null)
-		{
-			Debug.Log("Director_Playhead missing from Resources folder.");
-		}
 		if (scrubDurationHead == null)
 		{
 			scrubDurationHead = (Resources.Load("Director_Duration_Playhead", typeof(Texture)) as Texture);
@@ -351,7 +342,7 @@ public class DirectorControl : TimeArea
 			Handles.color = Color.red;
 			if (num > trackBodyBackground.x && num < bodyArea.width)
 			{
-				GUI.DrawTexture(new Rect(num - 8f, 20f, 16f, 16f), scrubHead);
+				GUI.DrawTexture(new Rect(num - 8f, 20f, 16f, 16f), BehaviorDesigner.Editor.BehaviorDesignerUtility.PlayHeadTexture);
 				Handles.DrawLine(new Vector2(num, 34f), new Vector2(num, timeRuleArea.y + trackBodyBackgroundNoVerticalScrollbar.height + 3f));
 				Handles.DrawLine(new Vector2(num + 1f, 34f), new Vector2(num + 1f, timeRuleArea.y + trackBodyBackgroundNoVerticalScrollbar.height + 3f));
 			}
