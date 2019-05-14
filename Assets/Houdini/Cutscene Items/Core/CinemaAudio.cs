@@ -5,7 +5,6 @@ namespace CinemaDirector
     [CutsceneItemAttribute("Audio", "Play Audio", typeof(AudioClip), CutsceneItemGenre.AudioClipItem)]
     public class CinemaAudio : TimelineActionFixed
     {
-        private bool wasPlaying = false;
         public string m_Path;
         
         public void Trigger()
@@ -51,19 +50,8 @@ namespace CinemaDirector
             AudioSource audio = gameObject.GetComponent<AudioSource>();
             if (audio != null)
             {
-                wasPlaying = false;
-                if (audio.isPlaying)
-                {
-                    wasPlaying = true;
-                }
-                
                 audio.Pause();
             }
-        }
-
-        public override void Stop()
-        {
-            
         }
 
         public void SetTime(float audioTime)

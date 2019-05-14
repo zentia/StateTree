@@ -7,10 +7,10 @@ namespace CinemaDirector
     /// An action that fades in a texture over the first 25% of length, shows for 50% of time length
     /// and fades away over the final 25%.
     /// </summary>
-    [CutsceneItem("GUITexture", "Fade Texture", CutsceneItemGenre.GlobalItem)]
+    [CutsceneItem("RawImage", "Fade Texture", CutsceneItemGenre.GlobalItem)]
     public class FadeTexture : CinemaGlobalAction
     {
-        // The GUITexture to show
+        // The RawImage to show
         public Image target;
 
         // Optional Tint

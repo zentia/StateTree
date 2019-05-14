@@ -519,46 +519,45 @@ public class CinemaAnimationCurveWrapper
 
 	internal void CollapseStart(float oldStartTime, float newStartTime)
 	{
-		for (int i = this.curve.length - 2; i > 0; i--)
+		for (int i = curve.length - 2; i > 0; i--)
 		{
-			if (this.curve[i].time >= oldStartTime && this.curve[i].time <= newStartTime)
+			if (curve[i].time >= oldStartTime && curve[i].time <= newStartTime)
 			{
-				this.RemoveKey(i);
+				RemoveKey(i);
 			}
 		}
-		if (newStartTime < this.GetKeyframe(this.curve.length - 1).time)
+		if (newStartTime < GetKeyframe(curve.length - 1).time)
 		{
-			Keyframe keyframe = this.GetKeyframe(0);
+			Keyframe keyframe = GetKeyframe(0);
 			Keyframe kf = new Keyframe(newStartTime, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-			kf.tangentMode=(keyframe.tangentMode);
-			this.MoveKey(0, kf);
+            AnimationUtility.SetKeyLeftTangentMode(curve, 0, AnimationUtility.GetKeyLeftTangentMode(curve, 0));
+			MoveKey(0, kf);
 		}
 	}
 
 	internal void ScaleStart(float oldFiretime, float oldDuration, float newFiretime)
 	{
 		float num = (oldFiretime + oldDuration - newFiretime) / oldDuration;
-		for (int i = this.curve.length - 1; i >= 0; i--)
+		for (int i = curve.length - 1; i >= 0; i--)
 		{
-			Keyframe keyframe = this.GetKeyframe(i);
+			Keyframe keyframe = GetKeyframe(i);
 			float num2 = (keyframe.time - oldFiretime) * num + newFiretime;
 			Keyframe kf = new Keyframe(num2, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-			kf.tangentMode=(keyframe.tangentMode);
-			this.MoveKey(i, kf);
+            AnimationUtility.SetKeyLeftTangentMode(curve, i, AnimationUtility.GetKeyLeftTangentMode(curve, i));
+            MoveKey(i, kf);
 		}
 	}
 
 	internal void ScaleEnd(float oldDuration, float newDuration)
 	{
 		float num = newDuration / oldDuration;
-		float time = this.curve[0].time;
-		for (int i = 1; i < this.curve.length; i++)
+		float time = curve[0].time;
+		for (int i = 1; i < curve.length; i++)
 		{
-			Keyframe keyframe = this.GetKeyframe(i);
+			Keyframe keyframe = GetKeyframe(i);
 			float num2 = (keyframe.time - time) * num + time;
 			Keyframe kf = new Keyframe(num2, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-			kf.tangentMode=(keyframe.tangentMode);
-			this.MoveKey(i, kf);
+            MoveKey(i, kf);
 		}
 	}
 
@@ -570,14 +569,13 @@ public class CinemaAnimationCurveWrapper
 		}
 		AnimationCurve animationCurve = new AnimationCurve();
 		float time = curve[0].time;
-		float time2 = this.curve[this.curve.length - 1].time;
-		for (int i = 0; i < this.curve.length; i++)
+		float time2 = curve[curve.length - 1].time;
+		for (int i = 0; i < curve.length; i++)
 		{
-			Keyframe keyframe = this.GetKeyframe(i);
+			Keyframe keyframe = GetKeyframe(i);
 			float num = time2 - keyframe.time + time;
 			Keyframe keyframe2 = new Keyframe(num, keyframe.value, keyframe.inTangent, keyframe.outTangent);
-			keyframe2.tangentMode=(keyframe.tangentMode);
-			animationCurve.AddKey(keyframe2);
+            animationCurve.AddKey(keyframe2);
 		}
 		Curve = animationCurve;
 	}

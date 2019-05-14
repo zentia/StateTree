@@ -20,7 +20,6 @@ namespace CinemaDirector
         private bool cachedState;
         private bool cachedEnable;
         private Transform m_cacheParent;
-        private Animation animation;
         private AnimationClip clip;
         public static string animDir = "Animation\\Juqing\\";
         public float[] m_Args = new float[3];
@@ -63,10 +62,6 @@ namespace CinemaDirector
                 
                 if (Application.isPlaying)
                 {
-                    if (animation != null)
-                    {
-                        animation.Play(clip.name);
-                    }
                 }
 #if UNITY_EDITOR
                 else
@@ -85,7 +80,6 @@ namespace CinemaDirector
         public bool m_HasBake;
         private float m_RecorderStopTime = 0.0f;
         private float m_RunningTime = 0f;
-        private bool m_Playing = true;
 
         public void ReBake()
         {
@@ -126,7 +120,6 @@ namespace CinemaDirector
             }
             Bake();
             m_RunningTime = 0f;
-            m_Playing = true;
         }
         public override void UpdateTime(float time, float deltaTime)
         {
@@ -141,7 +134,6 @@ namespace CinemaDirector
             }
             if (m_RunningTime > m_RecorderStopTime)
             {
-                m_Playing = false;
                 return;
             }
 

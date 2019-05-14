@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CinemaDirector
 {
     /// <summary>
-    /// Transition from Black to Clear over time by overlaying a guiTexture.
+    /// Transition from Black to Clear over time by overlaying a RawImage.
     /// </summary>
     [CutsceneItem("Transitions", "Fade from Black", CutsceneItemGenre.GlobalItem)]
     public class FadeFromBlack : CinemaGlobalAction

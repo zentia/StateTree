@@ -2082,12 +2082,12 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitTaskConnectionIdentifyBottomTexture()
 		{
-			BehaviorDesignerUtility.taskConnectionIdentifyBottomTexture = BehaviorDesignerUtility.LoadTaskTexture("TaskConnectionIdentifyBottom.png", true, null);
+			taskConnectionIdentifyBottomTexture = LoadTaskTexture("TaskConnectionIdentifyBottom.png", true, null);
 		}
 
 		private static void InitTaskConnectionCollapsedTexture()
 		{
-			BehaviorDesignerUtility.taskConnectionCollapsedTexture = BehaviorDesignerUtility.LoadTexture("TaskConnectionCollapsed.png", true, null);
+			taskConnectionCollapsedTexture = LoadTexture("TaskConnectionCollapsed.png", true, null);
 		}
 
 		private static void InitContentSeparatorTexture()
@@ -2097,37 +2097,37 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitDocTexture()
 		{
-			BehaviorDesignerUtility.docTexture = BehaviorDesignerUtility.LoadTexture("DocIcon.png", true, null);
+			docTexture = LoadTexture("DocIcon.png", true, null);
 		}
 
 		private static void InitGearTexture()
 		{
-			BehaviorDesignerUtility.gearTexture = BehaviorDesignerUtility.LoadTexture("GearIcon.png", true, null);
+			gearTexture = LoadTexture("GearIcon.png", true, null);
 		}
 
 		private static void InitColorSelectorTexture(int colorIndex)
 		{
-			BehaviorDesignerUtility.colorSelectorTexture[colorIndex] = BehaviorDesignerUtility.LoadTexture("ColorSelector" + BehaviorDesignerUtility.ColorIndexToColorString(colorIndex) + ".png", true, null);
+			colorSelectorTexture[colorIndex] = LoadTexture("ColorSelector" + ColorIndexToColorString(colorIndex) + ".png", true, null);
 		}
 
 		private static void InitVariableButtonTexture()
 		{
-			BehaviorDesignerUtility.variableButtonTexture = BehaviorDesignerUtility.LoadTexture("VariableButton.png", true, null);
+			variableButtonTexture = LoadTexture("VariableButton.png", true, null);
 		}
 
 		private static void InitVariableButtonSelectedTexture()
 		{
-			BehaviorDesignerUtility.variableButtonSelectedTexture = BehaviorDesignerUtility.LoadTexture("VariableButtonSelected.png", true, null);
+			variableButtonSelectedTexture = LoadTexture("VariableButtonSelected.png", true, null);
 		}
 
 		private static void InitVariableWatchButtonTexture()
 		{
-			BehaviorDesignerUtility.variableWatchButtonTexture = BehaviorDesignerUtility.LoadTexture("VariableWatchButton.png", true, null);
+			variableWatchButtonTexture = LoadTexture("VariableWatchButton.png", true, null);
 		}
 
 		private static void InitVariableWatchButtonSelectedTexture()
 		{
-			BehaviorDesignerUtility.variableWatchButtonSelectedTexture = BehaviorDesignerUtility.LoadTexture("VariableWatchButtonSelected.png", true, null);
+			variableWatchButtonSelectedTexture = LoadTexture("VariableWatchButtonSelected.png", true, null);
 		}
 
 		private static void InitReferencedTexture()
@@ -2137,127 +2137,127 @@ namespace BehaviorDesigner.Editor
 
 		private static void InitConditionalAbortSelfTexture()
 		{
-			BehaviorDesignerUtility.conditionalAbortSelfTexture = BehaviorDesignerUtility.LoadTexture("ConditionalAbortSelfIcon.png", true, null);
+			conditionalAbortSelfTexture = LoadTexture("ConditionalAbortSelfIcon.png", true, null);
 		}
 
 		private static void InitConditionalAbortLowerPriorityTexture()
 		{
-			BehaviorDesignerUtility.conditionalAbortLowerPriorityTexture = BehaviorDesignerUtility.LoadTexture("ConditionalAbortLowerPriorityIcon.png", true, null);
+			conditionalAbortLowerPriorityTexture = LoadTexture("ConditionalAbortLowerPriorityIcon.png", true, null);
 		}
 
 		private static void InitConditionalAbortBothTexture()
 		{
-			BehaviorDesignerUtility.conditionalAbortBothTexture = BehaviorDesignerUtility.LoadTexture("ConditionalAbortBothIcon.png", true, null);
+			conditionalAbortBothTexture = LoadTexture("ConditionalAbortBothIcon.png", true, null);
 		}
 
 		private static void InitDeleteButtonTexture()
 		{
-			BehaviorDesignerUtility.deleteButtonTexture = BehaviorDesignerUtility.LoadTexture("DeleteButton.png", true, null);
+			deleteButtonTexture = LoadTexture("DeleteButton.png", true, null);
 		}
 
 		private static void InitVariableDeleteButtonTexture()
 		{
-			BehaviorDesignerUtility.variableDeleteButtonTexture = LoadTexture("VariableDeleteButton.png", true, null);
+			variableDeleteButtonTexture = LoadTexture("VariableDeleteButton.png", true, null);
 		}
 
 		private static void InitDownArrowButtonTexture()
 		{
-			BehaviorDesignerUtility.downArrowButtonTexture = BehaviorDesignerUtility.LoadTexture("DownArrowButton.png", true, null);
+			downArrowButtonTexture = LoadTexture("DownArrowButton.png", true, null);
 		}
 
 		private static void InitUpArrowButtonTexture()
 		{
-			BehaviorDesignerUtility.upArrowButtonTexture = BehaviorDesignerUtility.LoadTexture("UpArrowButton.png", true, null);
+			upArrowButtonTexture = LoadTexture("UpArrowButton.png", true, null);
 		}
 
 		private static void InitVariableMapButtonTexture()
 		{
-			BehaviorDesignerUtility.variableMapButtonTexture = BehaviorDesignerUtility.LoadTexture("VariableMapButton.png", true, null);
+			variableMapButtonTexture = LoadTexture("VariableMapButton.png", true, null);
 		}
 
 		private static void InitIdentifyButtonTexture()
 		{
-			BehaviorDesignerUtility.identifyButtonTexture = BehaviorDesignerUtility.LoadTexture("IdentifyButton.png", true, null);
+			identifyButtonTexture = LoadTexture("IdentifyButton.png", true, null);
 		}
 
 		private static void InitBreakpointTexture()
 		{
-			BehaviorDesignerUtility.breakpointTexture = BehaviorDesignerUtility.LoadTexture("BreakpointIcon.png", false, null);
+			breakpointTexture = LoadTexture("BreakpointIcon.png", false, null);
 		}
 
 		private static void InitErrorIconTexture()
 		{
-			BehaviorDesignerUtility.errorIconTexture = BehaviorDesignerUtility.LoadTexture("ErrorIcon.png", true, null);
+			errorIconTexture = LoadTexture("ErrorIcon.png", true, null);
 		}
 
 		private static void InitSmallErrorIconTexture()
 		{
-			BehaviorDesignerUtility.smallErrorIconTexture = BehaviorDesignerUtility.LoadTexture("SmallErrorIcon.png", true, null);
+			smallErrorIconTexture = LoadTexture("SmallErrorIcon.png", true, null);
 		}
 
 		private static void InitEnableTaskTexture()
 		{
-			BehaviorDesignerUtility.enableTaskTexture = BehaviorDesignerUtility.LoadTexture("TaskEnableIcon.png", false, null);
+			enableTaskTexture = LoadTexture("TaskEnableIcon.png", false, null);
 		}
 
 		private static void InitDisableTaskTexture()
 		{
-			BehaviorDesignerUtility.disableTaskTexture = BehaviorDesignerUtility.LoadTexture("TaskDisableIcon.png", false, null);
+			disableTaskTexture = LoadTexture("TaskDisableIcon.png", false, null);
 		}
 
 		private static void InitExpandTaskTexture()
 		{
-			BehaviorDesignerUtility.expandTaskTexture = BehaviorDesignerUtility.LoadTexture("TaskExpandIcon.png", false, null);
+			expandTaskTexture = LoadTexture("TaskExpandIcon.png", false, null);
 		}
 
 		private static void InitCollapseTaskTexture()
 		{
-			BehaviorDesignerUtility.collapseTaskTexture = BehaviorDesignerUtility.LoadTexture("TaskCollapseIcon.png", false, null);
+			collapseTaskTexture = LoadTexture("TaskCollapseIcon.png", false, null);
 		}
 
 		private static void InitExecutionSuccessTexture()
 		{
-			BehaviorDesignerUtility.executionSuccessTexture = BehaviorDesignerUtility.LoadTexture("ExecutionSuccess.png", false, null);
+			executionSuccessTexture = LoadTexture("ExecutionSuccess.png", false, null);
 		}
 
 		private static void InitExecutionFailureTexture()
 		{
-			BehaviorDesignerUtility.executionFailureTexture = BehaviorDesignerUtility.LoadTexture("ExecutionFailure.png", false, null);
+			executionFailureTexture = LoadTexture("ExecutionFailure.png", false, null);
 		}
 
 		private static void InitExecutionSuccessRepeatTexture()
 		{
-			BehaviorDesignerUtility.executionSuccessRepeatTexture = BehaviorDesignerUtility.LoadTexture("ExecutionSuccessRepeat.png", false, null);
+			executionSuccessRepeatTexture = LoadTexture("ExecutionSuccessRepeat.png", false, null);
 		}
 
 		private static void InitExecutionFailureRepeatTexture()
 		{
-			BehaviorDesignerUtility.executionFailureRepeatTexture = BehaviorDesignerUtility.LoadTexture("ExecutionFailureRepeat.png", false, null);
+			executionFailureRepeatTexture = LoadTexture("ExecutionFailureRepeat.png", false, null);
 		}
 
 		private static void InitHistoryBackwardTexture()
 		{
-			BehaviorDesignerUtility.historyBackwardTexture = BehaviorDesignerUtility.LoadTexture("HistoryBackward.png", true, null);
+			historyBackwardTexture = LoadTexture("HistoryBackward.png", true, null);
 		}
 
 		private static void InitHistoryForwardTexture()
 		{
-			BehaviorDesignerUtility.historyForwardTexture = BehaviorDesignerUtility.LoadTexture("HistoryForward.png", true, null);
+			historyForwardTexture = LoadTexture("HistoryForward.png", true, null);
 		}
 
 		private static void InitPlayTexture()
 		{
-			BehaviorDesignerUtility.playTexture = LoadTexture("Play.png", true, null);
+			playTexture = LoadTexture("Play.png", true, null);
 		}
 
 		private static void InitPauseTexture()
 		{
-			BehaviorDesignerUtility.pauseTexture = BehaviorDesignerUtility.LoadTexture("Pause.png", true, null);
+			pauseTexture = LoadTexture("Pause.png", true, null);
 		}
 
 		private static void InitStepTexture()
 		{
-			BehaviorDesignerUtility.stepTexture = BehaviorDesignerUtility.LoadTexture("Step.png", true, null);
+			stepTexture = LoadTexture("Step.png", true, null);
 		}
 
 		private static void InitScreenshotBackgroundTexture()

@@ -824,10 +824,11 @@ public class DirectorControl : TimeArea
         return ((pixelX - rect.x) * area.width / rect.width + area.x);
     }
 
-    public float TimeToPixel(float time)
+    public override float TimeToPixel(float time)
     {
         return Mathf.Round(time * frameRate) / frameRate * scale.x + Translation.x;
     }
+
 	private void updateTimelineHeader(Rect headerArea, Rect timeRulerArea)
 	{
 		GUILayout.BeginArea(headerArea, string.Empty, EditorStyles.toolbarButton);

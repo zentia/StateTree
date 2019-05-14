@@ -548,27 +548,27 @@ public class ZoomableArea
 				float num4 = xMin + width;
 				if (num3 > shownAreaInsideMargins.xMin)
 				{
-					num3 = Mathf.Min(num3, num4 - this.m_HScaleMin);
+					num3 = Mathf.Min(num3, num4 - m_HScaleMin);
 				}
 				if (num4 < shownAreaInsideMargins.xMax)
 				{
-					num4 = Mathf.Max(num4, num3 + this.m_HScaleMin);
+					num4 = Mathf.Max(num4, num3 + m_HScaleMin);
 				}
-				this.SetShownHRangeInsideMargins(num3, num4);
+				SetShownHRangeInsideMargins(num3, num4);
 			}
 		}
 	}
 
-	internal float TimeToPixel(float time, Rect rect)
+	public float TimeToPixel(float time, Rect rect)
 	{
 		Rect shownArea = this.shownArea;
 		return (time - shownArea.x) / shownArea.width * rect.width + rect.x;
 	}
 
-	internal float TimeToPixel(float time)
+    public virtual float TimeToPixel(float time)
 	{
 		Rect shownArea = this.shownArea;
-		return (time - shownArea.x) / shownArea.width * this.m_DrawArea.width + this.m_DrawArea.x;
+		return (time - shownArea.x) / shownArea.width * m_DrawArea.width + m_DrawArea.x;
 	}
 
 	internal Vector2 ViewToDrawingTransformPoint(Vector2 lhs)

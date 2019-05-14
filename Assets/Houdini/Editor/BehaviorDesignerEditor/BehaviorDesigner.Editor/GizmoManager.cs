@@ -1,7 +1,7 @@
 using BehaviorDesigner.Runtime;
-using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BehaviorDesigner.Editor
 {
@@ -12,21 +12,22 @@ namespace BehaviorDesigner.Editor
 
 		static GizmoManager()
 		{
-			GizmoManager.currentScene = EditorApplication.currentScene;
-			EditorApplication.hierarchyWindowChanged = (EditorApplication.CallbackFunction)Delegate.Combine(EditorApplication.hierarchyWindowChanged, new EditorApplication.CallbackFunction(GizmoManager.HierarchyChange));
+			currentScene = SceneManager.GetActiveScene().name;
+            
+			EditorApplication.hierarchyChanged += HierarchyChange;
 			if (!Application.isPlaying)
 			{
-				GizmoManager.UpdateAllGizmos();
-				EditorApplication.playmodeStateChanged = (EditorApplication.CallbackFunction)Delegate.Combine(EditorApplication.playmodeStateChanged, new EditorApplication.CallbackFunction(GizmoManager.UpdateAllGizmos));
+				UpdateAllGizmos();
+				EditorApplication.playModeStateChanged += UpdateAllGizmos;
 			}
 		}
 
-		public static void UpdateAllGizmos()
+		public static void UpdateAllGizmos(PlayModeStateChange playModeStateChange = PlayModeStateChange.EnteredEditMode)
 		{
-			Behavior[] array = UnityEngine.Object.FindObjectsOfType<Behavior>();
+			Behavior[] array = Object.FindObjectsOfType<Behavior>();
 			for (int i = 0; i < array.Length; i++)
 			{
-				GizmoManager.UpdateGizmo(array[i]);
+				UpdateGizmo(array[i]);
 			}
 		}
 
@@ -43,13 +44,13 @@ namespace BehaviorDesigner.Editor
 			{
 				if (instance != null)
 				{
-					instance.onEnableBehavior = new BehaviorManager.BehaviorManagerHandler(GizmoManager.UpdateBehaviorManagerGizmos);
+					instance.onEnableBehavior = new BehaviorManager.BehaviorManagerHandler(UpdateBehaviorManagerGizmos);
 				}
 			}
-			else if (GizmoManager.currentScene != EditorApplication.currentScene)
+			else if (currentScene != SceneManager.GetActiveScene().name)
 			{
-				GizmoManager.currentScene = EditorApplication.currentScene;
-				GizmoManager.UpdateAllGizmos();
+				currentScene = SceneManager.GetActiveScene().name;
+				UpdateAllGizmos();
 			}
 		}
 
@@ -60,7 +61,7 @@ namespace BehaviorDesigner.Editor
 			{
 				for (int i = 0; i < instance.BehaviorTrees.Count; i++)
 				{
-					GizmoManager.UpdateGizmo(instance.BehaviorTrees[i].behavior);
+					UpdateGizmo(instance.BehaviorTrees[i].behavior);
 				}
 			}
 		}

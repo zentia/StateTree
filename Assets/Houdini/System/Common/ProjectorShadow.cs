@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -11,7 +10,6 @@ namespace CinemaDirector
         public int mRenderTexSize = 2048;
         public LayerMask mLayerCaster;
         public LayerMask mLayerIgnoreReceiver;
-        private bool mUseCommandBuf = false;
         private Projector mProjector;
         private Camera mShadowCam;
         private RenderTexture mShadowRT;

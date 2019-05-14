@@ -70,14 +70,14 @@ namespace BehaviorDesigner.Editor
 				GUILayout.Height(48f)
 			});
 			serializedObject.Update();
-			GUI.enabled=(PrefabUtility.GetPrefabType(behavior) != (PrefabType)3 || BehaviorDesignerPreferences.GetBool(BDPreferences.EditablePrefabInstances));
+			GUI.enabled = PrefabUtility.GetPrefabInstanceStatus(behavior) != PrefabInstanceStatus.MissingAsset || BehaviorDesignerPreferences.GetBool(BDPreferences.EditablePrefabInstances);
 			SerializedProperty serializedProperty = serializedObject.FindProperty("externalBehavior");
 			ExternalBehavior externalBehavior = serializedProperty.objectReferenceValue as ExternalBehavior;
 			EditorGUILayout.PropertyField(serializedProperty, true, new GUILayoutOption[0]);
 			serializedObject.ApplyModifiedProperties();
-			if ((!object.ReferenceEquals(behavior.ExternalBehavior, null) && !behavior.ExternalBehavior.Equals(externalBehavior)) || (!object.ReferenceEquals(externalBehavior, null) && !externalBehavior.Equals(behavior.ExternalBehavior)))
+			if ((!(behavior.ExternalBehavior is null) && !behavior.ExternalBehavior.Equals(externalBehavior)) || (!ReferenceEquals(externalBehavior, null) && !externalBehavior.Equals(behavior.ExternalBehavior)))
 			{
-				if (!object.ReferenceEquals(behavior.ExternalBehavior, null))
+				if (!(behavior.ExternalBehavior is null))
 				{
 					behavior.ExternalBehavior.BehaviorSource.Owner = behavior.ExternalBehavior;
 					behavior.ExternalBehavior.BehaviorSource.CheckForSerialization(true, behavior.GetBehaviorSource());
@@ -101,7 +101,7 @@ namespace BehaviorDesigner.Editor
 				}
 				externalModification = true;
 			}
-			GUI.enabled=(true);
+			GUI.enabled = true;
 			serializedProperty = serializedObject.FindProperty("group");
 			EditorGUILayout.PropertyField(serializedProperty, true, new GUILayoutOption[0]);
 			if (fromInspector && (showVariables = EditorGUILayout.Foldout(showVariables, "Variables")))

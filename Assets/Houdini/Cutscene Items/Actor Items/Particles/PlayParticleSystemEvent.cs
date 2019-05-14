@@ -2,13 +2,12 @@
 
 namespace CinemaDirector
 {
-    [CutsceneItemAttribute("特效", "Play", CutsceneItemGenre.ActorItem)]
+    [CutsceneItem("特效", "Play", CutsceneItemGenre.ActorItem)]
     public class PlayParticleSystemEvent : CinemaActorEvent
     {
         public string _path;
         private Animator effectAnim;
         private AnimatorClipInfo[] clip;
-        private string _clipName;
         public override void Trigger(GameObject actor)
         {
             
@@ -25,9 +24,7 @@ namespace CinemaDirector
                 }
             }
         }
-        private void OnDestroy()
-        {
-        }
+        
 #if UNITY_EDITOR
         private ParticleSystem m_ParticleSystem;
         public void OpenParticle()
@@ -43,7 +40,6 @@ namespace CinemaDirector
         private bool m_HasBake;
         private float m_RecorderStopTime = 0.0f;
         private float m_RunningTime = 0f;
-        private bool m_Playing = true;
         private void Bake()
         {
             if (m_HasBake)
@@ -79,7 +75,6 @@ namespace CinemaDirector
             }
             Bake();
             m_RunningTime = 0f;
-            m_Playing = true;
         }
 #endif
         public override void UpdateTrack(GameObject obj, float time, float deltaTime)
@@ -89,7 +84,6 @@ namespace CinemaDirector
             {
                 if (m_RunningTime > m_RecorderStopTime)
                 {
-                    m_Playing = false;
                     return;
                 }
                 effectAnim.playbackTime = m_RunningTime;

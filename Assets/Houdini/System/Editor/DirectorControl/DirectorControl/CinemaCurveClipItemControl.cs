@@ -104,12 +104,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	public abstract void UpdateCurveWrappers(CinemaClipCurveWrapper clipWrapper);
 	public override void PreUpdate(DirectorControlState state, Rect trackPosition)
 	{
-		CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-		if (cinemaClipCurveWrapper == null)
-		{
-			return;
-		}
-		isCurveClipEmpty = cinemaClipCurveWrapper.IsEmpty;
+        if (!(Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper))
+        {
+            return;
+        }
+        isCurveClipEmpty = cinemaClipCurveWrapper.IsEmpty;
 		isFolded = (trackPosition.height == 17f);
 		if (GUIUtility.hotControl == 0)
 		{
@@ -245,12 +244,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	public override void HandleInput(DirectorControlState state, Rect trackPosition)
 	{
-		CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-		if (cinemaClipCurveWrapper == null)
-		{
-			return;
-		}
-		handleItemInput(cinemaClipCurveWrapper, state, trackPosition);
+        if (!(Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper))
+        {
+            return;
+        }
+        handleItemInput(cinemaClipCurveWrapper, state, trackPosition);
 		if (!isCurveClipEmpty && IsEditing && !isFolded)
 		{
 			handleKeyframeInput(cinemaClipCurveWrapper, state);
@@ -309,12 +307,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 								Event.current.Use();
 								if (CurvesChanged != null)
 								{
-									CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-									if (cinemaClipCurveWrapper != null)
-									{
-										CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-									}
-									haveCurvesChanged = true;
+                                        if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                                        {
+                                            CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                                        }
+                                        haveCurvesChanged = true;
 								}
 							}
 							break;
@@ -334,12 +331,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 								if ((num2 > clipCurveWrapper.Firetime && num2 < clipCurveWrapper.Firetime + clipCurveWrapper.Duration) | flag2)
 								{
 									selection.KeyId = cinemaAnimationCurveWrapper.MoveKey(k, kf);
-									CinemaClipCurveWrapper cinemaClipCurveWrapper2 = Wrapper as CinemaClipCurveWrapper;
-									if (cinemaClipCurveWrapper2 != null)
-									{
-										CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
-									}
-									haveCurvesChanged = true;
+                                        if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
+                                        {
+                                            CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
+                                        }
+                                        haveCurvesChanged = true;
 								}
 							}
 							break;
@@ -393,12 +389,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 									GUIUtility.hotControl=(0);
 									if (CurvesChanged != null)
 									{
-										CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-										if (cinemaClipCurveWrapper != null)
-										{
-											CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-										}
-										haveCurvesChanged = true;
+                                            if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                                            {
+                                                CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                                            }
+                                            haveCurvesChanged = true;
 									}
 								}
 								break;
@@ -415,12 +410,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 									Keyframe kf = new Keyframe(keyframe.time, keyframe.value, num, num2);
 									kf.tangentMode=(keyframe.tangentMode);
 									cinemaAnimationCurveWrapper.MoveKey(k, kf);
-									CinemaClipCurveWrapper cinemaClipCurveWrapper2 = base.Wrapper as CinemaClipCurveWrapper;
-									if (cinemaClipCurveWrapper2 != null)
-									{
-										CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
-									}
-									haveCurvesChanged = true;
+                                        if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
+                                        {
+                                            CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
+                                        }
+                                        haveCurvesChanged = true;
 								}
 								break;
 							}
@@ -447,12 +441,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 									GUIUtility.hotControl=(0);
 									if (CurvesChanged != null)
 									{
-										CinemaClipCurveWrapper cinemaClipCurveWrapper3 = Wrapper as CinemaClipCurveWrapper;
-										if (cinemaClipCurveWrapper3 != null)
-										{
-											CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper3));
-										}
-										haveCurvesChanged = true;
+                                            if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper3)
+                                            {
+                                                CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper3));
+                                            }
+                                            haveCurvesChanged = true;
 									}
 								}
 								break;
@@ -470,12 +463,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 									Keyframe kf2 = new Keyframe(keyframe.time, keyframe.value, num4, num3);
 									kf2.tangentMode=(keyframe.tangentMode);
 									cinemaAnimationCurveWrapper.MoveKey(k, kf2);
-									CinemaClipCurveWrapper cinemaClipCurveWrapper4 = Wrapper as CinemaClipCurveWrapper;
-									if (cinemaClipCurveWrapper4 != null)
-									{
-										CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper4));
-									}
-									haveCurvesChanged = true;
+                                        if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper4)
+                                        {
+                                            CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper4));
+                                        }
+                                        haveCurvesChanged = true;
 								}
 								break;
 							}
@@ -609,12 +601,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 					GUIUtility.hotControl=(0);
 					if (CurvesChanged != null)
 					{
-						CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-						if (cinemaClipCurveWrapper != null)
-						{
-							CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-						}
-					}
+                            if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                            {
+                                CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                            }
+                        }
 				}
 				break;
 			case EventType.MouseDrag:
@@ -702,12 +693,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
                                         }
                                         if (change)
                                         {
-                                            CinemaClipCurveWrapper cinemaClipCurveWrapper2 = Wrapper as CinemaClipCurveWrapper;
-                                            if (cinemaClipCurveWrapper2 != null)
-                                            {
-                                                CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
-                                            }
-                                            haveCurvesChanged = true;
+                                                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
+                                                {
+                                                    CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
+                                                }
+                                                haveCurvesChanged = true;
                                         }
                                     }
 								}
@@ -774,12 +764,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 				}
 				else if (Event.current.clickCount >= 2)
 				{
-					CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-					if (cinemaClipCurveWrapper != null && this.RequestEdit != null)
-					{
-						this.RequestEdit(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-					}
-				}
+                        if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper && this.RequestEdit != null)
+                        {
+                            this.RequestEdit(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                        }
+                    }
 				else if (!IsSelected)
 				{
 					Selection.activeInstanceID=(base.Behaviour.GetInstanceID());
@@ -856,12 +845,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 			{
 				mouseDownOffset = -1f;
 				GUIUtility.hotControl = 0;
-				CinemaClipCurveWrapper cinemaClipCurveWrapper2 = Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper2 != null)
-				{
-					CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
-				}
-				this.haveCurvesChanged = true;
+                    if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
+                    {
+                        CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
+                    }
+                    this.haveCurvesChanged = true;
 			}
 			break;
 		case EventType.MouseDrag:
@@ -875,16 +863,15 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 				{
 					while (enumerator.MoveNext())
 					{
-						CinemaActionWrapper cinemaActionWrapper = enumerator.Current as CinemaActionWrapper;
-						if (cinemaActionWrapper != null && cinemaActionWrapper.Behaviour != base.Wrapper.Behaviour)
-						{
-							float num7 = cinemaActionWrapper.Firetime + cinemaActionWrapper.Duration;
-							if (num7 <= base.Wrapper.Firetime)
-							{
-								num5 = Mathf.Max(num5, num7);
-							}
-						}
-					}
+                            if (enumerator.Current is CinemaActionWrapper cinemaActionWrapper && cinemaActionWrapper.Behaviour != base.Wrapper.Behaviour)
+                            {
+                                float num7 = cinemaActionWrapper.Firetime + cinemaActionWrapper.Duration;
+                                if (num7 <= base.Wrapper.Firetime)
+                                {
+                                    num5 = Mathf.Max(num5, num7);
+                                }
+                            }
+                        }
 				}
 				num4 = Mathf.Max(num5, num4);
 				num4 = Mathf.Min(num6, num4);
@@ -896,12 +883,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 				{
 					clipCurveWrapper.ScaleFiretime(num4);
 				}
-				CinemaClipCurveWrapper cinemaClipCurveWrapper3 = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper3 != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper3));
-				}
-				this.haveCurvesChanged = true;
+                    if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper3)
+                    {
+                        this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper3));
+                    }
+                    this.haveCurvesChanged = true;
 			}
 			break;
 		}
@@ -920,12 +906,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 			{
 				mouseDownOffset = -1f;
 				GUIUtility.hotControl=(0);
-				CinemaClipCurveWrapper cinemaClipCurveWrapper4 = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper4 != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper4));
-				}
-				this.haveCurvesChanged = true;
+                    if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper4)
+                    {
+                        this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper4));
+                    }
+                    this.haveCurvesChanged = true;
 			}
 			break;
 		case EventType.MouseDrag:
@@ -938,16 +923,15 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 				{
 					while (enumerator.MoveNext())
 					{
-						CinemaActionWrapper cinemaActionWrapper2 = enumerator.Current as CinemaActionWrapper;
-						if (cinemaActionWrapper2 != null && cinemaActionWrapper2.Behaviour != base.Wrapper.Behaviour)
-						{
-							float num10 = clipCurveWrapper.Firetime + clipCurveWrapper.Duration;
-							if (cinemaActionWrapper2.Firetime >= num10)
-							{
-								num9 = Mathf.Min(num9, cinemaActionWrapper2.Firetime);
-							}
-						}
-					}
+                            if (enumerator.Current is CinemaActionWrapper cinemaActionWrapper2 && cinemaActionWrapper2.Behaviour != base.Wrapper.Behaviour)
+                            {
+                                float num10 = clipCurveWrapper.Firetime + clipCurveWrapper.Duration;
+                                if (cinemaActionWrapper2.Firetime >= num10)
+                                {
+                                    num9 = Mathf.Min(num9, cinemaActionWrapper2.Firetime);
+                                }
+                            }
+                        }
 				}
 				num8 = Mathf.Clamp(num8, Wrapper.Firetime, num9);
 				if (state.ResizeOption == ResizeOption.Crop)
@@ -958,12 +942,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 				{
 					clipCurveWrapper.ScaleDuration(num8 - base.Wrapper.Firetime);
 				}
-				CinemaClipCurveWrapper cinemaClipCurveWrapper5 = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper5 != null)
-				{
-					CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper5));
-				}
-				haveCurvesChanged = true;
+                    if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper5)
+                    {
+                        CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper5));
+                    }
+                    haveCurvesChanged = true;
 			}
 			break;
 		}
@@ -975,22 +958,20 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	internal override void Translate(float amount)
 	{
-		CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-		if (cinemaClipCurveWrapper == null)
-		{
-			return;
-		}
-		cinemaClipCurveWrapper.TranslateCurves(amount);
+        if (!(base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper))
+        {
+            return;
+        }
+        cinemaClipCurveWrapper.TranslateCurves(amount);
 		this.haveCurvesChanged = true;
 	}
 	internal override void ConfirmTranslate()
 	{
-		CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-		if (cinemaClipCurveWrapper == null)
-		{
-			return;
-		}
-		if (this.TranslateCurveClipItem != null)
+        if (!(base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper))
+        {
+            return;
+        }
+        if (this.TranslateCurveClipItem != null)
 		{
 			this.TranslateCurveClipItem(this, new CurveClipItemEventArgs(cinemaClipCurveWrapper.Behaviour, cinemaClipCurveWrapper.Firetime, cinemaClipCurveWrapper.Duration));
 		}
@@ -998,12 +979,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	public override void Draw(DirectorControlState state)
 	{
-		CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-		if (cinemaClipCurveWrapper == null)
-		{
-			return;
-		}
-		drawCurveItem();
+        if (!(base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper))
+        {
+            return;
+        }
+        drawCurveItem();
 		if (!this.isCurveClipEmpty && !this.isFolded)
 		{
 			drawCurveCanvas(state, cinemaClipCurveWrapper);
@@ -1234,14 +1214,13 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	private void snapScrubber(object userData)
 	{
-		CurvesContext curvesContext = userData as CurvesContext;
-		if (curvesContext != null && SnapScrubber != null)
-		{
-			SnapScrubber(this, new CurveClipScrubberEventArgs(Wrapper.Behaviour, curvesContext.time));
-			curvesContext.state.IsInPreviewMode = true;
-			curvesContext.state.ScrubberPosition = curvesContext.time;
-		}
-	}
+        if (userData is CurvesContext curvesContext && SnapScrubber != null)
+        {
+            SnapScrubber(this, new CurveClipScrubberEventArgs(Wrapper.Behaviour, curvesContext.time));
+            curvesContext.state.IsInPreviewMode = true;
+            curvesContext.state.ScrubberPosition = curvesContext.time;
+        }
+    }
 	private void showCurveCanvasContextMenu(CurvesContext context)
 	{
 		GenericMenu expr_05 = new GenericMenu();
@@ -1250,59 +1229,54 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	private void addKeyframes(object userData)
 	{
-		CurvesContext curvesContext = userData as CurvesContext;
-		if (curvesContext != null)
-		{
-			CinemaMemberCurveWrapper[] memberCurves = curvesContext.wrapper.MemberCurves;
-			for (int i = 0; i < memberCurves.Length; i++)
-			{
-				CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
-				for (int j = 0; j < animationCurves.Length; j++)
-				{
-					CinemaAnimationCurveWrapper cinemaAnimationCurveWrapper = animationCurves[j];
-					cinemaAnimationCurveWrapper.AddKey(curvesContext.time, cinemaAnimationCurveWrapper.Evaluate(curvesContext.time), curvesContext.state.DefaultTangentMode);
-				}
-			}
-			if (CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			haveCurvesChanged = true;
-		}
-	}
+        if (userData is CurvesContext curvesContext)
+        {
+            CinemaMemberCurveWrapper[] memberCurves = curvesContext.wrapper.MemberCurves;
+            for (int i = 0; i < memberCurves.Length; i++)
+            {
+                CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
+                for (int j = 0; j < animationCurves.Length; j++)
+                {
+                    CinemaAnimationCurveWrapper cinemaAnimationCurveWrapper = animationCurves[j];
+                    cinemaAnimationCurveWrapper.AddKey(curvesContext.time, cinemaAnimationCurveWrapper.Evaluate(curvesContext.time), curvesContext.state.DefaultTangentMode);
+                }
+            }
+            if (CurvesChanged != null)
+            {
+                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            haveCurvesChanged = true;
+        }
+    }
 	private void deleteKey(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null)
-		{
-			keyframeContext.curveWrapper.RemoveKey(keyframeContext.key);
-			if (CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			selection.CurveId = -1;
-			selection.KeyId = -1;
-		}
+        if (userData is KeyframeContext keyframeContext)
+        {
+            keyframeContext.curveWrapper.RemoveKey(keyframeContext.key);
+            if (CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            selection.CurveId = -1;
+            selection.KeyId = -1;
+        }
     }
 	private void deleteKeyframes(object userData)
 	{
-		CurvesContext curvesContext = userData as CurvesContext;
-		if (curvesContext != null)
-		{
-			CinemaMemberCurveWrapper[] memberCurves = curvesContext.wrapper.MemberCurves;
-			for (int i = 0; i < memberCurves.Length; i++)
-			{
-				CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
-				for (int j = 0; j < animationCurves.Length; j++)
-				{
+        if (userData is CurvesContext curvesContext)
+        {
+            CinemaMemberCurveWrapper[] memberCurves = curvesContext.wrapper.MemberCurves;
+            for (int i = 0; i < memberCurves.Length; i++)
+            {
+                CinemaAnimationCurveWrapper[] animationCurves = memberCurves[i].AnimationCurves;
+                for (int j = 0; j < animationCurves.Length; j++)
+                {
                     bool mark = false;
                     for (int l = animationCurves[j].KeyframeCount - 1; l >= 0; l--)
                     {
@@ -1318,30 +1292,27 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
                         animationCurves[j].initializeKeyframeWrappers();
                     }
                 }
-			}
+            }
             if (CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			haveCurvesChanged = true;
-		}
-	}
+            {
+                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            haveCurvesChanged = true;
+        }
+    }
     private void copyKeyframes(object userData)
     {
-        CurvesContext curvesContext = userData as CurvesContext;
-        if (curvesContext != null)
+        if (userData is CurvesContext curvesContext)
         {
             DirectorCopyPaste.time = curvesContext.time;
         }
     }
     private void pasteKeyframes(object userData)
     {
-        CurvesContext curvesContext = userData as CurvesContext;
-        if (curvesContext != null)
+        if (userData is CurvesContext curvesContext)
         {
             CinemaMemberCurveWrapper[] memberCurves = curvesContext.wrapper.MemberCurves;
             for (int i = 0; i < memberCurves.Length; i++)
@@ -1354,8 +1325,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
             }
             if (CurvesChanged != null)
             {
-                CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-                if (cinemaClipCurveWrapper != null)
+                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
                 {
                     CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
                 }
@@ -1376,12 +1346,11 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
     }
     internal void UpdateHeaderArea(DirectorControlState state, Rect controlHeaderArea)
 	{
-		CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-		if (cinemaClipCurveWrapper == null)
-		{
-			return;
-		}
-		Rect rect = new Rect(controlHeaderArea.x, controlHeaderArea.y, controlHeaderArea.width, controlHeaderArea.height - 17f);
+        if (!(Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper))
+        {
+            return;
+        }
+        Rect rect = new Rect(controlHeaderArea.x, controlHeaderArea.y, controlHeaderArea.width, controlHeaderArea.height - 17f);
 		Rect position = new Rect(controlHeaderArea.x, controlHeaderArea.y + controlHeaderArea.height - 17f, controlHeaderArea.width, 17f);
 		GUILayout.BeginArea(rect);
 		Rect rect2 = new Rect(controlHeaderArea.width - 15f, 0f, 15f, rect.height);
@@ -1419,8 +1388,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
                         updateOrAddKeyframe(cinemaAnimationCurveWrapper, state, num4);
                         if (CurvesChanged != null)
                         {
-                            CinemaClipCurveWrapper cinemaClipCurveWrapper2 = Wrapper as CinemaClipCurveWrapper;
-                            if (cinemaClipCurveWrapper2 != null)
+                            if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper2)
                             {
                                 CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper2));
                             }
@@ -1472,29 +1440,26 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	private void addKeyToCurve(object userData)
 	{
-		CurveContext curveContext = userData as CurveContext;
-		if (curveContext != null)
-		{
-			curveContext.curveWrapper.AddKey(curveContext.time, curveContext.curveWrapper.Evaluate(curveContext.time), curveContext.state.DefaultTangentMode);
-			if (CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			haveCurvesChanged = true;
-		}
-	}
+        if (userData is CurveContext curveContext)
+        {
+            curveContext.curveWrapper.AddKey(curveContext.time, curveContext.curveWrapper.Evaluate(curveContext.time), curveContext.state.DefaultTangentMode);
+            if (CurvesChanged != null)
+            {
+                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            haveCurvesChanged = true;
+        }
+    }
 	private void toggleMemberVisibility(object userData)
 	{
-		CinemaMemberCurveWrapper cinemaMemberCurveWrapper = userData as CinemaMemberCurveWrapper;
-		if (cinemaMemberCurveWrapper != null)
-		{
-		    cinemaMemberCurveWrapper.IsVisible = !cinemaMemberCurveWrapper.IsVisible;
-		}
-	}
+        if (userData is CinemaMemberCurveWrapper cinemaMemberCurveWrapper)
+        {
+            cinemaMemberCurveWrapper.IsVisible = !cinemaMemberCurveWrapper.IsVisible;
+        }
+    }
     private void toggleMemberVisibility2(object userData)
     {
         CurveMenuInfo cmi = userData as CurveMenuInfo;
@@ -1525,8 +1490,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 
     private void toggleCurveVisibility(object userData)
     {
-        CinemaAnimationCurveWrapper cinemaAnimationCurveWrapper = userData as CinemaAnimationCurveWrapper;
-        if (cinemaAnimationCurveWrapper != null)
+        if (userData is CinemaAnimationCurveWrapper cinemaAnimationCurveWrapper)
         {
             CinemaAnimationCurveWrapper expr_0B = cinemaAnimationCurveWrapper;
             expr_0B.IsVisible = !expr_0B.IsVisible;
@@ -1589,7 +1553,6 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 			if (keyframe.time == state.ScrubberPosition)
 			{
 				Keyframe kf = new Keyframe(keyframe.time, newValue, keyframe.inTangent, keyframe.outTangent);
-				kf.tangentMode=(keyframe.tangentMode);
 				curveWrapper.MoveKey(i, kf);
 				flag = true;
 			}
@@ -1599,6 +1562,7 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 			curveWrapper.AddKey(state.ScrubberPosition, newValue, state.DefaultTangentMode);
 		}
 	}
+
 	private void updateFooter(Rect position, CinemaMemberCurveWrapper[] memberCurveWrappers)
 	{
 		float num = position.width / 4f;
@@ -1613,13 +1577,14 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 		isAutoResizeEnabled = GUI.Toggle(rect, isAutoResizeEnabled, "Auto Resize", EditorStyles.miniButton);
 		float num2 = EditorGUI.FloatField(rect2, viewingSpace.y);
 		float num3 = EditorGUI.FloatField(arg_A6_0, viewingSpace.height);
-		if (num2 != viewingSpace.y || num3 != this.viewingSpace.height)
+		if (num2 != viewingSpace.y || num3 != viewingSpace.height)
 		{
 			isAutoResizeEnabled = false;
 			viewingSpace.y = num2;
 			viewingSpace.height=(num3);
 		}
 	}
+
 	private void showKeyframeContextMenu(CinemaAnimationCurveWrapper animationCurve, int i, bool isBookEnd)
 	{
 		GenericMenu genericMenu = new GenericMenu();
@@ -1632,12 +1597,12 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 			genericMenu.AddSeparator(string.Empty);
 		}
 		genericMenu.AddItem(new GUIContent("Auto"), animationCurve.IsAuto(i), (this.setKeyAuto), keyframeContext);
-		genericMenu.AddItem(new GUIContent("Free Smooth"), animationCurve.IsFreeSmooth(i), new GenericMenu.MenuFunction2(this.setKeyFreeSmooth), keyframeContext);
-		genericMenu.AddItem(new GUIContent("Flat"), animationCurve.IsFreeSmooth(i) && keyframe.inTangent == 0f && keyframe.outTangent == 0f, new GenericMenu.MenuFunction2(this.setKeyFlat), keyframeContext);
-		genericMenu.AddItem(new GUIContent("Broken"), animationCurve.IsBroken(i), new GenericMenu.MenuFunction2(this.setKeyBroken), keyframeContext);
+		genericMenu.AddItem(new GUIContent("Free Smooth"), animationCurve.IsFreeSmooth(i), new GenericMenu.MenuFunction2(setKeyFreeSmooth), keyframeContext);
+		genericMenu.AddItem(new GUIContent("Flat"), animationCurve.IsFreeSmooth(i) && keyframe.inTangent == 0f && keyframe.outTangent == 0f, new GenericMenu.MenuFunction2(setKeyFlat), keyframeContext);
+		genericMenu.AddItem(new GUIContent("Broken"), animationCurve.IsBroken(i), new GenericMenu.MenuFunction2(setKeyBroken), keyframeContext);
 		genericMenu.AddSeparator(string.Empty);
-		genericMenu.AddItem(new GUIContent("Left Tangent/Free"), animationCurve.IsLeftFree(i), new GenericMenu.MenuFunction2(this.setKeyLeftFree), keyframeContext);
-		genericMenu.AddItem(new GUIContent("Left Tangent/Linear"), animationCurve.IsLeftLinear(i), new GenericMenu.MenuFunction2(this.setKeyLeftLinear), keyframeContext);
+		genericMenu.AddItem(new GUIContent("Left Tangent/Free"), animationCurve.IsLeftFree(i), new GenericMenu.MenuFunction2(setKeyLeftFree), keyframeContext);
+		genericMenu.AddItem(new GUIContent("Left Tangent/Linear"), animationCurve.IsLeftLinear(i), new GenericMenu.MenuFunction2(setKeyLeftLinear), keyframeContext);
 		genericMenu.AddItem(new GUIContent("Left Tangent/Constant"), animationCurve.IsLeftConstant(i), new GenericMenu.MenuFunction2(this.setKeyLeftConstant), keyframeContext);
 		genericMenu.AddItem(new GUIContent("Right Tangent/Free"), animationCurve.IsRightFree(i), new GenericMenu.MenuFunction2(this.setKeyRightFree), keyframeContext);
 		genericMenu.AddItem(new GUIContent("Right Tangent/Linear"), animationCurve.IsRightLinear(i), new GenericMenu.MenuFunction2(this.setKeyRightLinear), keyframeContext);
@@ -1649,232 +1614,206 @@ public abstract class CinemaCurveClipItemControl : ActionItemControl
 	}
 	private void setKeyLeftConstant(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsLeftConstant(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyLeftConstant(keyframeContext.key);
-			if (CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsLeftConstant(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyLeftConstant(keyframeContext.key);
+            if (CurvesChanged != null)
+            {
+                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            haveCurvesChanged = true;
+        }
+    }
 	private void setKeyRightConstant(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsRightConstant(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyRightConstant(keyframeContext.key);
-			if (CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsRightConstant(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyRightConstant(keyframeContext.key);
+            if (CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            haveCurvesChanged = true;
+        }
+    }
 	private void setKeyBothConstant(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && (!keyframeContext.curveWrapper.IsRightConstant(keyframeContext.key) || !keyframeContext.curveWrapper.IsLeftConstant(keyframeContext.key)))
-		{
-			keyframeContext.curveWrapper.SetKeyLeftConstant(keyframeContext.key);
-			keyframeContext.curveWrapper.SetKeyRightConstant(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && (!keyframeContext.curveWrapper.IsRightConstant(keyframeContext.key) || !keyframeContext.curveWrapper.IsLeftConstant(keyframeContext.key)))
+        {
+            keyframeContext.curveWrapper.SetKeyLeftConstant(keyframeContext.key);
+            keyframeContext.curveWrapper.SetKeyRightConstant(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyLeftLinear(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsLeftLinear(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyLeftLinear(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsLeftLinear(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyLeftLinear(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyLeftFree(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsLeftFree(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyLeftFree(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsLeftFree(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyLeftFree(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyBothLinear(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && (!keyframeContext.curveWrapper.IsRightLinear(keyframeContext.key) || !keyframeContext.curveWrapper.IsLeftLinear(keyframeContext.key)))
-		{
-			keyframeContext.curveWrapper.SetKeyLeftLinear(keyframeContext.key);
-			keyframeContext.curveWrapper.SetKeyRightLinear(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && (!keyframeContext.curveWrapper.IsRightLinear(keyframeContext.key) || !keyframeContext.curveWrapper.IsLeftLinear(keyframeContext.key)))
+        {
+            keyframeContext.curveWrapper.SetKeyLeftLinear(keyframeContext.key);
+            keyframeContext.curveWrapper.SetKeyRightLinear(keyframeContext.key);
+            if (CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyBothFree(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && (!keyframeContext.curveWrapper.IsRightFree(keyframeContext.key) || !keyframeContext.curveWrapper.IsLeftFree(keyframeContext.key)))
-		{
-			keyframeContext.curveWrapper.SetKeyLeftFree(keyframeContext.key);
-			keyframeContext.curveWrapper.SetKeyRightFree(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && (!keyframeContext.curveWrapper.IsRightFree(keyframeContext.key) || !keyframeContext.curveWrapper.IsLeftFree(keyframeContext.key)))
+        {
+            keyframeContext.curveWrapper.SetKeyLeftFree(keyframeContext.key);
+            keyframeContext.curveWrapper.SetKeyRightFree(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyRightLinear(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsLeftLinear(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyRightLinear(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsLeftLinear(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyRightLinear(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyRightFree(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsRightFree(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyRightFree(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsRightFree(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyRightFree(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyBroken(object userData)
 	{
-		KeyframeContext keyframeContext = userData as CinemaCurveClipItemControl.KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsRightFree(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyBroken(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is CinemaCurveClipItemControl.KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsRightFree(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyBroken(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyAuto(object userData)
 	{
-		CinemaCurveClipItemControl.KeyframeContext keyframeContext = userData as CinemaCurveClipItemControl.KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsAuto(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyAuto(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is CinemaCurveClipItemControl.KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsAuto(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyAuto(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyFreeSmooth(object userData)
 	{
-		CinemaCurveClipItemControl.KeyframeContext keyframeContext = userData as CinemaCurveClipItemControl.KeyframeContext;
-		if (keyframeContext != null && !keyframeContext.curveWrapper.IsFreeSmooth(keyframeContext.key))
-		{
-			keyframeContext.curveWrapper.SetKeyFreeSmooth(keyframeContext.key);
-			if (this.CurvesChanged != null)
-			{
-				CinemaClipCurveWrapper cinemaClipCurveWrapper = base.Wrapper as CinemaClipCurveWrapper;
-				if (cinemaClipCurveWrapper != null)
-				{
-					this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-				}
-			}
-			this.haveCurvesChanged = true;
-		}
-	}
+        if (userData is CinemaCurveClipItemControl.KeyframeContext keyframeContext && !keyframeContext.curveWrapper.IsFreeSmooth(keyframeContext.key))
+        {
+            keyframeContext.curveWrapper.SetKeyFreeSmooth(keyframeContext.key);
+            if (this.CurvesChanged != null)
+            {
+                if (base.Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                {
+                    this.CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                }
+            }
+            this.haveCurvesChanged = true;
+        }
+    }
 	private void setKeyFlat(object userData)
 	{
-		KeyframeContext keyframeContext = userData as KeyframeContext;
-		if (keyframeContext != null)
-		{
-			Keyframe keyframe = keyframeContext.curveWrapper.GetKeyframe(keyframeContext.key);
-			if (keyframe.tangentMode != 0 || keyframe.inTangent != 0f || keyframe.outTangent != 0f)
-			{
-				keyframeContext.curveWrapper.FlattenKey(keyframeContext.key);
-				if (this.CurvesChanged != null)
-				{
-					CinemaClipCurveWrapper cinemaClipCurveWrapper = Wrapper as CinemaClipCurveWrapper;
-					if (cinemaClipCurveWrapper != null)
-					{
-						CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
-					}
-				}
-				haveCurvesChanged = true;
-			}
-		}
-	}
+        if (userData is KeyframeContext keyframeContext)
+        {
+            Keyframe keyframe = keyframeContext.curveWrapper.GetKeyframe(keyframeContext.key);
+            if (AnimationUtility.GetKeyLeftTangentMode(keyframeContext.curveWrapper.curve, keyframeContext.key) != AnimationUtility.TangentMode.Free || keyframe.inTangent != 0f || keyframe.outTangent != 0f)
+            {
+                keyframeContext.curveWrapper.FlattenKey(keyframeContext.key);
+                if (CurvesChanged != null)
+                {
+                    if (Wrapper is CinemaClipCurveWrapper cinemaClipCurveWrapper)
+                    {
+                        CurvesChanged(this, new CurveClipWrapperEventArgs(cinemaClipCurveWrapper));
+                    }
+                }
+                haveCurvesChanged = true;
+            }
+        }
+    }
     private HashSet<int> selectedKeyHashes
     {
         get { return selection.selectedKeyHashs; }

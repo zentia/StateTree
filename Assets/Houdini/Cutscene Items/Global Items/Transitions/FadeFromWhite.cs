@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace CinemaDirector
 {
     /// <summary>
-    /// Transition from White to Clear over time by overlaying a guiTexture.
+    /// Transition from White to Clear over time by overlaying a RawImage.
     /// </summary>
     [CutsceneItem("Transitions", "Fade from White", CutsceneItemGenre.GlobalItem)]
     public class FadeFromWhite : CinemaGlobalAction
@@ -17,15 +17,14 @@ namespace CinemaDirector
         /// </summary>
         void Awake()
         {
-			RawImage guiTexture = gameObject.GetComponent<RawImage> ();
-            if (guiTexture == null)
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+            if (RawImage == null)
             {
-                guiTexture = gameObject.AddComponent<RawImage>();
+                RawImage = gameObject.AddComponent<RawImage>();
                 gameObject.transform.position = Vector3.zero;
                 gameObject.transform.localScale = new Vector3(100, 100, 100);
-                guiTexture.texture = new Texture2D(1, 1);
-                guiTexture.enabled = false;
-                guiTexture.color = Color.clear;
+                RawImage.enabled = false;
+                RawImage.color = Color.clear;
             }
         }
 
@@ -34,12 +33,13 @@ namespace CinemaDirector
         /// </summary>
         public override void Trigger()
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
-			if (guiTexture != null) {
-								guiTexture.enabled = true;
-								guiTexture.pixelInset = new Rect (0f, 0f, Screen.width, Screen.height);
-								guiTexture.color = From;
-						}
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+			if (RawImage != null)
+            {
+				RawImage.enabled = true;
+				RawImage.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+				RawImage.color = From;
+		    }
         }
 
         /// <summary>
@@ -68,15 +68,19 @@ namespace CinemaDirector
         /// <param name="deltaTime">the deltaTime since the last update call.</param>
         public override void SetTime(float time, float deltaTime)
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
-			if (guiTexture != null) {
-								if (time >= 0 && time <= Duration) {
-										guiTexture.enabled = true;
-										UpdateTime (time, deltaTime);
-								} else if (guiTexture.enabled) {
-										guiTexture.enabled = false;
-								}
-						}
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+			if (RawImage != null)
+            {
+				if (time >= 0 && time <= Duration)
+                {
+					RawImage.enabled = true;
+					UpdateTime (time, deltaTime);
+				}
+                else if (RawImage.enabled)
+                {
+					RawImage.enabled = false;
+				}
+			}
         }
 
         /// <summary>
@@ -84,10 +88,11 @@ namespace CinemaDirector
         /// </summary>
         public override void End()
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
-			if (guiTexture != null) {
-								guiTexture.enabled = false;
-						}
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+			if (RawImage != null)
+            {
+				RawImage.enabled = false;
+			}
         }
 
         /// <summary>
@@ -95,12 +100,13 @@ namespace CinemaDirector
         /// </summary>
         public override void ReverseEnd()
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
-			if (guiTexture != null) {
-						guiTexture.enabled = true;
-						guiTexture.pixelInset = new Rect (0f, 0f, Screen.width, Screen.height);
-						guiTexture.color = To;
-				}
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+			if (RawImage != null)
+            {
+				RawImage.enabled = true;
+				RawImage.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+				RawImage.color = To;
+			}
         }
 
         /// <summary>
@@ -108,10 +114,10 @@ namespace CinemaDirector
         /// </summary>
         public override void Stop()
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
-            if (guiTexture != null)
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+            if (RawImage != null)
             {
-                guiTexture.enabled = false;
+                RawImage.enabled = false;
             }
         }
 
@@ -123,10 +129,11 @@ namespace CinemaDirector
         /// <param name="transition">the Lerp transition value</param>
         private void FadeToColor(Color from, Color to, float transition)
         {
-			GUITexture guiTexture = gameObject.GetComponent<GUITexture> ();
-			if (guiTexture != null) {
-								guiTexture.color = Color.Lerp (from, to, transition);
-						}
+            RawImage RawImage = gameObject.GetComponent<RawImage> ();
+			if (RawImage != null)
+            {
+				RawImage.color = Color.Lerp (from, to, transition);
+			}
         }
     }
 }

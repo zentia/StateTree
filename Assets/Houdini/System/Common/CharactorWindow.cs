@@ -243,85 +243,6 @@ public class ActorTargetSelector : EditorWindow
         comp.Show();
     }
 }
-public class NpcWindow : EditorWindow
-{
-    public static NpcWindow Instance;
-    public Vector3 position;
-    public bool m_Mark;
-    private void OnEnable()
-    {
-        Instance = this;
-    }
-
-    private void OnDisable()
-    {
-        Instance = null;
-    }
-
-    private void OnGUI()
-    {
-        EditorGUILayout.BeginHorizontal();
-        if (m_Mark)
-        {
-            GUILayout.Label("导航内的点");
-        }
-        else
-        {
-            GUILayout.Label("导航外的点");
-        }
-        GUILayout.Label("Position:X");
-        TextField(position.x.ToString());
-        GUILayout.Label("Y");
-        TextField(position.y.ToString());
-        GUILayout.Label("Z");
-        TextField(position.z.ToString());
-        EditorGUILayout.EndHorizontal();
-    }
-    [MenuItem("Scene/NPC信息")]
-    public static void Open()
-    {
-        NpcWindow comp = GetWindow<NpcWindow>("NPC信息");
-        comp.Show();
-    }
-    public static string HandleCopyPaste(int controlID)
-    {
-        if (controlID == GUIUtility.keyboardControl)
-        {
-            if (Event.current.type == EventType.KeyUp && (Event.current.modifiers == EventModifiers.Control || Event.current.modifiers == EventModifiers.Command))
-            {
-                if (Event.current.keyCode == KeyCode.C)
-                {
-                    Event.current.Use();
-                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
-                    editor.OnFocus();
-                    editor.Copy();
-                }
-                else if (Event.current.keyCode == KeyCode.V)
-                {
-                    Event.current.Use();
-                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
-                    editor.Paste();
-                    return editor.text; 
-                }
-                else if (Event.current.keyCode == KeyCode.A)
-                {
-                    Event.current.Use();
-                    TextEditor editor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
-                    editor.SelectAll();
-                }
-            }
-        }
-        return null;
-    }
-    public static string TextField(string value, params GUILayoutOption[] options)
-    {
-        int textFieldID = GUIUtility.GetControlID("TextField".GetHashCode(), FocusType.Keyboard) + 1;
-        if (textFieldID == 0)
-            return value;
-        value = HandleCopyPaste(textFieldID) ?? value;
-        return GUILayout.TextField(value, options);
-    }
-}
 
 public static class EditorCoroutineRunner
 {
@@ -332,28 +253,28 @@ public static class EditorCoroutineRunner
         public EditorCoroutine(IEnumerator iterator)
         {
             executionStack = new Stack<IEnumerator>();
-            this.executionStack.Push(iterator);
+            executionStack.Push(iterator);
         }
 
         public bool MoveNext()
         {
-            IEnumerator i = this.executionStack.Peek();
+            IEnumerator i = executionStack.Peek();
 
             if (i.MoveNext())
             {
                 object result = i.Current;
                 if (result != null && result is IEnumerator)
                 {
-                    this.executionStack.Push((IEnumerator)result);
+                    executionStack.Push((IEnumerator)result);
                 }
 
                 return true;
             }
             else
             {
-                if (this.executionStack.Count > 1)
+                if (executionStack.Count > 1)
                 {
-                    this.executionStack.Pop();
+                    executionStack.Pop();
                     return true;
                 }
             }
@@ -368,12 +289,12 @@ public static class EditorCoroutineRunner
 
         public object Current
         {
-            get { return this.executionStack.Peek().Current; }
+            get { return executionStack.Peek().Current; }
         }
 
         public bool Find(IEnumerator iterator)
         {
-            return this.executionStack.Contains(iterator);
+            return executionStack.Contains(iterator);
         }
     }
 

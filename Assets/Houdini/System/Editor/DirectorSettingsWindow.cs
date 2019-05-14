@@ -21,12 +21,8 @@ public class DirectorSettingsWindow : EditorWindow
     /// </summary>
     public void Awake()
     {
-#if UNITY_5 && !UNITY_5_0
-        base.titleContent = new GUIContent(TITLE);
-#else
-        base.title = TITLE;
-#endif
-        this.minSize = new Vector2(250f, 150f);
+        titleContent = new GUIContent(TITLE);
+        minSize = new Vector2(250f, 150f);
 
         if (EditorPrefs.HasKey("DirectorControl.DefaultTangentMode"))
         {

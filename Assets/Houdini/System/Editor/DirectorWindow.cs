@@ -112,7 +112,7 @@ public class DirectorWindow : EditorWindow
     protected void OnEnable()
     {
         Instance = this;
-        EditorApplication.playmodeStateChanged = (EditorApplication.CallbackFunction)Delegate.Combine(EditorApplication.playmodeStateChanged, new EditorApplication.CallbackFunction(this.PlaymodeStateChanged));
+        EditorApplication.playModeStateChanged += PlayModeStateChanged;
 
         GUISkin skin = CreateInstance<GUISkin>();
         skin = (EditorGUIUtility.isProSkin) ? Resources.Load<GUISkin>(PRO_SKIN) : Resources.Load<GUISkin>(FREE_SKIN);
@@ -490,7 +490,7 @@ public class DirectorWindow : EditorWindow
         this.cutscene = cutscene;
     }
 
-    public void PlaymodeStateChanged()
+    public void PlayModeStateChanged(PlayModeStateChange playModeStateChange)
     {
         directorControl.InPreviewMode = false;
     }

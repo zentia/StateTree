@@ -2,12 +2,11 @@ using UnityEngine;
 
 namespace CinemaDirector
 {
-    [CutsceneItemAttribute("Animator", "Play Mecanim Animation", CutsceneItemGenre.ActorItem, CutsceneItemGenre.MecanimItem)]
+    [CutsceneItem("Animator", "Play Mecanim Animation", CutsceneItemGenre.ActorItem, CutsceneItemGenre.MecanimItem)]
     public class PlayAnimatorEvent : CinemaActorEvent
     {
         public string StateName;
         public int Layer = -1;
-        float Normalizedtime = float.NegativeInfinity;
 
         public override void Trigger(GameObject actor)
         {

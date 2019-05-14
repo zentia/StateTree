@@ -26,12 +26,13 @@ namespace BehaviorDesigner.Runtime.Tasks.Basic.UnityParticleSystem
 
         public override TaskStatus OnUpdate()
         {
-            if (particleSystem == null) {
-                UnityEngine.Debug.LogWarning("ParticleSystem is null");
+            if (particleSystem == null)
+            {
+                Debug.LogWarning("ParticleSystem is null");
                 return TaskStatus.Failure;
             }
 
-            storeResult.Value = particleSystem.gravityModifier;
+            storeResult.Value = particleSystem.main.gravityModifier.constant;
 
             return TaskStatus.Success;
         }

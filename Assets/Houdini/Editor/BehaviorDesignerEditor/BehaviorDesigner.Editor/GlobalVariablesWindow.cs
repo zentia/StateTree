@@ -57,34 +57,34 @@ namespace BehaviorDesigner.Editor
 
 		public void OnGUI()
 		{
-			if (this.mVariableSource == null)
+			if (mVariableSource == null)
 			{
-				this.mVariableSource = GlobalVariables.Instance;
+				mVariableSource = GlobalVariables.Instance;
 			}
-			if (VariableInspector.DrawVariables(this.mVariableSource, true, null, ref this.mVariableName, ref this.mFocusNameField, ref this.mVariableTypeIndex, ref this.mScrollPosition, ref this.mVariablePosition, ref this.mVariableStartPosition, ref this.mSelectedVariableIndex, ref this.mSelectedVariableName, ref this.mSelectedVariableTypeIndex))
+			if (VariableInspector.DrawVariables(mVariableSource, true, null, ref mVariableName, ref mFocusNameField, ref mVariableTypeIndex, ref mScrollPosition, ref mVariablePosition, ref mVariableStartPosition, ref this.mSelectedVariableIndex, ref this.mSelectedVariableName, ref this.mSelectedVariableTypeIndex))
 			{
-				this.SerializeVariables();
+				SerializeVariables();
 			}
-			if (Event.current.type == null && VariableInspector.LeftMouseDown(this.mVariableSource, null, Event.current.mousePosition, this.mVariablePosition, this.mVariableStartPosition, this.mScrollPosition, ref this.mSelectedVariableIndex, ref this.mSelectedVariableName, ref this.mSelectedVariableTypeIndex))
+			if (Event.current.type == EventType.MouseDown && VariableInspector.LeftMouseDown(mVariableSource, null, Event.current.mousePosition, mVariablePosition, mVariableStartPosition, mScrollPosition, ref mSelectedVariableIndex, ref this.mSelectedVariableName, ref this.mSelectedVariableTypeIndex))
 			{
 				Event.current.Use();
-				base.Repaint();
+				Repaint();
 			}
 		}
 
 		private void SerializeVariables()
 		{
-			if (this.mVariableSource == null)
+			if (mVariableSource == null)
 			{
-				this.mVariableSource = GlobalVariables.Instance;
+				mVariableSource = GlobalVariables.Instance;
 			}
 			if (BehaviorDesignerPreferences.GetBool(BDPreferences.BinarySerialization))
 			{
-				BinarySerialization.Save(this.mVariableSource);
+				BinarySerialization.Save(mVariableSource);
 			}
 			else
 			{
-				SerializeJSON.Save(this.mVariableSource);
+				SerializeJSON.Save(mVariableSource);
 			}
 		}
 	}

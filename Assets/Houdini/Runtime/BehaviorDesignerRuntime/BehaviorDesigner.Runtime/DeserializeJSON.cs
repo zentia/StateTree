@@ -536,7 +536,7 @@ namespace BehaviorDesigner.Runtime
 			}
 			if (type.Equals(typeof(AnimationCurve)))
 			{
-				return DeserializeJSON.ValueToAnimationCurve((Dictionary<string, object>)obj);
+				return ValueToAnimationCurve((Dictionary<string, object>)obj);
 			}
 			object obj2 = TaskUtility.CreateInstance(type);
 			DeserializeJSON.DeserializeObject(task, obj2, obj as Dictionary<string, object>, variableSource, unityObjects);
@@ -623,7 +623,7 @@ namespace BehaviorDesigner.Runtime
 
 		private static LayerMask ValueToLayerMask(int value)
 		{
-			LayerMask result = default(LayerMask);
+			LayerMask result = default;
 			result.value = (value);
 			return result;
 		}
@@ -631,8 +631,7 @@ namespace BehaviorDesigner.Runtime
 		private static AnimationCurve ValueToAnimationCurve(Dictionary<string, object> value)
 		{
 			AnimationCurve animationCurve = new AnimationCurve();
-			object obj;
-			if (value.TryGetValue("Keys", out obj))
+			if (value.TryGetValue("Keys", out object obj))
 			{
 				List<object> list = obj as List<object>;
 				for (int i = 0; i < list.Count; i++)
@@ -640,6 +639,7 @@ namespace BehaviorDesigner.Runtime
 					List<object> list2 = list[i] as List<object>;
 					Keyframe keyframe = new Keyframe((float)Convert.ChangeType(list2[0], typeof(float)), (float)Convert.ChangeType(list2[1], typeof(float)), (float)Convert.ChangeType(list2[2], typeof(float)), (float)Convert.ChangeType(list2[3], typeof(float)));
 					keyframe.tangentMode = ((int)Convert.ChangeType(list2[4], typeof(int)));
+                    
 					animationCurve.AddKey(keyframe);
 				}
 			}
